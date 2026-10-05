@@ -8,8 +8,7 @@
   "creator": "Pexels（撮影者名の表示は任意）",
   "license": "Pexels License",
   "licenseUrl": "https://www.pexels.com/license/",
-  "title": "Empty room with laminate floor",
-  "usedOn": "トップページ：業種別（買取再販）、管理会社ページ、買取再販ページ"
+  "title": "Empty room with laminate floor"
  },
  "cta": {
   "lw": 1600,
@@ -20,8 +19,7 @@
   "creator": "Pexels（撮影者名の表示は任意）",
   "license": "Pexels License",
   "licenseUrl": "https://www.pexels.com/license/",
-  "title": "Bright empty attic room",
-  "usedOn": "各ページ末尾：ご相談の案内（背景）"
+  "title": "Bright empty attic room"
  },
  "building": {
   "lw": 1600,
@@ -32,8 +30,7 @@
   "creator": "OiMax",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "apartment",
-  "usedOn": "トップページ：業種別（管理会社）、管理会社ページ"
+  "title": "apartment"
  },
  "apartments": {
   "lw": 1600,
@@ -44,32 +41,29 @@
   "creator": "Yuya Tamai",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "集合住宅 apartment buildings",
-  "usedOn": "管理会社ページ：共用部"
+  "title": "集合住宅 apartment buildings"
  },
  "wall": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1022,
+  "lh": 767,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/36824782@N00/120869477",
   "creator": "Qole Pejorian",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Baby Room, sanded walls",
-  "usedOn": "管理会社ページ、買取再販ページ"
+  "title": "Baby Room, sanded walls"
  },
  "shop": {
-  "lw": 1600,
-  "lh": 1200,
+  "lw": 1536,
+  "lh": 1152,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/91873384@N04/54379225600",
   "creator": "dalecruse",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Timeless Streets of Kanazawa",
-  "usedOn": "トップページ：業種別（店舗・施設）、店舗・施設ページ"
+  "title": "Timeless Streets of Kanazawa"
  },
  "shop2": {
   "lw": 1600,
@@ -80,8 +74,7 @@
   "creator": "PhillipC",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Interior, Cafe Makara, Wellington, New Zealand",
-  "usedOn": "店舗・施設ページ"
+  "title": "Interior, Cafe Makara, Wellington, New Zealand"
  },
  "office": {
   "lw": 1600,
@@ -92,67 +85,72 @@
   "creator": "markhillary",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Empty Office",
-  "usedOn": "店舗・施設ページ"
+  "title": "Empty Office"
  },
  "hero": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 913,
+  "lh": 685,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/9160678@N06/4201330141",
   "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 16",
-  "usedOn": ""
+  "title": "House in Kita-ku 16"
  },
  "washitsu": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 913,
+  "lh": 685,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/9160678@N06/4202082712",
   "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 08",
-  "usedOn": ""
+  "title": "House in Kita-ku 08"
  },
  "fusuma": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 913,
+  "lh": 685,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
   "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 13",
-  "usedOn": ""
+  "title": "House in Kita-ku 13"
  },
  "kitchen": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 913,
+  "lh": 685,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/9160678@N06/4201328535",
   "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 02",
-  "usedOn": ""
+  "title": "House in Kita-ku 02"
  },
- "tools": {
-  "lw": 1600,
-  "lh": 1200,
+ "kitaroom": {
+  "lw": 913,
+  "lh": 685,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/84906483@N08/8747337118",
-  "creator": "spinster cardigan",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202082386",
+  "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "old tools",
-  "usedOn": ""
+  "title": "House in Kita-ku 01"
+ },
+ "carpentry": {
+  "lw": 913,
+  "lh": 685,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202083522",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 11"
  }
 }
