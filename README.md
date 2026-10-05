@@ -17,12 +17,14 @@
 | `docs/known-limitations.md` | 既知の制約 |
 | `docs/deployment.md` | ビルド・公開・写真差し替えの手順 |
 | `docs/screenshots/` | 主要ページのスクリーンショット |
+| `docs/gpt-review/` | 外部AI（ChatGPT 等）でレビューするための依頼文とバンドル |
 
 ## よく使うコマンド
 
 ```bash
 node build.mjs                 # dist/ を生成（デモ：noindex）
 node scripts/serve.mjs         # http://localhost:4173/ehime-shuzen-desk/
-node scripts/qa.mjs            # ブラウザQA（全ルート × 5幅）
+node scripts/qa.mjs            # ブラウザQA（全ルート × 6幅）
 node scripts/make-images.mjs   # OGP画像を再生成
+node scripts/make-review-bundle.mjs  # GPTレビュー用バンドルを再生成
 ```

@@ -37,7 +37,7 @@ node scripts/make-images.mjs    # OGP画像・apple-touch-icon を再生成
 - `PRODUCTION=1 node build.mjs` でビルドすると、noindex と robots.txt の Disallow が外れ、sitemap が有効になります（ワークフローの `node build.mjs` に環境変数を追加）。
 
 - フォーム送信：`src/assets/main.js` の `ENDPOINT`（または各ページで `window.EHIME_FORM_ENDPOINT` を定義）に送信先のURLを設定します。現在は `null` のため送信されず、「本番接続前」の案内を表示します。
-  - 送信は `multipart/form-data` の POST（写真は `photos` フィールドに複数添付）。電話番号は半角に正規化して送ります。
+  - 送信は `multipart/form-data` の POST（写真は `photos` フィールドに複数添付）。電話番号は半角数字のみ（例：`0899123456`）に正規化して送ります。
   - 応答が 2xx なら「送信しました」、それ以外はサーバーエラー、通信できない場合は通信失敗の案内を表示し、入力内容は保持します。送信中はボタンを無効化して二重送信を防ぎます。
   - 送信が成功すると、フォームと写真の選択をリセットします（URL の `?type=` で選ばれた区分は保持）。
   - 受け側では、スパム対策（reCAPTCHA 等）、ファイル形式・サイズの再検証、自動返信メールを実装してください。

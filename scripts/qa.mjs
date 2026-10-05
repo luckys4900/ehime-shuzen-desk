@@ -123,6 +123,17 @@ for (const p of ['sitemap.xml', 'robots.txt', 'assets/og.png', 'assets/favicon.s
 const nf = await req.get(BASE + 'no-such-page/');
 if (nf.status() !== 404) fail(`404 status ${nf.status()}`); else ok('404 returns 404');
 const nfBody = await nf.text();
+{
+  const pr = await ctx.newPage();
+  await pr.goto(BASE + '#flow', { waitUntil: 'networkidle' });
+  await pr.waitForTimeout(300);
+  await pr.mouse.wheel(0, 2500); await pr.waitForTimeout(400);
+  const y1 = await pr.evaluate(() => scrollY);
+  await pr.reload({ waitUntil: 'networkidle' }); await pr.waitForTimeout(600);
+  const y2 = await pr.evaluate(() => scrollY);
+  await pr.close();
+  if (Math.abs(y2 - y1) > 40) fail(`reload with #hash jumps: ${y1} -> ${y2}`); else ok('reload keeps scroll position with #hash');
+}
 if (/href="#(?!main")/.test(nfBody)) fail('404 has in-page anchors that do not exist there'); else ok('404 links are all absolute');
 if (!nfBody.includes('お探しのページが見つかりませんでした')) fail('404 body');
 
@@ -250,7 +261,7 @@ const rOk = await sendWith(async (route) => { await route.fulfill({ status: 200,
   if (bodies.length !== 2) fail('expected two sends, got ' + bodies.length);
   else if (!bodies[0].includes('first-property.png')) fail('first send did not include its photo');
   else if (bodies[1].includes('first-property.png') || thumbsLeft) fail('previous photo carried over to next inquiry');
-  else if (!bodies[1].includes('089912-3456') && !bodies[1].includes('089-912-3456')) fail('phone not normalized in request');
+  else if (!/name="tel"\r\n\r\n0899123456\r\n/.test(bodies[1].toString('utf8'))) fail('phone not normalized to digits in request');
   else ok('photos cleared after send; full-width brackets / U+2212 phone accepted and normalized');
 }
 if (!/送信しました/.test(rOk.text)) fail('success message missing: ' + rOk.text.slice(0, 30)); else ok('success message shown when endpoint is connected');

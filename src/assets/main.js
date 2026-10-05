@@ -21,10 +21,15 @@
   }
 
   /* ---------- 別ページからのアンカー移動：Webフォント読み込み後に位置を合わせ直す ---------- */
-  if (location.hash && location.hash.length > 1 && document.fonts && document.fonts.ready) {
+  // 新しく開いたときだけ。再読み込み・戻る操作や、利用者がすでにスクロールした場合はブラウザの位置を優先する
+  var navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  if (location.hash && location.hash.length > 1 && document.fonts && document.fonts.ready && (!navEntry || navEntry.type === 'navigate')) {
+    var userMoved = false;
+    var stop = function () { userMoved = true; };
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, stop, { once: true, passive: true }); });
     document.fonts.ready.then(function () {
       var t = document.getElementById(location.hash.slice(1));
-      if (t) t.scrollIntoView({ block: 'start' });
+      if (t && !userMoved) t.scrollIntoView({ block: 'start' });
     });
   }
 
@@ -224,8 +229,8 @@
         return;
       }
       var fd = new FormData(form);
-      // 電話番号は半角数字とハイフンに正規化して送る
-      form.querySelectorAll('[data-type="tel"]').forEach(function (el) { fd.set(el.name, toHalfWidth(el.value).replace(/[\s()]/g, '')); });
+      // 電話番号は半角数字のみ（例：0899123456）に正規化して送る
+      form.querySelectorAll('[data-type="tel"]').forEach(function (el) { fd.set(el.name, toHalfWidth(el.value).replace(/\D/g, '')); });
       var input = form.querySelector('input[type="file"]');
       if (input && input._files) { fd.delete(input.name); input._files.forEach(function (f) { fd.append(input.name, f); }); }
       var btn = form.querySelector('button[type="submit"]');

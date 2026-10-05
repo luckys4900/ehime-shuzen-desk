@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T07:32:08.133Z",
+  "date": "2026-10-05T07:55:09.222Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -51,6 +51,7 @@
     "assets/favicon.svg 200",
     "assets/apple-touch-icon.png 200",
     "404 returns 404",
+    "reload keeps scroll position with #hash",
     "404 links are all absolute",
     "mobile nav opens",
     "mobile nav closes with Escape",
