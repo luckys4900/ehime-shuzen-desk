@@ -5,9 +5,11 @@
   "sw": 800,
   "source": "pexels",
   "page": "https://www.pexels.com/photo/3284980/",
-  "creator": "Pexels",
+  "creator": "Pexels（撮影者名の表示は任意）",
   "license": "Pexels License",
-  "licenseUrl": "https://www.pexels.com/license/"
+  "licenseUrl": "https://www.pexels.com/license/",
+  "title": "Empty room with wooden floor",
+  "usedOn": "トップページ：メインビジュアル、買取再販ページ"
  },
  "room": {
   "lw": 1600,
@@ -15,9 +17,11 @@
   "sw": 800,
   "source": "pexels",
   "page": "https://www.pexels.com/photo/8146330/",
-  "creator": "Pexels",
+  "creator": "Pexels（撮影者名の表示は任意）",
   "license": "Pexels License",
-  "licenseUrl": "https://www.pexels.com/license/"
+  "licenseUrl": "https://www.pexels.com/license/",
+  "title": "Empty room with laminate floor",
+  "usedOn": "トップページ：業種別（買取再販）、管理会社ページ、買取再販ページ"
  },
  "cta": {
   "lw": 1600,
@@ -25,9 +29,11 @@
   "sw": 800,
   "source": "pexels",
   "page": "https://www.pexels.com/photo/8082324/",
-  "creator": "Pexels",
+  "creator": "Pexels（撮影者名の表示は任意）",
   "license": "Pexels License",
-  "licenseUrl": "https://www.pexels.com/license/"
+  "licenseUrl": "https://www.pexels.com/license/",
+  "title": "Bright empty attic room",
+  "usedOn": "各ページ末尾：ご相談の案内（背景）"
  },
  "building": {
   "lw": 1024,
@@ -37,7 +43,21 @@
   "page": "https://www.flickr.com/photos/72396314@N00/1412767312",
   "creator": "OiMax",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "apartment",
+  "usedOn": "トップページ：業種別（管理会社）、管理会社ページ"
+ },
+ "apartments": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/76758469@N00/3820595970",
+  "creator": "Yuya Tamai",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "集合住宅 apartment buildings",
+  "usedOn": "管理会社ページ：共用部"
  },
  "worker": {
   "lw": 1024,
@@ -47,7 +67,9 @@
   "page": "https://www.flickr.com/photos/62177673@N05/37138902306",
   "creator": "Austin Community College",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Moving in Building 4000",
+  "usedOn": "トップページ：第二施工店という考え方"
  },
  "wall": {
   "lw": 1024,
@@ -57,27 +79,9 @@
   "page": "https://www.flickr.com/photos/36824782@N00/120869477",
   "creator": "Qole Pejorian",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
- },
- "corridor": {
-  "lw": 1024,
-  "lh": 768,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/89135377@N03/8142185768",
-  "creator": "Seward Construction CO",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
- },
- "kitchen": {
-  "lw": 1024,
-  "lh": 768,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/26042955@N00/3324039940",
-  "creator": "Fazimoto",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Baby Room, sanded walls",
+  "usedOn": "管理会社ページ、買取再販ページ"
  },
  "shop": {
   "lw": 1024,
@@ -87,7 +91,9 @@
   "page": "https://www.flickr.com/photos/91873384@N04/54379225600",
   "creator": "dalecruse",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Timeless Streets of Kanazawa",
+  "usedOn": "トップページ：業種別（店舗・施設）、店舗・施設ページ"
  },
  "shop2": {
   "lw": 1024,
@@ -97,7 +103,9 @@
   "page": "https://www.flickr.com/photos/42033648@N00/236658788",
   "creator": "PhillipC",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Interior, Cafe Makara, Wellington, New Zealand",
+  "usedOn": "店舗・施設ページ"
  },
  "office": {
   "lw": 1024,
@@ -107,7 +115,9 @@
   "page": "https://www.flickr.com/photos/56087830@N00/4492973490",
   "creator": "markhillary",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Empty Office",
+  "usedOn": "店舗・施設ページ"
  },
  "partner": {
   "lw": 1024,
@@ -117,6 +127,8 @@
   "page": "https://www.flickr.com/photos/62177673@N05/37138917516",
   "creator": "Austin Community College",
   "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Moving in Building 4000",
+  "usedOn": "協力会社募集ページ"
  }
 }
