@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: |
+          npm i --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
       - run: node scripts/photo-candidates.mjs
       - name: Contact sheets (numbered)
         run: |
@@ -26,7 +29,7 @@ jobs:
           done
       - name: Encrypt and push to a temporary branch
         run: |
-          tar czf caps.tgz cand sheet_*.jpg
+          tar czf caps.tgz cand $(ls sheet_*.jpg 2>/dev/null)
           openssl rand -out k.bin 32
           openssl enc -aes-256-cbc -pbkdf2 -salt -in caps.tgz -out caps.enc -pass file:k.bin
           openssl pkeyutl -encrypt -pubin -inkey .github/reference/capture-pubkey.pem -in k.bin -out k.enc
