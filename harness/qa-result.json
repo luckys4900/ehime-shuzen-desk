@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T05:31:41.842Z",
+  "date": "2026-10-05T05:54:52.653Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -52,6 +52,7 @@
     "focus moved to error summary",
     "error summary has 11 links",
     "error summary link focuses company",
+    "error summary updates live (11 -> 9)",
     "tel/email format validation",
     "upload preview + type rejection",
     "valid submit shows not-connected status",

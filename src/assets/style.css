@@ -153,7 +153,7 @@ ul, ol { margin: 0; padding: 0; }
 }
 @media (max-width: 767px) {
   .hero { min-height: 0; }
-  .hero__bg img { object-position: 35% 100%; }
+  .hero__bg img { object-position: 85% 60%; }
   .hero__bg::after { background: linear-gradient(0deg, rgba(16,22,21,.88) 0%, rgba(16,22,21,.64) 55%, rgba(16,22,21,.38) 100%); }
   .hero__inner { padding-top: calc(var(--header-h) + 112px); padding-bottom: 36px; }
   .hero__eyebrow { font-size: 12.5px; margin-bottom: 20px; }
