@@ -21,17 +21,6 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 08"
  },
- "akiya_stuff": {
-  "lw": 500,
-  "lh": 375,
-  "sw": 500,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/152342724@N04/42970396042",
-  "creator": "GEEK KAZU",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "空き家バンク 物件紹介 (6)"
- },
  "akiya_garden": {
   "lw": 906,
   "lh": 680,
@@ -54,15 +43,15 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "空き家バンク 唐津 七山 (2)"
  },
- "akiya_room": {
-  "lw": 908,
-  "lh": 681,
+ "akiya_kitchen": {
+  "lw": 904,
+  "lh": 678,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/152342724@N04/43051294902",
+  "page": "https://www.flickr.com/photos/152342724@N04/29228917858",
   "creator": "GEEK KAZU",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "空き家バンク 唐津 七山 (7)"
+  "title": "空き家バンク 唐津 七山 (5)"
  }
 }
