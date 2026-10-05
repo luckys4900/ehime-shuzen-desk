@@ -54,7 +54,7 @@ for (const w of widths) {
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
         narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
-        orphanLines: [...document.querySelectorAll('h1, h2, h3, main p, main li, main dd, .faq summary, .prep__list span, .facts__v')].filter((h) => h.offsetParent !== null).map((h) => {
+        orphanLines: [...document.querySelectorAll('h1, h2, h3, main p, main li, main dd, main th, main td, main figcaption, .faq summary, .prep__list span, .facts__v')].filter((h) => h.offsetParent !== null).map((h) => {
           const counts = [];
           const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
           let node;
@@ -74,6 +74,8 @@ for (const w of widths) {
           }
           return counts.length > 1 && counts.some((c) => c.n <= 2) ? h.textContent.trim().slice(0, 14) : null;
         }).filter(Boolean),
+        areaStrongLines: [...document.querySelectorAll('.area__table td strong')].map((el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight || 30))).filter((n) => n > 2).length,
+        mobileCtaAtTop: innerWidth < 768 && !!document.querySelector('.hero__actions, .phero .btn-row') && document.querySelector('.mobile-cta') && !document.querySelector('.mobile-cta').classList.contains('is-hidden') && getComputedStyle(document.querySelector('.mobile-cta')).display !== 'none',
         placeholderText: /(lorem|ipsum|ダミー|TODO|XXX|000-0000|○○)/i.test(document.body.innerText),
       };
     });
@@ -87,6 +89,8 @@ for (const w of widths) {
     if (m.smallTap) fail(`${r || '/'} @${w}: ${m.smallTap} tap targets < 40px`);
     if (m.narrowHeads.length) fail(`${r || '/'} @${w}: headings squeezed ${m.narrowHeads.join(',')}`);
     if (m.orphanLines.length) fail(`${r || '/'} @${w}: line with <=2 chars: ${m.orphanLines.join(' / ')}`);
+    if (m.areaStrongLines) fail(`${r || '/'} @${w}: area table place list wraps over 2 lines`);
+    if (m.mobileCtaAtTop) fail(`${r || '/'} @${w}: mobile fixed CTA visible while hero CTA is on screen`);
     if (m.placeholderText) fail(`${r || '/'}: placeholder-like text found`);
     if (errors.length) fail(`${r || '/'} @${w}: console errors ${errors.join(' | ')}`);
     m.links.forEach((l) => linkSet.add(l.split('#')[0]));

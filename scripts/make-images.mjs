@@ -9,7 +9,8 @@ const page = await ctx.newPage();
 const OG_PHOTO = 'hero';
 const fsMod = await import('node:fs');
 const heroB64 = fsMod.readFileSync(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)).toString('base64');
-fsMod.writeFileSync(new URL('../src/assets/og.json', import.meta.url), JSON.stringify({ photo: OG_PHOTO, source: fsMod.statSync(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)).size }) + '\n');
+const { createHash } = await import('node:crypto');
+const sha1 = (u) => createHash('sha1').update(fsMod.readFileSync(u)).digest('hex');
 await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Shippori+Mincho+B1:wght@600;700&display=block"></head><body style="margin:0;width:1200px;height:630px;position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;color:#fff">
 <img src="data:image/jpeg;base64,${heroB64}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
 <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,22,21,.86) 0%,rgba(16,22,21,.6) 55%,rgba(16,22,21,.2) 100%)"></div>
@@ -22,6 +23,7 @@ await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.go
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(500);
 await page.screenshot({ path: out + 'og.png' });
+fsMod.writeFileSync(new URL('../src/assets/og.json', import.meta.url), JSON.stringify({ photo: OG_PHOTO, source: sha1(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)), og: sha1(new URL('../src/assets/og.png', import.meta.url)) }) + '\n');
 await page.setViewportSize({ width: 180, height: 180 });
 await page.setContent(`<html><body style="margin:0"><svg width="180" height="180" viewBox="0 0 40 40"><rect width="40" height="40" fill="#1f3a36"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="#fff" stroke-width="3"/><path d="M12 18 V31 H28 V18" fill="none" stroke="#fff" stroke-width="3"/><rect x="17.5" y="23" width="5" height="8" fill="#e0773a"/></svg></body></html>`);
 await page.screenshot({ path: out + 'apple-touch-icon.png' });

@@ -5,6 +5,8 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+const sha1 = (f) => createHash('sha1').update(readFileSync(f)).digest('hex');
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, 'src');
@@ -48,7 +50,7 @@ function imgTag(base, name, alt, sizes, eager) {
 }
 function photo(base, spec) {
   const [name, alt = '', cls = '', cap = '写真はイメージです', eager = ''] = spec.split('|');
-  const sizes = /hero__bg|cta__bg/.test(cls) ? '100vw' : '(max-width: 1023px) 100vw, 55vw';
+  const sizes = /hero__bg/.test(cls) ? '(max-width: 767px) 270vw, 100vw' : /cta__bg/.test(cls) ? '(max-width: 767px) 200vw, 100vw' : '(max-width: 1023px) 100vw, 55vw';
   const capHtml = cap === '-' ? '' : `<figcaption class="photo__cap">${cap}</figcaption>`;
   return `<figure class="photo ${cls}">${imgTag(base, name, alt, sizes, eager)}${capHtml}</figure>`;
 }
@@ -180,7 +182,7 @@ ${footer(base, page.slug)}
 }
 
 // OGP 画像が現在の写真から作られているか確認（写真を差し替えたら node scripts/make-images.mjs を再実行）
-if (statSync(join(SRC, 'assets', 'photos', `${OG.photo}-l.jpg`)).size !== OG.source) {
+if (sha1(join(SRC, 'assets', 'photos', `${OG.photo}-l.jpg`)) !== OG.source || sha1(join(SRC, 'assets', 'og.png')) !== OG.og) {
   throw new Error('og.png is stale: run `node scripts/make-images.mjs` after changing photos');
 }
 
