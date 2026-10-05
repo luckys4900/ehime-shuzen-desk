@@ -123,6 +123,7 @@ for (const p of ['sitemap.xml', 'robots.txt', 'assets/og.png', 'assets/favicon.s
 const nf = await req.get(BASE + 'no-such-page/');
 if (nf.status() !== 404) fail(`404 status ${nf.status()}`); else ok('404 returns 404');
 const nfBody = await nf.text();
+if (/href="#(?!main")/.test(nfBody)) fail('404 has in-page anchors that do not exist there'); else ok('404 links are all absolute');
 if (!nfBody.includes('お探しのページが見つかりませんでした')) fail('404 body');
 
 // mobile nav + form behaviour
@@ -232,7 +233,7 @@ const rOk = await sendWith(async (route) => { await route.fulfill({ status: 200,
   await p3.route('**/__qa_endpoint', async (route) => { bodies.push(route.request().postDataBuffer() || Buffer.alloc(0)); await route.fulfill({ status: 200, body: 'ok' }); });
   await p3.goto(BASE + 'contact/?type=kanri', { waitUntil: 'networkidle' });
   const fillAll = async () => {
-    await p3.fill('#company', 'テスト株式会社'); await p3.fill('#name', '山田'); await p3.fill('#tel', '089−912−3456'); await p3.fill('#email', 'info@example.co.jp');
+    await p3.fill('#company', 'テスト株式会社'); await p3.fill('#name', '山田'); await p3.fill('#tel', '（089）912−3456'); await p3.fill('#email', 'info@example.co.jp');
     await p3.selectOption('#city', '松山市'); await p3.fill('#address', '一番町'); await p3.selectOption('#ptype', { index: 1 });
     await p3.locator('label.choice:has(input[name="occupancy"][value="空室"])').click();
     await p3.fill('#detail', '壁紙'); await p3.selectOption('#timing', { index: 1 });
@@ -249,7 +250,8 @@ const rOk = await sendWith(async (route) => { await route.fulfill({ status: 200,
   if (bodies.length !== 2) fail('expected two sends, got ' + bodies.length);
   else if (!bodies[0].includes('first-property.png')) fail('first send did not include its photo');
   else if (bodies[1].includes('first-property.png') || thumbsLeft) fail('previous photo carried over to next inquiry');
-  else ok('photos cleared after successful send (no carry-over); U+2212 phone accepted');
+  else if (!bodies[1].includes('089912-3456') && !bodies[1].includes('089-912-3456')) fail('phone not normalized in request');
+  else ok('photos cleared after send; full-width brackets / U+2212 phone accepted and normalized');
 }
 if (!/送信しました/.test(rOk.text)) fail('success message missing: ' + rOk.text.slice(0, 30)); else ok('success message shown when endpoint is connected');
 

@@ -20,6 +20,14 @@
     window.matchMedia('(min-width: 1241px)').addEventListener('change', function (mq) { if (mq.matches) setOpen(false); });
   }
 
+  /* ---------- 別ページからのアンカー移動：Webフォント読み込み後に位置を合わせ直す ---------- */
+  if (location.hash && location.hash.length > 1 && document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      var t = document.getElementById(location.hash.slice(1));
+      if (t) t.scrollIntoView({ block: 'start' });
+    });
+  }
+
   /* ---------- header over the home hero ---------- */
   var siteHeader = document.querySelector('.site-header');
   if (document.body.classList.contains('page-home') && siteHeader) {
@@ -56,7 +64,8 @@
 
   function toHalfWidth(s) {
     return s.replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
-      .replace(/[－ー―‐−–—]/g, '-');
+      .replace(/[－ー―‐−–—ｰ]/g, '-')
+      .replace(/（/g, '(').replace(/）/g, ')').replace(/　/g, ' ');
   }
 
   function fieldLabel(form, name) {
@@ -215,6 +224,8 @@
         return;
       }
       var fd = new FormData(form);
+      // 電話番号は半角数字とハイフンに正規化して送る
+      form.querySelectorAll('[data-type="tel"]').forEach(function (el) { fd.set(el.name, toHalfWidth(el.value).replace(/[\s()]/g, '')); });
       var input = form.querySelector('input[type="file"]');
       if (input && input._files) { fd.delete(input.name); input._files.forEach(function (f) { fd.append(input.name, f); }); }
       var btn = form.querySelector('button[type="submit"]');

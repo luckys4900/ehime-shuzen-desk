@@ -201,6 +201,7 @@ for (const page of pages) {
 const notFoundBody = readFileSync(join(SRC, 'pages', '404.html'), 'utf8');
 const nf = layout({ slug: '', title: 'ページが見つかりません｜愛媛修繕デスク', description: 'お探しのページは見つかりませんでした。' }, notFoundBody)
   .replace(/(href|src)="(?!https?:|\/|#|mailto:|tel:)([^"]*)"/g, `$1="${BASE_PATH}$2"`)
+  .replace(/href="#(?!main")([^"]+)"/g, `href="${BASE_PATH}#$1"`)
   .replace('<body class="page-home">', '<body class="page-404">')
   .replace('<meta name="robots" content="noindex, nofollow">\n', '')
   .replace('<head>', '<head>\n<meta name="robots" content="noindex">');

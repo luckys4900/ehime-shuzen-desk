@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T07:09:19.918Z",
+  "date": "2026-10-05T07:32:08.133Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -51,6 +51,7 @@
     "assets/favicon.svg 200",
     "assets/apple-touch-icon.png 200",
     "404 returns 404",
+    "404 links are all absolute",
     "mobile nav opens",
     "mobile nav closes with Escape",
     "mobile nav link navigates",
@@ -71,7 +72,7 @@
     "submit button prevents double submit",
     "submit button re-enabled after failure",
     "network failure message shown",
-    "photos cleared after successful send (no carry-over); U+2212 phone accepted",
+    "photos cleared after send; full-width brackets / U+2212 phone accepted and normalized",
     "success message shown when endpoint is connected",
     "partner form validation 7",
     "header transparent on hero, solid after scroll",
