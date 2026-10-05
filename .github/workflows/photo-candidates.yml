@@ -25,7 +25,7 @@ jobs:
           sudo apt-get install -y imagemagick >/dev/null
           cd cand
           for q in $(ls q*.jpg | cut -c1-3 | sort -u); do
-            montage -label '%t' -pointsize 13 ${q}_*.jpg -tile 4x -geometry 330x220+4+4 ../sheet_${q}.jpg || true
+            montage -label '%t' -pointsize 13 ${q}_*.jpg -tile 6x -geometry 300x200+3+3 ../sheet_${q}.jpg || true
           done
       - name: Encrypt and push to a temporary branch
         run: |

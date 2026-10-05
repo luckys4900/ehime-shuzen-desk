@@ -21,29 +21,42 @@ async function save(prefix, n, url, info) {
 for (const [qi, q] of qs.entries()) {
   const prefix = 'q' + String(qi).padStart(2, '0');
   let n = 0;
+  for (const site of ['unsplash', 'pexels']) {
+    try {
+      const url = site === 'unsplash'
+        ? `https://unsplash.com/s/photos/${encodeURIComponent(q.replace(/ /g, '-'))}?license=free&orientation=landscape`
+        : `https://www.pexels.com/search/${encodeURIComponent(q)}/?orientation=landscape`;
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await page.waitForTimeout(3500);
+      for (let i = 0; i < 3; i++) { await page.mouse.wheel(0, 1400); await page.waitForTimeout(700); }
+      const items = await page.evaluate((site) => {
+        const pat = site === 'unsplash' ? /images\.unsplash\.com\/photo-/ : /images\.pexels\.com\/photos\//;
+        return [...document.querySelectorAll('img')].filter((img) => pat.test(img.currentSrc || img.src)).map((img) => {
+          const a = img.closest('a');
+          return { href: a ? a.href : '', src: img.currentSrc || img.src, alt: img.alt };
+        });
+      }, site);
+      console.log(site, q, 'title=', (await page.title()).slice(0, 60), 'imgs=', items.length);
+      if (qi === 0) await page.screenshot({ path: `cand/_debug_${site}.jpg`, type: 'jpeg', quality: 50 });
+      const seen = new Set();
+      let k = 0;
+      for (const it of items) {
+        if (k >= 10) break;
+        if (/plus\.unsplash|premium/.test(it.src + it.href)) continue;
+        const base = it.src.split('?')[0];
+        if (seen.has(base)) continue;
+        seen.add(base);
+        const thumb = site === 'unsplash' ? base + '?w=420&q=60&fm=jpg' : base + '?auto=compress&w=420';
+        if (await save(prefix, n, thumb, { q, source: site, page: it.href.split('?')[0], raw: base, alt: it.alt })) { n++; k++; }
+      }
+    } catch (e) { console.log(site, 'fail', q, String(e).slice(0, 120)); }
+  }
   try {
-    await page.goto(`https://unsplash.com/s/photos/${encodeURIComponent(q.replace(/ /g, '-'))}?license=free&orientation=landscape`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await page.waitForTimeout(2500);
-    for (let i = 0; i < 3; i++) { await page.mouse.wheel(0, 1200); await page.waitForTimeout(600); }
-    const items = await page.evaluate(() => [...document.querySelectorAll('a[href*="/photos/"]')].map((a) => {
-      const img = a.querySelector('img[src*="images.unsplash.com/photo-"]');
-      return img ? { href: a.href, src: img.src, alt: img.alt } : null;
-    }).filter(Boolean));
-    const seen = new Set();
-    for (const it of items) {
-      if (n >= 8) break;
-      const base = it.src.split('?')[0];
-      if (seen.has(base) || /plus\.unsplash/.test(it.src)) continue;
-      seen.add(base);
-      if (await save(prefix, n, base + '?w=420&q=60&fm=jpg', { q, source: 'unsplash', page: it.href.split('?')[0], raw: base, alt: it.alt })) n++;
-    }
-  } catch (e) { console.log('unsplash fail', q, String(e).slice(0, 80)); }
-  try {
-    const r = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&license_type=commercial&page_size=12&aspect_ratio=wide&mature=false`, { headers: { 'user-agent': 'ehime-shuzen-desk-mockup/1.0' } });
+    const r = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&license_type=commercial&page_size=6&aspect_ratio=wide&mature=false`, { headers: { 'user-agent': 'ehime-shuzen-desk-mockup/1.0' } });
     if (r.ok) {
       const j = await r.json();
       for (const it of j.results || []) {
-        if (n >= 14) break;
+        if (n >= 26) break;
         if (!['cc0', 'pdm', 'by'].includes(it.license)) continue;
         const thumb = it.thumbnail || it.url;
         if (await save(prefix, n, thumb, { q, source: 'openverse:' + it.source, page: it.foreign_landing_url, raw: it.url, alt: it.title, creator: it.creator, creatorUrl: it.creator_url, license: it.license, licenseVersion: it.license_version, licenseUrl: it.license_url, w: it.width, h: it.height })) n++;
