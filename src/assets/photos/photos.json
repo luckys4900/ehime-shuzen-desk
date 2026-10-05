@@ -1,16 +1,4 @@
 {
- "hero": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "pexels",
-  "page": "https://www.pexels.com/photo/3284980/",
-  "creator": "Pexels（撮影者名の表示は任意）",
-  "license": "Pexels License",
-  "licenseUrl": "https://www.pexels.com/license/",
-  "title": "Empty room with wooden floor",
-  "usedOn": "トップページ：メインビジュアル、買取再販ページ"
- },
  "room": {
   "lw": 1600,
   "lh": 1200,
@@ -36,8 +24,8 @@
   "usedOn": "各ページ末尾：ご相談の案内（背景）"
  },
  "building": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/72396314@N00/1412767312",
@@ -48,8 +36,8 @@
   "usedOn": "トップページ：業種別（管理会社）、管理会社ページ"
  },
  "apartments": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/76758469@N00/3820595970",
@@ -58,18 +46,6 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "集合住宅 apartment buildings",
   "usedOn": "管理会社ページ：共用部"
- },
- "worker": {
-  "lw": 1024,
-  "lh": 768,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/62177673@N05/37138902306",
-  "creator": "Austin Community College",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Moving in Building 4000",
-  "usedOn": "トップページ：第二施工店という考え方"
  },
  "wall": {
   "lw": 1024,
@@ -84,8 +60,8 @@
   "usedOn": "管理会社ページ、買取再販ページ"
  },
  "shop": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/91873384@N04/54379225600",
@@ -96,8 +72,8 @@
   "usedOn": "トップページ：業種別（店舗・施設）、店舗・施設ページ"
  },
  "shop2": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/42033648@N00/236658788",
@@ -108,8 +84,8 @@
   "usedOn": "店舗・施設ページ"
  },
  "office": {
-  "lw": 1024,
-  "lh": 768,
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
   "page": "https://www.flickr.com/photos/56087830@N00/4492973490",
@@ -119,16 +95,64 @@
   "title": "Empty Office",
   "usedOn": "店舗・施設ページ"
  },
- "partner": {
+ "hero": {
   "lw": 1024,
   "lh": 768,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/62177673@N05/37138917516",
-  "creator": "Austin Community College",
+  "page": "https://www.flickr.com/photos/9160678@N06/4201330141",
+  "creator": "scarletgreen",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Moving in Building 4000",
-  "usedOn": "協力会社募集ページ"
+  "title": "House in Kita-ku 16",
+  "usedOn": ""
+ },
+ "washitsu": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202082712",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 08",
+  "usedOn": ""
+ },
+ "fusuma": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 13",
+  "usedOn": ""
+ },
+ "kitchen": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4201328535",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 02",
+  "usedOn": ""
+ },
+ "tools": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/84906483@N08/8747337118",
+  "creator": "spinster cardigan",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "old tools",
+  "usedOn": ""
  }
 }
