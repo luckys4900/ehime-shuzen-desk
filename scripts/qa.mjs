@@ -195,6 +195,38 @@ if (!/本番接続前/.test(status)) fail('valid submit status: ' + status); els
 const robots = await (await req.get(BASE + 'robots.txt')).text();
 if (!/Disallow: \//.test(robots)) fail('demo robots.txt should disallow'); else ok('demo robots.txt disallows indexing');
 
+// 本番接続後の挙動（送信先を差し替えて検証）：サーバーエラー・通信失敗・二重送信
+async function sendWith(handler, dbl = true) {
+  const p2 = await ctx.newPage();
+  await p2.addInitScript((u) => { window.EHIME_FORM_ENDPOINT = u; }, BASE + '__qa_endpoint');
+  let hits = 0;
+  await p2.route('**/__qa_endpoint', async (route) => { hits++; await handler(route); });
+  await p2.goto(BASE + 'contact/?type=kanri', { waitUntil: 'networkidle' });
+  await p2.fill('#company', 'テスト株式会社'); await p2.fill('#name', '山田'); await p2.fill('#tel', '0899123456'); await p2.fill('#email', 'info@example.co.jp');
+  await p2.selectOption('#city', '松山市'); await p2.fill('#address', '一番町'); await p2.selectOption('#ptype', { index: 1 });
+  await p2.locator('label.choice:has(input[name="occupancy"][value="空室"])').click();
+  await p2.fill('#detail', '壁紙'); await p2.selectOption('#timing', { index: 1 });
+  await p2.locator('label.choice:has(#agree)').click();
+  const btn = p2.locator('#contact-form button[type="submit"]');
+  await btn.click(); if (dbl) await btn.click({ force: true }).catch(() => {});
+  await p2.waitForTimeout(800);
+  const text = await p2.textContent('[data-status-for="contact-form"]');
+  await p2.fill('#name', '山田太郎');
+  await p2.locator('#name').blur();
+  const after = await p2.textContent('[data-status-for="contact-form"]');
+  const disabledAfter = await btn.isDisabled();
+  await p2.close();
+  return { text, after, hits, disabledAfter };
+}
+const r500 = await sendWith(async (route) => { await new Promise((r) => setTimeout(r, 300)); await route.fulfill({ status: 500, body: 'error' }); });
+if (!/送信できませんでした/.test(r500.text) || !/送信できませんでした/.test(r500.after)) fail('server error message missing or overwritten: ' + r500.after.slice(0, 30)); else ok('server error message shown and kept');
+if (r500.hits !== 1) fail('double submit: endpoint hit ' + r500.hits + ' times'); else ok('submit button prevents double submit');
+if (r500.disabledAfter) fail('submit button stays disabled after failure'); else ok('submit button re-enabled after failure');
+const rNet = await sendWith(async (route) => { await route.abort('failed'); });
+if (!/通信に失敗しました/.test(rNet.text)) fail('network failure message missing: ' + rNet.text.slice(0, 30)); else ok('network failure message shown');
+const rOk = await sendWith(async (route) => { await route.fulfill({ status: 200, body: 'ok' }); }, false);
+if (!/送信しました/.test(rOk.text)) fail('success message missing: ' + rOk.text.slice(0, 30)); else ok('success message shown when endpoint is connected');
+
 await page.goto(BASE + 'partner/', { waitUntil: 'networkidle' });
 await page.click('#partner-form button[type="submit"]');
 const pErr = await page.locator('#partner-form .is-invalid').count();

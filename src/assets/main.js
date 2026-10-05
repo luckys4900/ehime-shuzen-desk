@@ -112,10 +112,13 @@
 
   /* 送信処理は本番接続前のため分離しています。
      本番では ENDPOINT に送信先（フォームサービス等）を設定し、submitInquiry を実装してください。 */
-  var ENDPOINT = null;
+  // （検証用に window.EHIME_FORM_ENDPOINT で上書きできる）
+  var ENDPOINT = window.EHIME_FORM_ENDPOINT || null;
   function submitInquiry(formData) {
     if (!ENDPOINT) return Promise.resolve({ ok: false, reason: 'not_connected' });
-    return fetch(ENDPOINT, { method: 'POST', body: formData }).then(function (r) { return { ok: r.ok }; });
+    return fetch(ENDPOINT, { method: 'POST', body: formData })
+      .then(function (r) { return { ok: r.ok, reason: r.ok ? '' : 'server' }; })
+      .catch(function () { return { ok: false, reason: 'network' }; });
   }
 
   /* エラー要約を、項目の再判定に合わせて更新する（フォーカスは動かさない） */
@@ -155,12 +158,14 @@
     return '<h3>入力内容をご確認ください（' + errors.length + '件）</h3><ul>' + list + '</ul>';
   }
 
-  function showStatus(form, type, html) {
+  // live: 入力エラーの要約のときだけ true（入力に合わせて要約を更新する）
+  function showStatus(form, type, html, live) {
     var box = document.querySelector('[data-status-for="' + form.id + '"]') || form.querySelector('.form-status');
     box.setAttribute('role', 'alert');
     box.removeAttribute('aria-live');
     box.setAttribute('data-summary', html);
-    if (type === 'error') box.setAttribute('data-live', ''); else box.removeAttribute('data-live');
+    if (live) box.setAttribute('data-live', ''); else box.removeAttribute('data-live');
+    if (type === 'done') box.setAttribute('data-done', ''); else box.removeAttribute('data-done');
     box.className = 'form-status' + (type ? ' form-status--' + type : '');
     box.innerHTML = html;
     box.hidden = false;
@@ -191,6 +196,8 @@
     });
     form.addEventListener('input', function (e) {
       var t = e.target;
+      var sbox = document.querySelector('[data-status-for="' + form.id + '"]');
+      if (sbox && sbox.hasAttribute('data-done')) { sbox.hidden = true; sbox.removeAttribute('data-done'); }
       // エラー表示中の項目は入力のたびに再判定し、直った時点でメッセージを消す（離脱時のレイアウトのずれを防ぐ）
       var wrap = t.name && form.querySelector('[data-field="' + t.name + '"]');
       if (t.name && (touched[t.name] || (wrap && wrap.classList.contains('is-invalid')))) { validateField(form, t.name); refreshSummary(form); }
@@ -204,20 +211,28 @@
         if (m) errors.push({ name: n, msg: m });
       });
       if (errors.length) {
-        showStatus(form, 'error', summaryHtml(form, errors));
+        showStatus(form, 'error', summaryHtml(form, errors), true);
         return;
       }
       var fd = new FormData(form);
       var input = form.querySelector('input[type="file"]');
       if (input && input._files) { fd.delete(input.name); input._files.forEach(function (f) { fd.append(input.name, f); }); }
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
       submitInquiry(fd).then(function (res) {
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
         if (res.ok) {
           showStatus(form, 'done', '<h3>送信しました</h3><p>内容を確認のうえ、担当者からご連絡します。</p>');
           form.reset();
         } else if (res.reason === 'not_connected') {
           showStatus(form, 'done', '<h3>入力内容の確認が完了しました</h3><p>本サイトは営業提案用のデモサイトのため、フォームは送信先に接続されていません（本番接続前）。実際の送信は行われていません。</p>');
+        } else if (res.reason === 'network') {
+          showStatus(form, 'error', '<h3>送信できませんでした</h3><p>通信に失敗しました。インターネット接続をご確認のうえ、もう一度お試しください。入力内容は保持されています。</p>');
         } else {
-          showStatus(form, 'error', '<h3>送信できませんでした</h3><p>時間をおいて、もう一度お試しください。</p>');
+          showStatus(form, 'error', '<h3>送信できませんでした</h3><p>時間をおいて、もう一度お試しください。入力内容は保持されています。</p>');
         }
       });
     });

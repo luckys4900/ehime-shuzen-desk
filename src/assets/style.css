@@ -482,6 +482,7 @@ main li, main p, main dd, main span, .faq summary { word-break: auto-phrase; tex
 .consent .choice input:checked + span { background: none; }
 .form__submit { padding: 8px 0 0; }
 .form__submit .btn { min-width: 340px; min-height: 64px; font-size: 16.5px; }
+.form__submit .btn[disabled] { opacity: .6; cursor: progress; }
 .form-status { margin: 0 0 20px; padding: 20px 22px; border: 1px solid var(--line); background: var(--paper); font-size: 15px; }
 .form-status[hidden] { display: none; }
 .form-status--error { border-color: var(--error); background: #fff7f6; color: var(--error); }

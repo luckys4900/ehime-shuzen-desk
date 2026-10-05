@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T06:23:26.446Z",
+  "date": "2026-10-05T06:43:00.036Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -67,6 +67,11 @@
     "summary reappears with 1 error after re-emptying a field",
     "valid submit shows not-connected status",
     "demo robots.txt disallows indexing",
+    "server error message shown and kept",
+    "submit button prevents double submit",
+    "submit button re-enabled after failure",
+    "network failure message shown",
+    "success message shown when endpoint is connected",
     "partner form validation 7",
     "header transparent on hero, solid after scroll",
     "partner mobile CTA goes to #entry",
