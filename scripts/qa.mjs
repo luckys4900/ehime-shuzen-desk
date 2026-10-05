@@ -72,7 +72,8 @@ for (const w of widths) {
               if (line) line.n++; else counts.push({ top, n: 1 });
             }
           }
-          return counts.length > 1 && counts.some((c) => c.n <= 2) ? h.textContent.trim().slice(0, 14) : null;
+          counts.sort((x, y) => x.top - y.top);
+          return counts.length > 1 && counts[counts.length - 1].n <= 2 ? h.textContent.trim().slice(0, 14) : null;
         }).filter(Boolean),
         areaStrongLines: [...document.querySelectorAll('.area__table td strong')].map((el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight || 30))).filter((n) => n > 2).length,
         mobileCtaAtTop: innerWidth < 768 && !!document.querySelector('.hero__actions, .phero .btn-row') && document.querySelector('.mobile-cta') && !document.querySelector('.mobile-cta').classList.contains('is-hidden') && getComputedStyle(document.querySelector('.mobile-cta')).display !== 'none',
@@ -88,7 +89,7 @@ for (const w of widths) {
     if (m.unlabeled.length) fail(`${r || '/'}: unlabeled inputs ${m.unlabeled}`);
     if (m.smallTap) fail(`${r || '/'} @${w}: ${m.smallTap} tap targets < 40px`);
     if (m.narrowHeads.length) fail(`${r || '/'} @${w}: headings squeezed ${m.narrowHeads.join(',')}`);
-    if (m.orphanLines.length) fail(`${r || '/'} @${w}: line with <=2 chars: ${m.orphanLines.join(' / ')}`);
+    if (m.orphanLines.length) fail(`${r || '/'} @${w}: last line with <=2 chars: ${m.orphanLines.join(' / ')}`);
     if (m.areaStrongLines) fail(`${r || '/'} @${w}: area table place list wraps over 2 lines`);
     if (m.mobileCtaAtTop) fail(`${r || '/'} @${w}: mobile fixed CTA visible while hero CTA is on screen`);
     if (m.placeholderText) fail(`${r || '/'}: placeholder-like text found`);

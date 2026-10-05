@@ -305,7 +305,7 @@ main li, main p, main dd, main span, .faq summary { word-break: auto-phrase; tex
 .area__table td strong { font-size: 19px; font-family: var(--serif); font-weight: 600; }
 .area__table td > span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 6px; }
 @media (max-width: 1023px) { .area { grid-template-columns: 1fr; } }
-@media (max-width: 600px) { .area__table th { width: 5.5em; font-size: 13px; letter-spacing: .02em; } .area__table td strong { font-size: 17px; } .area__map { padding: 8px; } .area__map svg { max-height: 260px; } }
+@media (max-width: 600px) { .area__table th { width: 7.8em; font-size: 13px; letter-spacing: 0; white-space: nowrap; padding-right: 12px; } .area__table td strong { font-size: 17px; } .area__map { padding: 8px; } .area__map svg { max-height: 260px; } }
 
 /* ---------- faq ---------- */
 .faq-wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 40px 80px; }
