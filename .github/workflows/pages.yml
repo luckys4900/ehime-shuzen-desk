@@ -55,7 +55,7 @@ jobs:
           npm i --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
       - name: Browser QA against the public URL
-        run: node scripts/qa.mjs "$SITE"
+        run: QA_WRITE=1 node scripts/qa.mjs "$SITE"
       - if: always()
         uses: actions/upload-artifact@v4
         with:

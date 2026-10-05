@@ -2,7 +2,7 @@
 // src/pages/*.html（本文）に共通 header/footer を合成し dist/ へ出力する。
 // GitHub Pages のサブパス配信に対応するため、全リンクは相対パスで生成する。
 // 本番公開時は PRODUCTION=1 でビルドすると、検索エンジン向けの noindex を外す。
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +29,7 @@ const pages = [
 
 const partial = (name) => readFileSync(join(SRC, 'partials', name), 'utf8');
 const PARTIALS = { cta: partial('cta.html'), flow: partial('flow.html') };
+const OG = JSON.parse(readFileSync(join(SRC, 'assets', 'og.json'), 'utf8'));
 const PHOTOS = existsSync(join(SRC, 'assets', 'photos', 'photos.json')) ? JSON.parse(readFileSync(join(SRC, 'assets', 'photos', 'photos.json'), 'utf8')) : {};
 
 const nav = [
@@ -69,11 +70,11 @@ function photoUsage() {
 }
 function creditsHtml(base) {
   const used = photoUsage();
-  const rows = Object.entries(PHOTOS).filter(([name]) => used[name] || name === 'hero').map(([name, p]) => {
+  const rows = Object.entries(PHOTOS).filter(([name]) => used[name] || OG.photo === name).map(([name, p]) => {
     const isPexels = p.source === 'pexels';
     const id = isPexels ? (p.page.match(/photo\/(\d+)/) || [])[1] : '';
     const where = [...(used[name] || [])];
-    if (name === 'hero') where.push('SNS共有用画像（OGP）');
+    if (OG.photo === name) where.push('SNS共有用画像（OGP）');
     return `<li class="credit">
   <img src="${base}assets/photos/${name}-s.jpg" width="200" height="150" alt="" loading="lazy" decoding="async">
   <dl>
@@ -178,9 +179,14 @@ ${footer(base, page.slug)}
 `;
 }
 
+// OGP 画像が現在の写真から作られているか確認（写真を差し替えたら node scripts/make-images.mjs を再実行）
+if (statSync(join(SRC, 'assets', 'photos', `${OG.photo}-l.jpg`)).size !== OG.source) {
+  throw new Error('og.png is stale: run `node scripts/make-images.mjs` after changing photos');
+}
+
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
-cpSync(join(SRC, 'assets'), join(DIST, 'assets'), { recursive: true, filter: (p) => !p.endsWith('photos.json') });
+cpSync(join(SRC, 'assets'), join(DIST, 'assets'), { recursive: true, filter: (p) => !/(photos|og)\.json$/.test(p) });
 
 for (const page of pages) {
   const body = readFileSync(join(SRC, 'pages', page.file), 'utf8');

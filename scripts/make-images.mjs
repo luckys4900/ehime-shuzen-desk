@@ -6,7 +6,10 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } });
 await routeFonts(ctx);
 const page = await ctx.newPage();
-const heroB64 = (await import('node:fs')).readFileSync(new URL('../src/assets/photos/hero-l.jpg', import.meta.url)).toString('base64');
+const OG_PHOTO = 'hero';
+const fsMod = await import('node:fs');
+const heroB64 = fsMod.readFileSync(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)).toString('base64');
+fsMod.writeFileSync(new URL('../src/assets/og.json', import.meta.url), JSON.stringify({ photo: OG_PHOTO, source: fsMod.statSync(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)).size }) + '\n');
 await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Shippori+Mincho+B1:wght@600;700&display=block"></head><body style="margin:0;width:1200px;height:630px;position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;color:#fff">
 <img src="data:image/jpeg;base64,${heroB64}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
 <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,22,21,.86) 0%,rgba(16,22,21,.6) 55%,rgba(16,22,21,.2) 100%)"></div>

@@ -9,6 +9,7 @@ const arg = process.argv[2];
 let srv;
 const BASE = arg || 'http://localhost:4173/ehime-shuzen-desk/';
 if (!arg) srv = await serve(4173);
+const WRITE = process.env.QA_WRITE === '1'; // 1 のときだけ docs/screenshots と harness/qa-result.json を更新する
 const SHOT_DIR = new URL('../docs/screenshots/', import.meta.url).pathname;
 mkdirSync(SHOT_DIR, { recursive: true });
 
@@ -16,7 +17,7 @@ const routes = ['', 'kanri/', 'kaitori/', 'shop/', 'partner/', 'contact/', 'priv
 const widths = [390, 430, 768, 1024, 1440];
 const shots = { '': ['desktop', 'mobile'], 'kanri/': ['desktop', 'mobile'], 'kaitori/': ['mobile'], 'shop/': ['mobile'], 'partner/': ['mobile'], 'contact/': ['mobile'] };
 const results = { base: BASE, date: new Date().toISOString(), checks: [], failures: [] };
-const fail = (m) => { results.failures.push(m); console.log('FAIL', m); };
+const fail = (m) => { results.failures.push(m); };
 const ok = (m) => { results.checks.push(m); };
 
 const browser = await chromium.launch();
@@ -53,7 +54,7 @@ for (const w of widths) {
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
         narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
-        orphanLines: [...document.querySelectorAll('h1, h2')].filter((h) => h.offsetParent !== null).map((h) => {
+        orphanLines: [...document.querySelectorAll('h1, h2, h3, main li, .faq summary')].filter((h) => h.offsetParent !== null).map((h) => {
           const counts = [];
           const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
           let node;
@@ -82,13 +83,13 @@ for (const w of widths) {
     if (m.unlabeled.length) fail(`${r || '/'}: unlabeled inputs ${m.unlabeled}`);
     if (m.smallTap) fail(`${r || '/'} @${w}: ${m.smallTap} tap targets < 40px`);
     if (m.narrowHeads.length) fail(`${r || '/'} @${w}: headings squeezed ${m.narrowHeads.join(',')}`);
-    if (m.orphanLines.length) fail(`${r || '/'} @${w}: heading line with <=2 chars: ${m.orphanLines.join(' / ')}`);
+    if (m.orphanLines.length) fail(`${r || '/'} @${w}: line with <=2 chars: ${m.orphanLines.join(' / ')}`);
     if (m.placeholderText) fail(`${r || '/'}: placeholder-like text found`);
     if (errors.length) fail(`${r || '/'} @${w}: console errors ${errors.join(' | ')}`);
     m.links.forEach((l) => linkSet.add(l.split('#')[0]));
 
     const kind = w === 1440 ? 'desktop' : w === 390 ? 'mobile' : null;
-    if (kind && shots[r]?.includes(kind)) {
+    if (WRITE && kind && shots[r]?.includes(kind)) {
       const name = (r.replace('/', '') || 'top') + '-' + kind + '.png';
       await page.screenshot({ path: SHOT_DIR + name, fullPage: true });
     }
@@ -196,6 +197,7 @@ if (errs.length) fail('page errors ' + errs.join(' | '));
 
 await browser.close();
 if (srv) srv.close();
-writeFileSync(new URL('../harness/qa-result.json', import.meta.url), JSON.stringify(results, null, 2));
+if (WRITE) writeFileSync(new URL('../harness/qa-result.json', import.meta.url), JSON.stringify(results, null, 2));
+results.failures.forEach((f) => console.log('FAIL', f));
 console.log(`checks ok: ${results.checks.length}, failures: ${results.failures.length}`);
 process.exit(results.failures.length ? 1 : 0);
