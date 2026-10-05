@@ -333,12 +333,12 @@ ul, ol { margin: 0; padding: 0; }
 
 /* ---------- sub page hero ---------- */
 .phero { background: var(--paper); border-bottom: 1px solid var(--line-2); }
-.phero__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px 72px; align-items: center; padding-top: 40px; padding-bottom: 96px; }
+.phero__inner { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 48px 72px; align-items: center; padding-top: 40px; padding-bottom: 96px; }
 .crumbs { font-size: 12.5px; color: var(--muted); padding-top: 28px; letter-spacing: .06em; }
 .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; }
 .crumbs li + li::before { content: "／"; margin-right: 4px; color: var(--line); }
 .crumbs a { color: var(--muted); }
-.phero h1 { font-family: var(--serif); font-size: clamp(30px, 3.6vw, 48px); line-height: 1.55; }
+.phero h1 { font-family: var(--serif); font-size: clamp(27px, 2.9vw, 42px); line-height: 1.62; }
 .phero__lead { margin-top: 26px; color: var(--ink-2); font-size: 16px; line-height: 2.05; }
 .phero .btn-row { margin-top: 36px; }
 .phero__photo { aspect-ratio: 4 / 3; }
@@ -531,3 +531,6 @@ ul, ol { margin: 0; padding: 0; }
 .consent .req { margin-top: 0; }
 .form-intro .notice { margin-top: 14px; font-size: 14px; }
 .form-intro p { margin-bottom: 0; }
+.sec-head--split { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+.overlap__photo .photo__cap { right: auto; left: 12px; }
+.overlap--rev .overlap__photo .photo__cap { left: auto; right: 12px; }
