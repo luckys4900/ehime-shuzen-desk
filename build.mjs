@@ -10,10 +10,11 @@ const sha1 = (f) => createHash('sha1').update(readFileSync(f)).digest('hex');
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, 'src');
-const DIST = join(ROOT, 'dist');
+const DIST = process.env.OUT_DIR || join(ROOT, 'dist');
 const SITE_URL = 'https://luckys4900.github.io/ehime-shuzen-desk/';
 const BASE_PATH = new URL(SITE_URL).pathname;
-const CONFIG = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'site.config.json'), 'utf8'));
+// 検証用に SITE_CONFIG_OVERRIDE（JSON）で設定を一時的に上書きできる（本番ビルドでは使わない）
+const CONFIG = Object.assign(JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'site.config.json'), 'utf8')), process.env.SITE_CONFIG_OVERRIDE ? JSON.parse(process.env.SITE_CONFIG_OVERRIDE) : {});
 const SITE_NAME = CONFIG.serviceName || '売却前おまかせデスク';
 const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
@@ -135,6 +136,7 @@ function footer(base, slug) {
       ${logo(base)}
       <p>松山市・近郊の不動産会社向け<br>売却前の残置物・清掃・草刈り・小修繕の相談窓口</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
+      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB}</p></div>`}
       ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-function makeEnv() {
+export function makeEnv() {
   const props = { SHEET_ID: 'sheet1', PHOTO_FOLDER_ID: 'folder1', CASE_PREFIX: 'MAT', NOTIFY_EMAIL: 'desk@example.com' };
   const rows = { 案件: [], 協力事業者: [] };
   const files = [];
@@ -34,6 +34,8 @@ function makeEnv() {
   return { env, post, rows, files, mails, props };
 }
 
+if (process.argv[1] === new URL(import.meta.url).pathname) runTests();
+function runTests() {
 const png = 'data:image/jpeg;base64,' + Buffer.from('fake-jpeg-bytes').toString('base64');
 const base = { formType: 'case', company: '松山不動産', name: '山田', tel: '0899123456', email: '', area: '松山市', services: ['残置物・片付け', '空室清掃'], note: '相続物件', page: 'https://example/#form' };
 let passed = 0;
@@ -94,3 +96,4 @@ t('broken JSON returns an error, not an exception', () => {
   assert.equal(r.ok, false);
 });
 console.log(`backend tests passed: ${passed}`);
+}
