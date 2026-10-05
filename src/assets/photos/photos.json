@@ -109,17 +109,6 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 08"
  },
- "fusuma": {
-  "lw": 913,
-  "lh": 685,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
-  "creator": "scarletgreen",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 13"
- },
  "kitchen": {
   "lw": 913,
   "lh": 685,
@@ -142,15 +131,26 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 01"
  },
- "carpentry": {
-  "lw": 913,
-  "lh": 685,
+ "tatami": {
+  "lw": 1600,
+  "lh": 1200,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4202083522",
-  "creator": "scarletgreen",
+  "page": "https://www.flickr.com/photos/82365211@N00/5953281164",
+  "creator": "kalleboo",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 11"
+  "title": "Apartment tatami room"
+ },
+ "washitsu2": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/13910409@N05/2886383047",
+  "creator": "TANAKA Juuyoh (田中十洋)",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Japanese house traditional style interior design / 和室(わしつ)の内装(ないそう)"
  }
 }
