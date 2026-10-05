@@ -1,0 +1,20 @@
+name: Remove temporary analysis branches
+
+on:
+  push:
+    branches: [main-9c3jqk]
+    paths: ['.github/workflows/cleanup-temp-branches.yml']
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete temporary branches (encrypted reference captures / photo candidates)
+        run: |
+          for b in ref-capture-tmp photo-cand-tmp; do
+            git push origin --delete "$b" || true
+          done

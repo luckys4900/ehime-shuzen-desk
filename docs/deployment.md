@@ -25,7 +25,16 @@ node scripts/qa.mjs https://luckys4900.github.io/ehime-shuzen-desk/   # 公開UR
 node scripts/make-images.mjs    # OGP画像・apple-touch-icon を再生成
 ```
 
+## 写真の差し替え
+
+1. `.github/reference/photo-picks.txt` に `用途名|出典|元ページURL|画像URL|撮影者|ライセンス|ライセンスURL|トリミング位置` を記載して push します。
+2. ワークフロー `photo-fetch.yml` が写真を取得し、4:3 の大小2サイズ（最大1600px / 800px）に最適化して `src/assets/photos/` にコミットします。
+3. 出典は `photos.json` に保存され、ビルド時に写真クレジットページ（/credits/）が自動生成されます。
+4. 自社の現場写真を使う場合は、同じファイル名（`hero-l.jpg` など）で置き換え、`photos.json` の出典欄を更新してください。
+
 ## 本番運用に向けて
+
+- `PRODUCTION=1 node build.mjs` でビルドすると、noindex と robots.txt の Disallow が外れ、sitemap が有効になります（ワークフローの `node build.mjs` に環境変数を追加）。
 
 - フォーム送信：`src/assets/main.js` の `ENDPOINT` に送信先（フォームサービスや自社API）を設定し、`submitInquiry` を実装します。現在は `ENDPOINT = null` のため送信されず、「本番接続前」の案内を表示します。
 - 独自ドメインを使う場合は、`build.mjs` の `SITE_URL` と 404 のパス書き換え（`/ehime-shuzen-desk/`）を変更してください。
