@@ -125,7 +125,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 ```json
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T17:06:07.520Z",
+  "date": "2026-10-05T17:07:46.666Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "partner/ @390: no horizontal overflow",
@@ -475,7 +475,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
           <ul><li>庭・空き地の草刈り</li><li>庭木の剪定</li><li>建物まわりの片付け</li></ul></div>
       </div>
       <div class="svc-row">
-        <h3>残置物の整理<span class="en">CLEAR-OUT</span></h3>
+        <h3>残置物の搬出手配<span class="en">CLEAR-OUT</span></h3>
         <div><p><span class="svc-when">媒介開始前・相続物件</span>売主様のご確認後、残置物の整理と搬出を手配します。収集・運搬は許可を持つ事業者が担当します。</p>
           <ul><li>売主様確認済みの残置物の搬出手配</li><li>物置・倉庫内の残置物の搬出手配</li></ul></div>
       </div>
