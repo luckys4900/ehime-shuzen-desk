@@ -8,13 +8,15 @@
 
 ## 機能上の制約（未設定であることによるもの）
 
-4. **フォームは送信されません（`formEndpoint` 未設定）。** 送信ボタンを押すと「送信されていません」と明示し、受付番号の表示例を示します。
-5. **電話CTAはありません（`phone` 未設定）。** 架空の番号は入れていません。設定すると自動で表示されます（QAで確認済み）。
-6. **アクセス解析は未導入（`ga4MeasurementId` 未設定）。** イベント（hero_cta_click / sticky_cta_click / form_start / service_select / photo_upload / form_submit / phone_click）は実装済みで、ID 設定後に GA4 へ送られます。
+4. **2サイトとも、フォームは送信されません（`formEndpoint` 未設定）。** 送信ボタンを押すと「送信されていません」と明示し、受付番号の表示例を示します。
+5. **電話CTA・運営者情報はありません（`operator` 未設定）。** 架空の番号・会社名は入れていません。`site.config.json` の `operator.phone` 等を設定すると、両サイトに自動で表示されます（QAで確認済み）。
+6. **アクセス解析は未導入（`ga4MeasurementId` 未設定）。** イベント（hero_cta_click / cta_click / sticky_cta_click / form_start / service_select / photo_upload / form_submit / phone_click / hub_select）は実装済みで、すべてに `site_type`（repair / sale_support）が付きます。ID 設定後に GA4 へ送られます。GA4 側で `site_type` をカスタムディメンションに登録する作業が必要です。
 7. **運営者情報がなく、個人情報の取扱いは記載案です。**
 8. **自動返信メール・reCAPTCHA はありません。** スパム対策は隠し項目（honeypot）とバックエンドの入力検証のみ。
 9. **写真は送信前にブラウザで長辺1600pxの JPEG に縮小します。** 縮小できない形式（一部の HEIC 等）は元のまま送るため、Apps Script の受信上限（約50MB）に注意が必要です。
 10. **デモ環境は検索エンジンに載らない設定です（noindex）。**
+11. **2サイトは同じドメインのサブディレクトリです。** 独立したドメインで運用する場合は、`build.mjs` の `SITE_URL` とサイトの `slug` を見直してください。
+12. **愛媛修繕デスクの業種別ページ（/repair/kanri/ 等）は v2 の内容をそのまま復元しています。** 本文の約束事項（写真での完了報告、見積の内訳など）は `business-assumptions.md` の要確認事項です。
 
 ## 本番化で必要な作業
 

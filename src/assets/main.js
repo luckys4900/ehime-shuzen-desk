@@ -1,12 +1,15 @@
-/* 売却前おまかせデスク — UI scripts */
+/* 愛媛修繕デスク・売却前おまかせデスク — 共通 UI スクリプト（2サイトで共有） */
 (function () {
   'use strict';
 
   /* ---------- 計測：GA4（gtag）や dataLayer があれば送り、なければ何もしない ----------
      計測ツールを後から入れても、ここを変えずにイベントが届くようにしている。
      すべてのイベントは document の 'osd:track' イベントとしても発行する（検証・他ツール接続用）。 */
+  // どちらのサイトで起きたイベントかを必ず付ける（body の data-site-type / data-business-line）
+  var SITE_TYPE = document.body.getAttribute('data-site-type') || '';
+  var BUSINESS_LINE = document.body.getAttribute('data-business-line') || '';
   function track(name, params) {
-    params = params || {};
+    params = Object.assign({ site_type: SITE_TYPE, business_line: BUSINESS_LINE }, params || {});
     try {
       if (typeof window.gtag === 'function') window.gtag('event', name, params);
       else if (Array.isArray(window.dataLayer)) window.dataLayer.push(Object.assign({ event: name }, params));
@@ -21,6 +24,24 @@
     if (a.getAttribute('data-track-pos')) p.position = a.getAttribute('data-track-pos');
     track(a.getAttribute('data-track'), p);
   });
+
+  /* ---------- 流入元：営業メールなどで送るURLの utm_* / ref と参照元を、セッションの最初の1回だけ記録する ----------
+     案件相談の送信データ（entry）に含め、どの営業送付から案件化したかを台帳で追えるようにする。 */
+  var ENTRY_KEY = 'osd-entry-v1';
+  function entryInfo() {
+    var st; try { st = window.sessionStorage; } catch (e) { st = null; }
+    var saved = null;
+    try { saved = st && st.getItem(ENTRY_KEY); } catch (e) { saved = null; }
+    if (saved) return saved;
+    var q = new URLSearchParams(location.search);
+    var parts = [];
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ref'].forEach(function (k) { if (q.get(k)) parts.push(k + '=' + q.get(k).slice(0, 80)); });
+    var ref = document.referrer && document.referrer.indexOf(location.origin) !== 0 ? document.referrer.slice(0, 200) : '';
+    var v = [parts.join('&') || '(パラメータなし)', 'landing=' + location.pathname, ref ? 'referrer=' + ref : ''].filter(Boolean).join(' | ');
+    try { if (st) st.setItem(ENTRY_KEY, v); } catch (e) { /* noop */ }
+    return v;
+  }
+  var ENTRY = entryInfo();
 
   /* ---------- mobile navigation ---------- */
   var menuBtn = document.querySelector('.menu-btn');
@@ -363,7 +384,7 @@
      ===================================================================== */
   var caseForm = document.getElementById('case-form');
   if (caseForm) (function (form) {
-    var DRAFT_KEY = 'osd-case-draft-v1';
+    var DRAFT_KEY = 'osd-case-draft-v1-' + (BUSINESS_LINE || 'case');  // サービスごとに下書きを分ける
     var PHOTO_MAX = 10;
     var PHOTO_RAW_MAX = 20 * 1024 * 1024;  // 元ファイルの上限（スマホ写真を想定）
     var PHOTO_EDGE = 1600;                 // 送信前に長辺1600pxへ縮小する
@@ -396,7 +417,7 @@
         return msg;
       }
       if (name === 'services') {
-        var m = form.querySelector('[name="services"]:checked') ? '' : '相談したい作業を1つ以上選んでください。';
+        var m = form.querySelector('[name="services"]:checked') ? '' : (form.getAttribute('data-services-msg') || '相談したい内容を1つ以上選んでください。');
         setError(form, 'services', m);
         return m;
       }
@@ -502,6 +523,10 @@
     }
     function clearDraft() { var st = storage(); if (st) try { st.removeItem(DRAFT_KEY); } catch (e) { /* noop */ } }
     if (restoreDraft()) document.getElementById('draft-note').hidden = false;
+    // 業種別ページからの導線（?seg=kanri 等）は、業種の選択肢を初期選択にする（未選択のときだけ）
+    var seg = new URLSearchParams(location.search).get('seg');
+    var segInput = seg && form.querySelector('[data-seg="' + seg.replace(/[^a-z]/g, '') + '"]');
+    if (segInput && !form.querySelector('[name="' + segInput.name + '"]:checked')) segInput.checked = true;
     document.getElementById('draft-clear').addEventListener('click', function () {
       form.reset(); photos = []; renderPhotos(); clearDraft(); go(1, { silent: true });
       form.querySelectorAll('.is-invalid').forEach(function (w) { w.classList.remove('is-invalid'); });
@@ -626,10 +651,14 @@
       if (btn.disabled) return;
       var fd = new FormData(form);
       var payload = formDataToObject(fd);
-      payload.services = fd.getAll('services');
+      // 複数選択の項目は、選択数に関わらず配列で送る
+      form.querySelectorAll('input[type="checkbox"][name]').forEach(function (el) { payload[el.name] = fd.getAll(el.name); });
       payload.tel = toHalfWidth(form.tel.value).replace(/\D/g, '');
       payload.email = form.email.value.trim();
       payload.formType = 'case';
+      payload.business_line = BUSINESS_LINE;  // repair_desk / sale_support：どちらのサイトの案件かを台帳に残す
+      payload.site_type = SITE_TYPE;
+      payload.entry = ENTRY;
       payload.page = location.href;
       payload.photos = photos.map(function (p) { return { name: p.name, dataUrl: p.dataUrl }; });
       delete payload.website;

@@ -31,17 +31,19 @@ export function makeEnv() {
   vm.createContext(env);
   vm.runInContext(readFileSync(new URL('../backend/google-apps-script/Code.gs', import.meta.url), 'utf8'), env);
   const post = (obj) => JSON.parse(env.doPost({ postData: { contents: JSON.stringify(obj) } }).text);
-  return { env, post, rows, files, mails, props };
+  // 台帳の列は位置ではなく列名で参照する（列の追加に強くするため）
+  const col = (row, header) => row[env.CASE_HEADERS.indexOf(header)];
+  return { env, post, rows, files, mails, props, col };
 }
 
 if (process.argv[1] === new URL(import.meta.url).pathname) runTests();
 function runTests() {
 const png = 'data:image/jpeg;base64,' + Buffer.from('fake-jpeg-bytes').toString('base64');
-const base = { formType: 'case', company: '松山不動産', name: '山田', tel: '0899123456', email: '', area: '松山市', services: ['残置物・片付け', '空室清掃'], note: '相続物件', page: 'https://example/#form' };
+const base = { formType: 'case', business_line: 'sale_support', company: '松山不動産', name: '山田', tel: '0899123456', email: '', area: '松山市', services: ['残置物・片付け', '空室清掃'], note: '相続物件', page: 'https://example/#form' };
 let passed = 0;
 const t = (name, fn) => { fn(); passed++; console.log('ok -', name); };
 
-const { post, rows, files, mails, props } = makeEnv();
+const { post, rows, files, mails, props, col } = makeEnv();
 t('valid case returns sequential case number', () => {
   const r1 = post({ ...base, photos: [{ name: 'a.jpg', dataUrl: png }, { name: 'b.jpg', dataUrl: png }] });
   assert.equal(r1.ok, true);
@@ -52,7 +54,30 @@ t('valid case returns sequential case number', () => {
 t('case row is saved with all fields', () => {
   assert.equal(rows['案件'].length, 2);
   const r = rows['案件'][0];
-  assert.equal(r[2], '松山不動産'); assert.equal(r[6], '松山市'); assert.equal(r[11], '残置物・片付け、空室清掃'); assert.equal(r[13], 2); assert.equal(r[16], '未対応');
+  assert.equal(col(r, '会社名'), '松山不動産'); assert.equal(col(r, '物件エリア'), '松山市'); assert.equal(col(r, '相談内容'), '残置物・片付け、空室清掃');
+  assert.equal(col(r, '写真枚数'), 2); assert.equal(col(r, '対応状況'), '未対応');
+  assert.equal(col(r, 'サービス'), '売却前おまかせデスク'); assert.equal(col(r, 'サービス区分'), 'sale_support');
+});
+t('repair desk cases are labelled and keep repair-only fields', () => {
+  const r = post({ ...base, business_line: 'repair_desk', company: '松山管理', services: ['建具・設備まわり'], reason: ['繁忙で手が回らない', '対応外の工種'], urgency: '早めに対応したい', segment: '管理会社', entry: 'utm_source=mail | landing=/repair/' });
+  assert.equal(r.ok, true);
+  const row = rows['案件'].at(-1);
+  assert.equal(col(row, 'サービス'), '愛媛修繕デスク'); assert.equal(col(row, 'サービス区分'), 'repair_desk');
+  assert.equal(col(row, '普段の施工会社で対応できない理由'), '繁忙で手が回らない、対応外の工種'); assert.equal(col(row, '緊急度'), '早めに対応したい');
+  assert.equal(col(row, '業種'), '管理会社'); assert.equal(col(row, '流入元'), 'utm_source=mail | landing=/repair/');
+  assert.match(mails.at(-1).subject, /【案件相談｜愛媛修繕デスク】/);
+  rows['案件'].pop(); mails.pop();
+});
+t('unknown business line is still saved, marked as unknown', () => {
+  const r = post({ ...base, business_line: 'evil' });
+  assert.equal(r.ok, true);
+  assert.equal(col(rows['案件'].at(-1), 'サービス区分'), 'unknown');
+  rows['案件'].pop(); mails.pop();
+});
+t('sales KPI columns exist for manual tracking', () => {
+  const headers = makeEnv().env.CASE_HEADERS;
+  assert.equal(rows['案件'][0].length, headers.length);
+  for (const h of ['見積日', '見積金額', '成約', '成約金額', '粗利', '再依頼']) assert.ok(headers.includes(h), h);
 });
 t('photos are stored in a per-case folder', () => {
   assert.equal(files.length, 2);
@@ -88,7 +113,7 @@ t('partner registration is stored in its own sheet', () => {
   assert.equal(rows['協力事業者'].length, 1);
 });
 t('sequence counter is stored per day', () => {
-  assert.ok(Object.keys(props).some((k) => /^SEQ_MAT_\d{8}$/.test(k) && props[k] === '2'));
+  assert.ok(Object.keys(props).some((k) => /^SEQ_MAT_\d{8}$/.test(k) && props[k] === '4'));
 });
 t('broken JSON returns an error, not an exception', () => {
   const { env } = makeEnv();

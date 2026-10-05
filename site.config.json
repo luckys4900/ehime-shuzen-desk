@@ -1,8 +1,13 @@
 {
   "_comment": "本番投入前に人間が設定する項目。未設定（null）の項目はサイトに表示されません。架空の値は入れないでください。",
-  "serviceName": "売却前おまかせデスク",
-  "phone": null,
-  "phoneHours": null,
+  "operator": {
+    "_comment": "運営者情報。設定した項目だけが両サイトのフッターに表示されます。phone を設定すると「電話で相談」ボタンも表示されます。",
+    "name": null,
+    "address": null,
+    "phone": null,
+    "phoneHours": null,
+    "email": null
+  },
   "formEndpoint": null,
   "ga4MeasurementId": null,
   "casePrefix": "MAT"

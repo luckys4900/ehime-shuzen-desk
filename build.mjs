@@ -1,8 +1,11 @@
-// 売却前おまかせデスク（愛媛修繕デスク）静的サイトビルド
-// src/pages/*.html（本文）に共通 header/footer を合成し dist/ へ出力する。
+// 愛媛修繕デスク／売却前おまかせデスク 静的サイトビルド
+// 営業目的の異なる2つのサービスサイトを、共通の部品（ヘッダー・フッター・フォーム・計測・写真）から生成する。
+//   /repair/        愛媛修繕デスク（法人向け 建物修繕の第二施工店）       src/sites/repair/
+//   /sale-support/  売却前おまかせデスク（不動産会社向け 売却前の手配窓口） src/sites/sale/
+//   /               2つの窓口への分岐ページと共通ページ（協力事業者・個人情報・写真クレジット） src/pages/
 // GitHub Pages のサブパス配信に対応するため、全リンクは相対パスで生成する。
 // 本番公開時は PRODUCTION=1 でビルドすると、検索エンジン向けの noindex を外す。
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -14,50 +17,82 @@ const DIST = process.env.OUT_DIR || join(ROOT, 'dist');
 const SITE_URL = 'https://luckys4900.github.io/ehime-shuzen-desk/';
 const BASE_PATH = new URL(SITE_URL).pathname;
 // 検証用に SITE_CONFIG_OVERRIDE（JSON）で設定を一時的に上書きできる（本番ビルドでは使わない）
-const CONFIG = Object.assign(JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'site.config.json'), 'utf8')), process.env.SITE_CONFIG_OVERRIDE ? JSON.parse(process.env.SITE_CONFIG_OVERRIDE) : {});
-const SITE_NAME = CONFIG.serviceName || '売却前おまかせデスク';
+const CONFIG = Object.assign(JSON.parse(readFileSync(join(ROOT, 'site.config.json'), 'utf8')), process.env.SITE_CONFIG_OVERRIDE ? JSON.parse(process.env.SITE_CONFIG_OVERRIDE) : {});
 const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
-const CTA_LABEL = '写真を送って案件相談';
-const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応';
-// ヒーロー以外の補足（最後の相談案内・フッター）
-const CTA_SUB2 = '不動産会社様向け ｜ 既存業者との併用OK ｜ 松山市・近郊';
-// 区切りの位置でだけ改行させる
-const subHtml = (t) => t.split(' ｜ ').map((x) => `<span class="nw">${x}</span>`).join('<span class="sub-sep"> ｜ </span>');
-const CTA_SUB_HTML = subHtml(CTA_SUB);
-const CTA_SUB2_HTML = subHtml(CTA_SUB2);
-// 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
-const CTALINE_TEXT = { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
-// 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
-const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// 運営者情報：設定されている項目だけを表示する（未設定の項目を架空の値で埋めない）
+const OP = Object.fromEntries(Object.entries(CONFIG.operator || {}).filter(([k, v]) => !k.startsWith('_') && v !== null && String(v).trim() !== '').map(([k, v]) => [k, String(v).trim()]));
+const PHONE = OP.phone || '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
 
+// 区切りの位置でだけ改行させる
+const subHtml = (t) => t.split(' ｜ ').map((x) => `<span class="nw">${x}</span>`).join('<span class="sub-sep"> ｜ </span>');
+
+/* ---------- 2つのサービス（表側の文言・色・導線はここで分ける） ---------- */
+const SITES = {
+  repair: {
+    dir: 'repair', slug: 'repair', name: '愛媛修繕デスク', sub: 'EHIME SHUZEN DESK', subJa: false,
+    theme: 'theme-repair', siteType: 'repair', businessLine: 'repair_desk', themeColor: '#17283f', og: 'og-repair.png',
+    cta: '修繕案件を相談する', sticky: '修繕案件を相談する', stickyShort: '修繕案件を相談',
+    ctaSub: '法人・事業者様専用 ｜ いつもの施工会社との併用OK ｜ 松山市・近郊',
+    ctaline: { concept: '普段の工事はそのままで。手が回らない案件だけ、ご相談ください。', services: '写真と物件情報から、対応できる施工パートナーを確認します。', flow: '写真と物件情報だけで、ご相談いただけます。' },
+    nav: [{ href: 'kanri/', label: '管理会社様' }, { href: 'kaitori/', label: '買取再販事業者様' }, { href: 'shop/', label: '店舗・施設運営者様' }, { href: '#flow', label: 'ご相談の流れ' }],
+    footerText: '松山周辺の法人・事業者様向け<br>建物修繕の相談窓口',
+    step1: '修繕内容', step2: '写真・物件情報',
+    photoHint: '修繕箇所に近づいた写真と、部屋や場所の全体が分かる写真があると判断しやすくなります。',
+    services: '工事内容を1つ以上選んでください。',
+  },
+  sale: {
+    dir: 'sale', slug: 'sale-support', name: '売却前おまかせデスク', sub: '松山周辺の不動産会社様向け', subJa: true,
+    theme: 'theme-sale', siteType: 'sale_support', businessLine: 'sale_support', themeColor: '#1e3d38', og: 'og-sale.png',
+    cta: '写真を送って案件相談', sticky: '写真を送って案件相談', stickyShort: '写真を送って相談',
+    ctaSub: '不動産会社様向け ｜ 既存業者との併用OK ｜ 松山市・近郊',
+    heroSub: '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応',
+    ctaline: { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' },
+    nav: [{ href: '#services', label: '対応内容' }, { href: '#examples', label: 'ご相談例' }, { href: '#flow', label: '利用の流れ' }, { href: '#faq', label: 'よくある質問' }],
+    footerText: '松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口',
+    step1: '売却工程・作業', step2: '写真・物件情報',
+    photoHint: '全体が分かる写真と、気になる箇所の写真があると整理しやすくなります。',
+    services: '必要な作業を1つ以上選んでください。',
+  },
+  // 分岐ページと共通ページ（協力事業者の募集・個人情報・写真クレジット）
+  hub: {
+    dir: null, slug: '', name: '愛媛修繕デスク・売却前おまかせデスク', sub: '松山周辺の事業者様向け 相談窓口', subJa: true,
+    theme: 'theme-hub', siteType: 'hub', businessLine: '', themeColor: '#1e3d38', og: 'og.png',
+    nav: [{ href: 'repair/', label: '愛媛修繕デスク', root: true }, { href: 'sale-support/', label: '売却前おまかせデスク', root: true }],
+    footerText: '松山周辺の法人・事業者様、不動産会社様向けの相談窓口',
+  },
+};
+
 const pages = [
-  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者がいてもOK。写真を送るだけでご相談いただけます。' },
-  { slug: 'partner', file: 'partner.html', title: '協力事業者の募集｜売却前おまかせデスク', description: '松山市・近郊で、残置物整理・清掃・草刈り・小修繕などに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
-  { slug: 'credits', file: 'credits.html', title: '写真クレジット｜売却前おまかせデスク', description: '売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
-  { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜売却前おまかせデスク', description: '売却前おまかせデスクの案件相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
+  { site: 'hub', slug: '', file: 'pages/hub.html', title: '愛媛の不動産・建物事業者向け 2つの相談窓口｜愛媛修繕デスク・売却前おまかせデスク', description: '建物修繕の第二施工店「愛媛修繕デスク」と、不動産会社向けの売却前の手配窓口「売却前おまかせデスク」のご案内です。' },
+  { site: 'repair', slug: 'repair', home: true, file: 'sites/repair/pages/index.html', label: '愛媛修繕デスク トップ', title: '愛媛修繕デスク｜松山周辺の法人向け 建物修繕の相談窓口', description: '松山市・松前町・伊予市・東温市・砥部町の管理会社様、買取再販事業者様、店舗・施設運営者様向けの建物修繕の相談窓口。いつもの施工会社が手いっぱいの時に、写真と物件情報から修繕のご相談を受け付けます。' },
+  { site: 'repair', slug: 'repair/kanri', file: 'sites/repair/pages/kanri.html', label: '愛媛修繕デスク 管理会社様', title: '管理会社様へ｜愛媛修繕デスク', description: '退去後の原状回復、入居中の小修繕など、賃貸管理の修繕手配を写真から相談できる、もう一つの修繕窓口。いつもの施工会社との取引はそのままにご利用いただけます。' },
+  { site: 'repair', slug: 'repair/kaitori', file: 'sites/repair/pages/kaitori.html', label: '愛媛修繕デスク 買取再販事業者様', title: '買取再販事業者様へ｜愛媛修繕デスク', description: '仕入れ後の内装補修や販売前の手直しなど、買取再販物件の修繕を写真から相談できる窓口。工事範囲ごとに内訳の分かる見積をご案内します。' },
+  { site: 'repair', slug: 'repair/shop', file: 'sites/repair/pages/shop.html', label: '愛媛修繕デスク 店舗・施設運営者様', title: '店舗・施設運営者様へ｜愛媛修繕デスク', description: '店舗・事務所・施設の床や壁の補修、退店時の原状回復など。営業への影響を確認しながら、作業日時を含めてご相談いただけます。' },
+  { site: 'sale', slug: 'sale-support', home: true, file: 'sites/sale/pages/index.html', label: '売却前おまかせデスク トップ', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などの手配をまとめて相談。いつもの業者はそのままで、写真を送るだけでご相談いただけます。' },
+  { site: 'hub', slug: 'partner', file: 'pages/partner.html', label: '協力事業者の募集', title: '協力事業者の募集｜愛媛修繕デスク・売却前おまかせデスク', description: '松山市・近郊で、建物の修繕や、売却前の残置物整理・清掃・草刈りなどに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
+  { site: 'hub', slug: 'credits', file: 'pages/credits.html', label: '写真クレジット', title: '写真クレジット｜愛媛修繕デスク・売却前おまかせデスク', description: '愛媛修繕デスク・売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
+  { site: 'hub', slug: 'privacy', file: 'pages/privacy.html', label: '個人情報の取扱い', title: '個人情報の取扱い｜愛媛修繕デスク・売却前おまかせデスク', description: '愛媛修繕デスク・売却前おまかせデスクの相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
 ];
-// 旧ページ（前バージョンの業種別ページ・問い合わせページ）は、リンク切れを防ぐため新しいページへ転送する
+// 旧URL：前バージョンの業種別ページ・問い合わせページは愛媛修繕デスクへ転送する（リンク切れを防ぐ）
+// 旧トップのページ内リンク（#form など）は、分岐ページで売却前おまかせデスクへ転送する（src/pages/hub.html）
 const redirects = [
-  { slug: 'kanri', to: '' },
-  { slug: 'kaitori', to: '' },
-  { slug: 'shop', to: '' },
-  { slug: 'contact', to: '#form' },
+  { slug: 'kanri', to: 'repair/kanri/' },
+  { slug: 'kaitori', to: 'repair/kaitori/' },
+  { slug: 'shop', to: 'repair/shop/' },
+  { slug: 'contact', to: 'repair/#form', keepType: true },
 ];
 
-const partial = (name) => readFileSync(join(SRC, 'partials', name), 'utf8');
-const PARTIALS = { cta: partial('cta.html'), flow: partial('flow.html'), ctaline: partial('ctaline.html') };
-const OG = JSON.parse(readFileSync(join(SRC, 'assets', 'og.json'), 'utf8'));
-const PHOTOS = existsSync(join(SRC, 'assets', 'photos', 'photos.json')) ? JSON.parse(readFileSync(join(SRC, 'assets', 'photos', 'photos.json'), 'utf8')) : {};
-
-// ページ内の主要セクションへの目次
-const nav = [
-  { href: '#services', label: '対応内容' },
-  { href: '#examples', label: 'ご相談例' },
-  { href: '#flow', label: '利用の流れ' },
-  { href: '#faq', label: 'よくある質問' },
-];
+const read = (p) => readFileSync(join(SRC, p), 'utf8');
+const partial = (site, name) => {
+  const own = site.dir && join(SRC, 'sites', site.dir, 'partials', name);
+  return own && existsSync(own) ? readFileSync(own, 'utf8') : read(join('partials', name));
+};
+const OG = JSON.parse(read('assets/og.json'));
+const PHOTOS = existsSync(join(SRC, 'assets', 'photos', 'photos.json')) ? JSON.parse(read('assets/photos/photos.json')) : {};
 
 // 写真：{{photo:name|代替テキスト|追加クラス|キャプション|eager}} は <figure>、{{img:name|代替テキスト|sizes|eager}} は <img> に展開する
 function imgTag(base, name, alt, sizes, eager) {
@@ -76,25 +111,23 @@ function img(base, spec) {
   const [name, alt = '', sizes = '100vw', eager = ''] = spec.split('|');
   return imgTag(base, name, alt, sizes, eager);
 }
-const PAGE_LABEL = { 'index.html': 'トップページ', 'partner.html': '協力事業者の募集ページ', 'cta.html': 'トップページ末尾のご相談案内（背景）' };
+
+/* ---------- 写真クレジット（実際に使っている写真だけを、使用箇所つきで掲載） ---------- */
 function photoUsage() {
   const used = {};
-  const files = [...pages.map((p) => ['pages', p.file]), ['partials', 'cta.html'], ['partials', 'flow.html']];
-  for (const [dir, file] of files) {
-    const src = readFileSync(join(SRC, dir, file), 'utf8');
-    for (const m of src.matchAll(/\{\{(?:photo|img):(\w+)/g)) {
-      (used[m[1]] ||= new Set()).add(PAGE_LABEL[file] || file);
-    }
-  }
+  const add = (src, label) => { for (const m of src.matchAll(/\{\{(?:photo|img):(\w+)/g)) (used[m[1]] ||= new Set()).add(label); };
+  for (const p of pages) add(read(p.file), p.label || 'トップページ');
+  for (const key of ['repair', 'sale']) add(partial(SITES[key], 'cta.html'), `${SITES[key].name} 末尾のご相談案内（背景）`);
   return used;
 }
 function creditsHtml(base) {
   const used = photoUsage();
-  const rows = Object.entries(PHOTOS).filter(([name]) => used[name] || OG.photo === name).map(([name, p]) => {
+  const ogs = Object.values(OG);
+  const rows = Object.entries(PHOTOS).filter(([name]) => used[name] || ogs.some((o) => o.photo === name)).map(([name, p]) => {
     const isPexels = p.source === 'pexels';
     const id = isPexels ? (p.page.match(/photo\/(\d+)/) || [])[1] : '';
     const where = [...(used[name] || [])];
-    if (OG.photo === name) where.push('SNS共有用画像（OGP）');
+    if (ogs.some((o) => o.photo === name)) where.push('SNS共有用画像（OGP）');
     return `<li class="credit">
   <img src="${base}assets/photos/${name}-s.jpg" width="200" height="150" alt="" loading="lazy" decoding="async">
   <dl>
@@ -106,55 +139,83 @@ function creditsHtml(base) {
   </dl>
 </li>`;
   }).join('\n');
-  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。売却前おまかせデスクの作業事例ではありません。</p>`;
+  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。愛媛修繕デスク・売却前おまかせデスクの施工・作業事例ではありません。</p>`;
 }
 
-const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
-  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#c8662f"/></svg>
-  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">松山周辺の不動産会社様向け</span></span>
+/* ---------- 共通部品：ロゴ・ヘッダー・フッター ---------- */
+const logo = (site, href) => `<a class="logo${site.siteType === 'hub' ? ' logo--hub' : ''}" href="${href || './'}" aria-label="${site.name} トップページ">
+  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" class="logo__door"/></svg>
+  <span class="logo__text"><span class="logo__name">${site.name}</span><span class="logo__sub${site.subJa ? '' : ' logo__sub--en'}">${site.sub}</span></span>
 </a>`;
 
 const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="${track}">電話で相談</a>` : '';
 
-function header(base, current) {
-  const items = nav.map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
+function header(site, root, siteBase) {
+  const items = site.nav.map((n) => `<li><a href="${n.root ? root : siteBase}${n.href}">${n.label}</a></li>`).join('');
+  const cta = site.cta ? `${phoneLink('gnav__tel', 'header')}
+      <a class="btn btn--primary gnav__cta" href="${siteBase}#form" data-track="cta_click" data-track-pos="header">${site.cta}</a>` : '';
   return `<a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
   <div class="site-header__inner">
-    ${logo(base)}
+    ${logo(site, siteBase || './')}
     <nav class="gnav" id="gnav" aria-label="メインメニュー">
       <ul class="gnav__list">${items}</ul>
-      ${phoneLink('gnav__tel', 'header')}
-      <a class="btn btn--primary gnav__cta" href="${base}#form" data-track="cta_click" data-track-pos="header">${CTA_LABEL}</a>
+      ${cta}
     </nav>
     <button class="menu-btn" type="button" aria-controls="gnav" aria-expanded="false"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">メニュー</span></button>
   </div>
 </header>`;
 }
 
-function footer(base, slug) {
-  const items = [{ href: '', label: 'トップページ' }, { href: '#form', label: '案件相談フォーム' }, { href: 'partner/', label: '協力事業者の募集' }, { href: 'privacy/', label: '個人情報の取扱い' }, { href: 'credits/', label: '写真クレジット' }]
-    .map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
-  const mobile = slug === 'partner'
-    ? `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`
-    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">${PHONE ? '写真を送って相談' : CTA_LABEL}</a>`;
+function operatorHtml() {
+  if (!Object.keys(OP).length) return '';
+  const rows = [
+    OP.name && `<dt>運営</dt><dd>${esc(OP.name)}</dd>`,
+    OP.address && `<dt>所在地</dt><dd>${esc(OP.address)}</dd>`,
+    OP.phone && `<dt>電話</dt><dd><a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${esc(OP.phone)}</a>${OP.phoneHours ? `（${esc(OP.phoneHours)}）` : ''}</dd>`,
+    OP.email && `<dt>メール</dt><dd><a href="mailto:${esc(OP.email)}">${esc(OP.email)}</a></dd>`,
+  ].filter(Boolean).join('');
+  return rows ? `<dl class="site-footer__op">${rows}</dl>` : '';
+}
+
+function footer(site, root, siteBase, page) {
+  const isPartner = page.slug === 'partner';
+  const items = (site.siteType === 'hub'
+    ? [{ href: 'repair/', label: '愛媛修繕デスク' }, { href: 'sale-support/', label: '売却前おまかせデスク' }, { href: 'partner/', label: '協力事業者の募集' }, { href: 'privacy/', label: '個人情報の取扱い' }, { href: 'credits/', label: '写真クレジット' }].map((n) => ({ ...n, href: root + n.href }))
+    : [{ href: siteBase, label: 'トップページ' }, ...(site.siteType === 'repair' ? site.nav.slice(0, 3).map((n) => ({ href: siteBase + n.href, label: n.label })) : []), { href: siteBase + '#form', label: '案件相談フォーム' }, { href: root + 'partner/', label: '協力事業者の募集' }, { href: root + 'privacy/', label: '個人情報の取扱い' }, { href: root + 'credits/', label: '写真クレジット' }])
+    .map((n) => `<li><a href="${n.href || './'}">${n.label}</a></li>`).join('');
+  let mobile = '';
+  if (isPartner) mobile = `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`;
+  else if (site.cta) mobile = `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${siteBase}#form" data-track="sticky_cta_click">${PHONE ? site.stickyShort : site.sticky}</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
-      ${logo(base)}
-      <p>松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口</p>
+      ${logo(site, siteBase || './')}
+      <p>${site.footerText}</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB2_HTML}</p></div>`}
-      ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
+      ${site.cta && !isPartner ? `<div class="site-footer__cta"><a class="btn btn--primary" href="${siteBase}#form" data-track="cta_click" data-track-pos="footer">${site.cta}</a><p>${subHtml(site.ctaSub)}</p></div>` : ''}
+      ${operatorHtml()}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
   </div>
   <div class="container site-footer__note">
-    <p>本サイトは営業提案用のデモサイトです。運営者情報・連絡先・各種条件は、事業内容の確認を経て本番公開時に掲載します。</p>
-    <p><small>&copy; 2026 ${SITE_NAME}</small></p>
+    <p>${OP.name ? '' : '本サイトは営業提案用のデモサイトです。運営者情報・連絡先・各種条件は、事業内容の確認を経て本番公開時に掲載します。'}</p>
+    <p><small>&copy; 2026 ${OP.name ? esc(OP.name) : site.name}</small></p>
   </div>
 </footer>
-<div class="mobile-cta${PHONE && slug !== 'partner' ? ' mobile-cta--two' : ''}">${mobile}</div>`;
+${mobile ? `<div class="mobile-cta${PHONE && !isPartner ? ' mobile-cta--two' : ''}">${mobile}</div>` : ''}`;
+}
+
+/* ---------- 案件相談フォーム：共通のエンジンと枠に、サービスごとの質問を差し込む ---------- */
+function caseForm(site) {
+  return partial(site, 'case-form.html')
+    .replaceAll('{{step1_label}}', site.step1)
+    .replaceAll('{{step2_label}}', site.step2)
+    .replace('{{form_step1}}', partial(site, 'form-step1.html'))
+    .replace('{{form_step2}}', partial(site, 'form-step2.html'))
+    .replace('{{form_step3}}', existsSync(join(SRC, 'sites', site.dir, 'partials', 'form-step3.html')) ? partial(site, 'form-step3.html') : '')
+    .replaceAll('{{photo_hint}}', site.photoHint)
+    .replaceAll('{{services_msg}}', site.services);
 }
 
 // GA4 は測定IDが設定されている場合のみ読み込む（IDを自動生成しない）
@@ -164,18 +225,28 @@ const GA = CONFIG.ga4MeasurementId ? `<script async src="https://www.googletagma
 const RUNTIME_CONFIG = `<script>window.OSD_CONFIG=${JSON.stringify({ formEndpoint: CONFIG.formEndpoint || null, casePrefix: CONFIG.casePrefix || 'MAT' })};</script>`;
 
 function layout(page, body) {
-  const base = page.slug ? '../' : '';
+  const site = SITES[page.site];
+  const depth = page.slug ? page.slug.split('/').length : 0;
+  const root = '../'.repeat(depth);
+  const siteDepth = site.slug ? site.slug.split('/').length : 0;
+  const siteBase = '../'.repeat(depth - siteDepth);
   const canonical = SITE_URL + (page.slug ? page.slug + '/' : '');
-  const html = body
-    .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => PARTIALS.ctaline.replace('{{pos}}', pos || 'inline').replace('{{ctaline_text}}', CTALINE_TEXT[pos] || '写真と簡単な内容だけで相談できます。'))
-    .replace(/\{\{(cta|flow)\}\}/g, (_, k) => PARTIALS[k])
-    .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
-    .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(base, spec))
-    .replace('{{credits}}', creditsHtml(base))
-    .replaceAll('{{base}}', base)
-    .replaceAll('{{cta_label}}', CTA_LABEL)
-    .replaceAll('{{cta_sub}}', CTA_SUB_HTML).replaceAll('{{cta_sub2}}', CTA_SUB2_HTML)
-    .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${PHONE}）</a>` : '');
+  let html = body
+    .replace('{{case_form}}', () => caseForm(site))
+    .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => partial(site, 'ctaline.html').replace('{{pos}}', pos || 'inline').replace('{{ctaline_text}}', (site.ctaline || {})[pos] || '写真と簡単な内容だけで相談できます。'))
+    .replace(/\{\{(cta|flow)\}\}/g, (_, k) => partial(site, k + '.html'));
+  html = html
+    .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(root, spec))
+    .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(root, spec))
+    .replace('{{credits}}', () => creditsHtml(root))
+    .replaceAll('{{base}}', root)
+    .replaceAll('{{site}}', siteBase || './')
+    .replaceAll('{{cta_label}}', site.cta || '')
+    .replaceAll('{{cta_sub}}', subHtml(site.heroSub || site.ctaSub || ''))
+    .replaceAll('{{cta_sub2}}', subHtml(site.ctaSub || ''))
+    .replaceAll('{{operator_name}}', OP.name ? esc(OP.name) : '本サイトの運営者')
+    .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${esc(PHONE)}）</a>` : '');
+  const bodyClass = [page.home ? 'page-home' : `page-${(page.slug.split('/').pop()) || 'hub'}`, site.theme].join(' ');
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -185,39 +256,41 @@ function layout(page, body) {
 <meta name="description" content="${page.description}">
 ${PRODUCTION ? '' : '<meta name="robots" content="noindex, nofollow">\n'}<link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="${SITE_NAME}">
+<meta property="og:site_name" content="${site.name}">
 <meta property="og:title" content="${page.title}">
 <meta property="og:description" content="${page.description}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${SITE_URL}assets/og.png">
+<meta property="og:image" content="${SITE_URL}assets/${site.og}">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#1e3d38">
+<meta name="theme-color" content="${site.themeColor}">
 ${RUNTIME_CONFIG}
 ${GA}
 <meta name="build" content="${BUILD_ID}">
-<link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png">
+<link rel="icon" href="${root}assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${root}assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho+B1:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="${base}assets/style.css">
-<script src="${base}assets/main.js" defer></script>
+<link rel="stylesheet" href="${root}assets/style.css">
+<script src="${root}assets/main.js" defer></script>
 </head>
-<body class="page-${page.slug || 'home'}">
-${header(base, page.slug)}
+<body class="${bodyClass}" data-site-type="${site.siteType}"${site.businessLine ? ` data-business-line="${site.businessLine}"` : ''}>
+${header(site, root, siteBase)}
 <main id="main">
 ${html}
 </main>
-${footer(base, page.slug)}
+${footer(site, root, siteBase, page)}
 </body>
 </html>
 `;
 }
 
 // OGP 画像が現在の写真から作られているか確認（写真を差し替えたら node scripts/make-images.mjs を再実行）
-if (sha1(join(SRC, 'assets', 'photos', `${OG.photo}-l.jpg`)) !== OG.source || sha1(join(SRC, 'assets', 'og.png')) !== OG.og) {
-  throw new Error('og.png is stale: run `node scripts/make-images.mjs` after changing photos');
+for (const [file, o] of Object.entries(OG)) {
+  if (sha1(join(SRC, 'assets', 'photos', `${o.photo}-l.jpg`)) !== o.source || sha1(join(SRC, 'assets', file)) !== o.og) {
+    throw new Error(`${file} is stale: run \`node scripts/make-images.mjs\` after changing photos or OGP text`);
+  }
 }
 
 rmSync(DIST, { recursive: true, force: true });
@@ -225,30 +298,31 @@ mkdirSync(DIST, { recursive: true });
 cpSync(join(SRC, 'assets'), join(DIST, 'assets'), { recursive: true, filter: (p) => !/(photos|og)\.json$/.test(p) });
 
 for (const page of pages) {
-  const body = readFileSync(join(SRC, 'pages', page.file), 'utf8');
   const outDir = page.slug ? join(DIST, page.slug) : DIST;
   mkdirSync(outDir, { recursive: true });
-  writeFileSync(join(outDir, 'index.html'), layout(page, body));
+  writeFileSync(join(outDir, 'index.html'), layout(page, read(page.file)));
 }
 for (const r of redirects) {
   mkdirSync(join(DIST, r.slug), { recursive: true });
   const to = `../${r.to}`;
+  // 旧問い合わせページの ?type=kanri 等は、愛媛修繕デスクのフォームの業種の初期選択（?seg=）に引き継ぐ
+  const js = r.keepType
+    ? `var t=new URLSearchParams(location.search).get('type');location.replace(${JSON.stringify(to)}.replace('#form','')+(t?'?seg='+encodeURIComponent(t):'')+'#form');`
+    : `location.replace(${JSON.stringify(to)});`;
   writeFileSync(join(DIST, r.slug, 'index.html'), `<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<title>${SITE_NAME}</title><link rel="canonical" href="${SITE_URL}${r.to}">
+<title>このページは移動しました</title><link rel="canonical" href="${SITE_URL}${r.to}">
 <meta http-equiv="refresh" content="0; url=${to}">
-<script>location.replace(${JSON.stringify(to)});</script>
-</head><body><p>このページは移動しました。<a href="${to}">${SITE_NAME}のページへ</a></p></body></html>
+<script>${js}</script>
+</head><body><p>このページは移動しました。<a href="${to}">移動先のページへ</a></p></body></html>
 `);
 }
 
 // 404（GitHub Pages はルート直下の 404.html を任意パスで返すため、サイトのベースパスからの絶対パスで参照）
-const notFoundBody = readFileSync(join(SRC, 'pages', '404.html'), 'utf8');
-const nf = layout({ slug: '', title: 'ページが見つかりません｜売却前おまかせデスク', description: 'お探しのページは見つかりませんでした。' }, notFoundBody)
+const nf = layout({ site: 'hub', slug: '', title: 'ページが見つかりません｜愛媛修繕デスク・売却前おまかせデスク', description: 'お探しのページは見つかりませんでした。' }, read('pages/404.html'))
   .replace(/(href|src)="(?!https?:|\/|#|mailto:|tel:)([^"]*)"/g, `$1="${BASE_PATH}$2"`)
-  .replace(/href="#(?!main")([^"]+)"/g, `href="${BASE_PATH}#$1"`)
   .replaceAll(`${BASE_PATH}./`, BASE_PATH)
-  .replace('<body class="page-home">', '<body class="page-404">')
+  .replace('<body class="page-hub ', '<body class="page-404 ')
   .replace('<meta name="robots" content="noindex, nofollow">\n', '')
   .replace('<head>', '<head>\n<meta name="robots" content="noindex">');
 writeFileSync(join(DIST, '404.html'), nf);
@@ -264,4 +338,4 @@ writeFileSync(join(DIST, 'robots.txt'), PRODUCTION
   : `# 営業提案用デモのため、検索エンジンへの掲載を拒否しています（本番は PRODUCTION=1 でビルド）\nUser-agent: *\nDisallow: /\n`);
 writeFileSync(join(DIST, '.nojekyll'), '');
 
-console.log(`built ${pages.length} pages + 404 -> dist/ (${PRODUCTION ? 'production' : 'demo: noindex'})`);
+console.log(`built ${pages.length} pages + ${redirects.length} redirects + 404 -> dist/ (${PRODUCTION ? 'production' : 'demo: noindex'})`);

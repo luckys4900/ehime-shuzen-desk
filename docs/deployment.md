@@ -3,14 +3,19 @@
 ## 構成
 
 - 依存パッケージなしの静的サイト。`node build.mjs` で `src/` から `dist/` を生成します。
-- ページ：トップ（案件相談フォームを含む）/ 協力事業者の募集 / 個人情報の取扱い / 写真クレジット。旧ページ（/kanri /kaitori /shop /contact）はトップ（/contact は `#form`）へ転送するページを出力します。
+- ページ：
+  - `/repair/`（愛媛修繕デスク。案件相談フォームを含む）、`/repair/kanri/`・`/repair/kaitori/`・`/repair/shop/`（業種別）
+  - `/sale-support/`（売却前おまかせデスク。案件相談フォームを含む）
+  - `/`（2つの窓口への分岐ページ）、`/partner/`・`/privacy/`・`/credits/`（2サイト共通）
+- 旧URLの転送：`/kanri/` `/kaitori/` `/shop/` → `/repair/…/`、`/contact/` → `/repair/#form`（`?type=kanri` などは業種の初期選択 `?seg=` に引き継ぐ）。以前のトップ（売却前おまかせデスク）のページ内リンク `/#form` 等は、分岐ページから `/sale-support/#form` 等へ転送します。
 - 設定は `site.config.json`。未設定（null）の項目はサイトに出ません。
 
 | キー | 内容 | 未設定のとき |
 |---|---|---|
-| `phone` / `phoneHours` | 電話番号・受付時間 | 電話CTAを表示しない |
+| `operator.name` / `operator.address` / `operator.email` | 運営者名・所在地・メール（両サイトのフッターに表示。運営者名は個人情報の取扱いにも表示） | 表示しない（「本番公開時に掲載」と表示） |
+| `operator.phone` / `operator.phoneHours` | 電話番号・受付時間（両サイトの電話CTA・フッター） | 電話CTAを表示しない |
 | `formEndpoint` | フォームの送信先（Google Apps Script のウェブアプリURL） | デモ動作（送信せず、その旨と案件番号の表示例を出す） |
-| `ga4MeasurementId` | GA4 の測定ID（G-XXXX） | 計測タグを読み込まない |
+| `ga4MeasurementId` | GA4 の測定ID（G-XXXX）。2サイトで1つのプロパティを共有し、イベントの `site_type` で分ける | 計測タグを読み込まない |
 | `casePrefix` | 案件番号の接頭辞（デモ表示用。実際の採番はバックエンドの `CASE_PREFIX`） | MAT |
 
 ## 公開（GitHub Pages）

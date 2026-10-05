@@ -1,0 +1,38 @@
+          <div class="field field--stack" data-field="status">
+            <span class="field__label" id="status-label"><span class="opt">任意</span>いまの売却工程</span>
+            <div class="choices" role="radiogroup" aria-labelledby="status-label">
+              <label class="choice"><input type="radio" name="status" value="媒介前"><span>媒介前</span></label>
+              <label class="choice"><input type="radio" name="status" value="媒介中"><span>媒介中</span></label>
+              <label class="choice"><input type="radio" name="status" value="撮影前"><span>撮影前</span></label>
+              <label class="choice"><input type="radio" name="status" value="内覧前"><span>内覧前</span></label>
+              <label class="choice"><input type="radio" name="status" value="引き渡し前"><span>引き渡し前</span></label>
+              <label class="choice"><input type="radio" name="status" value="その他"><span>その他</span></label>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="services">
+            <span class="field__label" id="services-label"><span class="req">必須</span>売却準備で必要な作業（複数選択できます）</span>
+            <div>
+              <div class="choices choices--grid" role="group" aria-labelledby="services-label" aria-describedby="services-err">
+                <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物の搬出手配</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="空室清掃"><span>空室清掃</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="草刈り・外回り"><span>草刈り・外回り整理</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="小修繕"><span>小修繕</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="複数業者の手配"><span>複数業者の手配をまとめたい</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="その他"><span>その他の売却前作業</span></label>
+              </div>
+              <p class="field__err" id="services-err" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="timing">
+            <span class="field__label" id="timing-label"><span class="opt">任意</span>希望時期</span>
+            <div class="choices" role="radiogroup" aria-labelledby="timing-label">
+              <label class="choice"><input type="radio" name="timing" value="急ぎ"><span>急ぎ</span></label>
+              <label class="choice"><input type="radio" name="timing" value="1週間程度"><span>1週間程度</span></label>
+              <label class="choice"><input type="radio" name="timing" value="1か月以内"><span>1か月以内</span></label>
+              <label class="choice"><input type="radio" name="timing" value="時期未定"><span>時期未定</span></label>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="note">
+            <label class="field__label" for="note"><span class="opt">任意</span>補足説明</label>
+            <div><textarea class="textarea" id="note" name="note" rows="4" placeholder="例）相続した戸建。2階に家具が多く残っています。売主様は県外在住です。"></textarea></div>
+          </div>

@@ -1,18 +1,18 @@
 <section class="phero" aria-labelledby="page-title">
   <div class="container">
-    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">トップ</a></li><li aria-current="page">協力事業者の募集</li></ol></nav>
+    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">相談窓口のご案内</a></li><li aria-current="page">協力事業者の募集</li></ol></nav>
   </div>
   <div class="container phero__inner">
     <div>
       <span class="eyebrow">FOR PARTNERS</span>
-      <h1 id="page-title">松山市・近郊で、<br>売却前の作業に対応できる<br>事業者様を募集しています。</h1>
-      <p class="phero__lead">不動産会社様から受け付けた、売却前の残置物整理・清掃・草刈り・小修繕などのご相談について、作業内容と地域に合う事業者様へ、案件ごとにご依頼します。</p>
+      <h1 id="page-title">松山市・近郊で、<br>修繕や売却前の作業に<br>対応できる事業者様を<br class="br-sp">募集しています。</h1>
+      <p class="phero__lead">「愛媛修繕デスク」で法人・事業者様から受け付けた建物修繕のご相談と、「売却前おまかせデスク」で不動産会社様から受け付けた売却前の作業のご相談について、作業内容と地域に合う事業者様へ、案件ごとにご依頼します。</p>
       <div class="btn-row">
         <a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>
         <a class="more" href="#trades">募集している作業</a>
       </div>
     </div>
-    {{photo:akiya_ext|草が伸びた敷地に建つ空き家の外観|phero__photo|写真はイメージです|eager}}
+    {{photo:wall|壁紙をはがし、下地を補修している室内と脚立|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
@@ -23,7 +23,7 @@
     </div>
     <ol class="points">
       <li><h3>案件ごとに、受けるかどうかを選べます</h3><p>案件の内容・場所・時期をお伝えし、お引き受けいただけるかをご判断いただきます。お断りいただいても問題ありません。</p></li>
-      <li><h3>写真と情報を共有してから</h3><p>不動産会社様から受け取った写真と物件情報を共有します。必要に応じて現地確認のうえ、見積をご提出いただきます。</p></li>
+      <li><h3>写真と情報を共有してから</h3><p>ご相談者様から受け取った写真と物件情報を共有します。必要に応じて現地確認のうえ、見積をご提出いただきます。</p></li>
       <li><h3>条件は着手前に確認します</h3><p>作業内容・金額・日程・支払条件は、着手前に書面で確認します。条件が合わない場合は、無理にお願いすることはありません。</p></li>
     </ol>
     <div class="notice" data-space="l">
@@ -47,6 +47,8 @@
     <table class="trade-table">
       <caption class="sr-only">募集している作業と、許可・資格についての注意</caption>
       <tbody>
+        <tr><th scope="row">内装・原状回復</th><td>クロス・床の張替えや部分補修、退去後の原状回復など</td></tr>
+        <tr><th scope="row">建具・外まわり</th><td>建具の調整・交換、外壁や共用部の部分補修など</td></tr>
         <tr><th scope="row">残置物整理・片付け</th><td>家具・家電・生活用品の搬出、相続物件・空き家の室内整理<small>廃棄物の収集運搬には、一般廃棄物・産業廃棄物の収集運搬業許可など、法令で定められた許可が必要です。許可の範囲でのご依頼となります。不用品の買取を行う場合は古物商許可が必要です。</small></td></tr>
         <tr><th scope="row">ハウスクリーニング</th><td>空室の室内清掃、水まわりの清掃、内覧前の簡易清掃など</td></tr>
         <tr><th scope="row">草刈り・外回り</th><td>庭・空き地の草刈り、庭木の剪定、建物周辺の<span class="nw">片付けなど</span></td></tr>
@@ -100,6 +102,8 @@
           <span class="field__label" id="p_trades-label"><span class="req">必須</span>対応できる作業</span>
           <div>
             <div class="choices" role="group" aria-labelledby="p_trades-label" aria-describedby="p_trades-err">
+              <label class="choice"><input type="checkbox" name="p_trades" value="内装・原状回復"><span>内装・原状回復</span></label>
+              <label class="choice"><input type="checkbox" name="p_trades" value="建具・外まわり"><span>建具・外まわり</span></label>
               <label class="choice"><input type="checkbox" name="p_trades" value="残置物整理・片付け"><span>残置物整理・片付け</span></label>
               <label class="choice"><input type="checkbox" name="p_trades" value="ハウスクリーニング"><span>ハウスクリーニング</span></label>
               <label class="choice"><input type="checkbox" name="p_trades" value="草刈り・外回り"><span>草刈り・外回り</span></label>
