@@ -4,41 +4,22 @@
   </div>
   <div class="container phero__inner">
     <div>
-      <span class="phero__label">FOR PARTNERS</span>
+      <span class="eyebrow">FOR PARTNERS</span>
       <h1 id="page-title">松山周辺で、修繕の<br>施工パートナーを募集しています。</h1>
       <p class="phero__lead">管理会社様・買取再販事業者様・店舗や施設の運営者様から受け付けた修繕のご相談について、工種と地域に合う施工パートナーへ、案件ごとにご依頼します。</p>
       <div class="btn-row">
         <a class="btn btn--primary" href="#entry">協力会社として登録を相談する</a>
-        <a class="btn btn--ghost" href="#trades">募集している工種</a>
+        <a class="more" href="#trades">募集している工種</a>
       </div>
     </div>
-    <figure class="phero__fig">
-      <svg class="draw" viewBox="0 0 420 280" role="img" aria-labelledby="partner-fig">
-        <title id="partner-fig">案件の流れの図。事業者様からの相談を愛媛修繕デスクが受け付け、工種と地域に合う施工パートナーへ案件ごとに依頼します。</title>
-        <g font-weight="700" text-anchor="middle">
-          <rect x="20" y="104" width="110" height="72" fill="#1b2422"/>
-          <text x="75" y="136" fill="#fff" font-size="14">事業者様</text>
-          <text x="75" y="156" fill="#c6cfcc" font-size="11">相談・写真</text>
-          <rect x="160" y="104" width="110" height="72" fill="#f6e6da" stroke="#c25a22" stroke-width="2"/>
-          <text x="215" y="136" fill="#9e4716" font-size="14">愛媛修繕</text>
-          <text x="215" y="156" fill="#9e4716" font-size="14">デスク</text>
-          <g fill="#fff" stroke="#1f3a36" stroke-width="1.6"><rect x="300" y="30" width="100" height="56"/><rect x="300" y="112" width="100" height="56"/><rect x="300" y="194" width="100" height="56"/></g>
-          <g fill="#1f3a36" font-size="13"><text x="350" y="63">内装</text><text x="350" y="145">建具・設備</text><text x="350" y="227">外まわり</text></g>
-        </g>
-        <g fill="none" stroke="#1b2422" stroke-width="1.8">
-          <path d="M130 140 H160"/>
-          <path d="M270 140 H285 V58 H300 M285 140 H300 M285 140 V222 H300" stroke="#c25a22" stroke-dasharray="5 4"/>
-        </g>
-      </svg>
-      <figcaption><span class="legend__note">案件ごとに、工種と地域に合う施工パートナーへご依頼します（説明用の図）</span></figcaption>
-    </figure>
+    {{photo:partner|内装工事の道具と職人の手元|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
 <section class="section" aria-labelledby="how-title">
   <div class="container">
     <div class="sec-head">
-      <p class="sec-label">01 / How it works</p>
+      <span class="eyebrow">HOW IT WORKS</span>
       <h2 class="sec-title" id="how-title">ご依頼の考え方</h2>
     </div>
     <ol class="points">
@@ -60,7 +41,7 @@
   <div class="container">
     <div class="sec-head sec-head--split">
       <div>
-        <p class="sec-label">02 / Trades</p>
+        <span class="eyebrow">TRADES</span>
         <h2 class="sec-title" id="trades-title">募集している工種</h2>
       </div>
       <p class="sec-lead">以下の工種で、松山市・松前町・伊予市・東温市・砥部町を中心に対応いただける方を募集しています。</p>
@@ -86,10 +67,11 @@
 <section class="section" id="entry" aria-labelledby="entry-title">
   <div class="container">
     <div class="sec-head">
-      <p class="sec-label">03 / Entry</p>
+      <span class="eyebrow">ENTRY</span>
       <h2 class="sec-title" id="entry-title">協力会社としての登録相談</h2>
       <p class="sec-lead">まずは以下の内容をお送りください。内容を確認のうえ、担当者からご連絡します。</p>
     </div>
+    <div class="form-status" data-status-for="partner-form" role="alert" tabindex="-1" hidden></div>
     <form class="form js-form" id="partner-form" data-form="partner" novalidate>
       <fieldset class="fset">
         <legend class="fset__legend">会社・ご担当者様の情報</legend>
@@ -151,12 +133,11 @@
           <div><textarea class="textarea" id="p_note" name="p_note" rows="4" placeholder="稼働しやすい曜日・時期、得意な工事など"></textarea></div>
         </div>
       </fieldset>
-      <div class="consent" data-field="p_agree">
-        <label class="choice"><input type="checkbox" name="p_agree" id="p_agree" value="1" aria-describedby="p_agree-err"><span>入力した情報を、協力会社登録のご相談への対応に使用することに同意します。</span></label>
+      <div class="consent field-like" data-field="p_agree">
+        <div class="consent__row"><span class="req">必須</span><label class="choice"><input type="checkbox" name="p_agree" id="p_agree" value="1" required aria-describedby="p_agree-err"><span>入力した情報の取扱いについて同意します</span></label><a href="{{base}}privacy/" target="_blank" rel="noopener">個人情報の取扱い（別タブで開きます）</a></div>
         <p class="field__err" id="p_agree-err" aria-live="polite"></p>
       </div>
-      <div class="form__submit"><button class="btn btn--primary" type="submit">入力内容を確認して送信</button></div>
-      <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+      <div class="form__submit"><button class="btn btn--primary" type="submit">この内容で登録を相談する</button></div>
     </form>
   </div>
 </section>

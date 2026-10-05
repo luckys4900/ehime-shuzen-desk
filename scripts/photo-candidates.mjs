@@ -26,7 +26,12 @@ for (const [qi, q] of qs.entries()) {
       const url = site === 'unsplash'
         ? `https://unsplash.com/s/photos/${encodeURIComponent(q.replace(/ /g, '-'))}?license=free&orientation=landscape`
         : `https://www.pexels.com/search/${encodeURIComponent(q)}/?orientation=landscape`;
-      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      for (let w = 0; w < 30; w++) {
+        const t = await page.title().catch(() => '');
+        if (!/bot|moment|just a|checking|attention/i.test(t)) break;
+        await page.waitForTimeout(2000);
+      }
       await page.waitForTimeout(3500);
       for (let i = 0; i < 3; i++) { await page.mouse.wheel(0, 1400); await page.waitForTimeout(700); }
       const items = await page.evaluate((site) => {
@@ -37,7 +42,7 @@ for (const [qi, q] of qs.entries()) {
         });
       }, site);
       console.log(site, q, 'title=', (await page.title()).slice(0, 60), 'imgs=', items.length);
-      if (qi === 0) await page.screenshot({ path: `cand/_debug_${site}.jpg`, type: 'jpeg', quality: 50 });
+      if (qi < 2) await page.screenshot({ path: `cand/_debug_${site}_${qi}.jpg`, type: 'jpeg', quality: 50 });
       const seen = new Set();
       let k = 0;
       for (const it of items) {
@@ -50,6 +55,7 @@ for (const [qi, q] of qs.entries()) {
         if (await save(prefix, n, thumb, { q, source: site, page: it.href.split('?')[0], raw: base, alt: it.alt })) { n++; k++; }
       }
     } catch (e) { console.log(site, 'fail', q, String(e).slice(0, 120)); }
+    await page.waitForTimeout(4000);
   }
   try {
     const r = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&license_type=commercial&page_size=6&aspect_ratio=wide&mature=false`, { headers: { 'user-agent': 'ehime-shuzen-desk-mockup/1.0' } });

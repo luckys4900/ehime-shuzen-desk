@@ -519,3 +519,9 @@ ul, ol { margin: 0; padding: 0; }
 .nf li a:hover { color: var(--accent-dark); }
 
 .draw { width: 100%; height: auto; font-family: var(--sans); }
+
+/* segments wrapper */
+.segments { padding-top: 128px; }
+.segments__head .sec-head { margin-bottom: 56px; }
+@media (max-width: 767px) { .segments { padding-top: 88px; } .segments__head .sec-head { margin-bottom: 40px; } }
+.flow li > div { min-width: 0; }

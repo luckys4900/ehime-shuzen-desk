@@ -1,12 +1,12 @@
-<section class="phero phero--compact" aria-labelledby="page-title">
+<section class="phero phero--text" aria-labelledby="page-title">
   <div class="container">
-    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">トップ</a></li><li aria-current="page">写真で相談する</li></ol></nav>
+    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">トップ</a></li><li aria-current="page">写真を送って相談する</li></ol></nav>
   </div>
   <div class="container phero__inner">
     <div>
-      <span class="phero__label">CONTACT</span>
-      <h1 id="page-title">写真で相談する</h1>
-      <p class="phero__lead">物件の情報と修繕内容、写真をお送りください。内容を確認のうえ、担当者からご連絡します。<br class="br-pc">分からない項目は「その他」欄にご記入ください。</p>
+      <span class="eyebrow">CONTACT</span>
+      <h1 id="page-title">写真を送って相談する</h1>
+      <p class="phero__lead">物件の情報と修繕内容、写真をお送りください。内容を確認のうえ、担当者からメールまたはお電話でご連絡します。分からない項目は「その他」欄にご記入ください。</p>
     </div>
   </div>
 </section>
@@ -14,7 +14,11 @@
 <section class="section section--tight" aria-label="相談フォーム">
   <div class="container form-wrap">
     <div>
-    <p class="form-demo">本サイトは営業提案用のデモです。フォームは本番接続前のため、入力内容の確認までを行い、送信はされません。</p>
+    <div class="form-intro">
+      <p>必須項目は、ご相談の区分・会社名・ご担当者名・電話番号・メールアドレス・市町村・物件所在地・物件種別・物件の状況・修繕内容・希望時期の11項目です。写真は任意ですが、あると判断しやすくなります。</p>
+      <div class="notice notice--muted"><p>本サイトは営業提案用のデモです。フォームは本番の送信先に接続する前の状態のため、入力内容のチェックまでを行い、送信はされません。</p></div>
+    </div>
+    <div class="form-status" data-status-for="contact-form" role="alert" tabindex="-1" hidden></div>
     <form class="form js-form" id="contact-form" data-form="contact" novalidate>
       <fieldset class="fset">
         <legend class="fset__legend">お客様の情報<span>CUSTOMER</span></legend>
@@ -57,7 +61,7 @@
               <option value="">選択してください</option>
               <option>松山市</option><option>松前町</option><option>伊予市</option><option>東温市</option><option>砥部町</option><option>今治市</option><option>その他</option>
             </select>
-            <p class="field__hint" id="city-hint">今治市・その他の地域は、案件内容・工事規模により対応します。</p>
+            <p class="field__hint" id="city-hint">今治市は案件内容・工事規模により対応します。その他の地域は、個別にご相談ください。</p>
             <p class="field__err" id="city-err" aria-live="polite"></p>
           </div>
         </div>
@@ -135,11 +139,10 @@
       </fieldset>
 
       <div class="consent" data-field="agree">
-        <label class="choice"><input type="checkbox" name="agree" id="agree" value="1" aria-describedby="agree-err"><span>入力した情報を、ご相談への対応に使用することに同意します。</span></label>
+        <div class="consent__row"><span class="req">必須</span><label class="choice"><input type="checkbox" name="agree" id="agree" value="1" required aria-describedby="agree-err"><span>入力した情報と写真の取扱いについて同意します</span></label><a href="{{base}}privacy/" target="_blank" rel="noopener">個人情報の取扱い（別タブで開きます）</a></div>
         <p class="field__err" id="agree-err" aria-live="polite"></p>
       </div>
-      <div class="form__submit"><button class="btn btn--primary" type="submit">入力内容を確認して送信</button></div>
-      <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+      <div class="form__submit"><button class="btn btn--primary" type="submit">この内容で相談を送信する</button></div>
     </form>
     </div>
 
@@ -151,11 +154,16 @@
           <li>必要に応じて追加の写真や情報をお願いします</li>
           <li>対応可能な施工パートナーを調整します</li>
           <li>現地確認または見積のご案内</li>
+          <li>ご連絡はメールまたはお電話で差し上げます</li>
         </ol>
       </div>
       <div class="notice notice--muted">
-        <h3>このフォームについて</h3>
-        <p>本サイトは営業提案用のデモサイトです。フォームは本番の送信先に接続する前の状態のため、入力内容の確認までを行い、送信はされません。</p>
+        <h3>お引き受けしていない内容</h3>
+        <ul>
+          <li>個人のお客様からのご依頼</li>
+          <li>新築工事、大規模な増改築</li>
+          <li>夜間・休日の緊急駆け付け対応</li>
+        </ul>
       </div>
     </aside>
   </div>
