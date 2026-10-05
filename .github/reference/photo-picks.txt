@@ -1,7 +1,6 @@
 # name|source|page url|image url|creator|license|license url|gravity|title
 cta|pexels|https://www.pexels.com/photo/8082324/|https://images.pexels.com/photos/8082324/pexels-photo-8082324.jpeg|Pexels（撮影者名の表示は任意）|Pexels License|https://www.pexels.com/license/|center|Bright empty attic room
 washitsu|flickr|https://www.flickr.com/photos/9160678@N06/4202082712|https://live.staticflickr.com/2563/4202082712_e9e29a4821_b.jpg|scarletgreen|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|House in Kita-ku 08
-akiya_stuff|flickr|https://www.flickr.com/photos/152342724@N04/42970396042|https://live.staticflickr.com/1840/42970396042_dee69aa683.jpg|GEEK KAZU|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|空き家バンク 物件紹介 (6)
 akiya_garden|flickr|https://www.flickr.com/photos/152342724@N04/29228918358|https://live.staticflickr.com/846/29228918358_76e1dee730_b.jpg|GEEK KAZU|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|空き家バンク 唐津 七山 (1)
 akiya_ext|flickr|https://www.flickr.com/photos/152342724@N04/42382961554|https://live.staticflickr.com/1782/42382961554_fb1aa49963_b.jpg|GEEK KAZU|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|空き家バンク 唐津 七山 (2)
-akiya_room|flickr|https://www.flickr.com/photos/152342724@N04/43051294902|https://live.staticflickr.com/1790/43051294902_dae54fc4ee_b.jpg|GEEK KAZU|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|空き家バンク 唐津 七山 (7)
+akiya_kitchen|flickr|https://www.flickr.com/photos/152342724@N04/29228917858|https://live.staticflickr.com/1765/29228917858_6e16d64b05_b.jpg|GEEK KAZU|CC BY 2.0|https://creativecommons.org/licenses/by/2.0/|center|空き家バンク 唐津 七山 (5)
