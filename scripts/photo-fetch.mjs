@@ -9,7 +9,18 @@ mkdirSync('src/assets/photos', { recursive: true });
 const manifest = {};
 for (const line of lines) {
   const [name, source, page, url, creator, license, licenseUrl, gravity = 'center', title = '', usedOn = ''] = line.split('|');
-  const fetchUrl = source === 'pexels' ? url + '?auto=compress&cs=tinysrgb&w=2000' : url;
+  let fetchUrl = source === 'pexels' ? url + '?auto=compress&cs=tinysrgb&w=2000' : url;
+  if (source === 'flickr') {
+    // Flickr の写真ページから、より大きいサイズ（_k / _h）の画像URLを探す。見つからなければ _b（1024px）を使う
+    try {
+      const html = await (await fetch(page, { headers: { 'user-agent': 'Mozilla/5.0 (ehime-shuzen-desk mockup)' } })).text();
+      const id = page.split('/').filter(Boolean).pop();
+      const found = [...html.matchAll(new RegExp(`live\\.staticflickr\\.com\\\\?/\\d+\\\\?/${id}_[0-9a-f]+_(k|h)\\.jpg`, 'g'))].map((m) => m[0].replace(/\\\//g, '/'));
+      const best = found.find((u) => u.endsWith('_k.jpg')) || found.find((u) => u.endsWith('_h.jpg'));
+      if (best) fetchUrl = 'https://' + best;
+      console.log(name, 'size candidates', found.length, best || '(none)');
+    } catch (e) { console.log(name, 'page lookup failed', String(e).slice(0, 80)); }
+  }
   const r = await fetch(fetchUrl, { headers: { 'user-agent': 'Mozilla/5.0 (ehime-shuzen-desk mockup)' } });
   if (!r.ok) { console.log('FAILED', name, r.status); process.exitCode = 1; continue; }
   const orig = `/tmp/${name}.orig`;

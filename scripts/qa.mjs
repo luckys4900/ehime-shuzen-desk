@@ -53,6 +53,23 @@ for (const w of widths) {
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
         narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
+        orphanLines: [...document.querySelectorAll('h1, h2')].filter((h) => h.offsetParent !== null).map((h) => {
+          const counts = [];
+          const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+          let node;
+          while ((node = walker.nextNode())) {
+            for (let i = 0; i < node.length; i++) {
+              if (/\s/.test(node.data[i])) continue;
+              const r = document.createRange(); r.setStart(node, i); r.setEnd(node, i + 1);
+              const rect = r.getClientRects()[0];
+              if (!rect) continue;
+              const top = Math.round(rect.top);
+              const line = counts.find((c) => Math.abs(c.top - top) < 6);
+              if (line) line.n++; else counts.push({ top, n: 1 });
+            }
+          }
+          return counts.length > 1 && counts.some((c) => c.n <= 2) ? h.textContent.trim().slice(0, 14) : null;
+        }).filter(Boolean),
         placeholderText: /(lorem|ipsum|ダミー|TODO|XXX|000-0000|○○)/i.test(document.body.innerText),
       };
     });
@@ -65,6 +82,7 @@ for (const w of widths) {
     if (m.unlabeled.length) fail(`${r || '/'}: unlabeled inputs ${m.unlabeled}`);
     if (m.smallTap) fail(`${r || '/'} @${w}: ${m.smallTap} tap targets < 40px`);
     if (m.narrowHeads.length) fail(`${r || '/'} @${w}: headings squeezed ${m.narrowHeads.join(',')}`);
+    if (m.orphanLines.length) fail(`${r || '/'} @${w}: heading line with <=2 chars: ${m.orphanLines.join(' / ')}`);
     if (m.placeholderText) fail(`${r || '/'}: placeholder-like text found`);
     if (errors.length) fail(`${r || '/'} @${w}: console errors ${errors.join(' | ')}`);
     m.links.forEach((l) => linkSet.add(l.split('#')[0]));

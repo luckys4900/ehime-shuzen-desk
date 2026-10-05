@@ -55,18 +55,37 @@ function img(base, spec) {
   const [name, alt = '', sizes = '100vw', eager = ''] = spec.split('|');
   return imgTag(base, name, alt, sizes, eager);
 }
+const PAGE_LABEL = { 'index.html': 'トップページ', 'kanri.html': '管理会社様ページ', 'kaitori.html': '買取再販事業者様ページ', 'shop.html': '店舗・施設運営者様ページ', 'partner.html': '協力会社募集ページ', 'cta.html': '各ページ末尾のご相談案内（背景）' };
+function photoUsage() {
+  const used = {};
+  const files = [...pages.map((p) => ['pages', p.file]), ['partials', 'cta.html'], ['partials', 'flow.html']];
+  for (const [dir, file] of files) {
+    const src = readFileSync(join(SRC, dir, file), 'utf8');
+    for (const m of src.matchAll(/\{\{(?:photo|img):(\w+)/g)) {
+      (used[m[1]] ||= new Set()).add(PAGE_LABEL[file] || file);
+    }
+  }
+  return used;
+}
 function creditsHtml(base) {
-  const rows = Object.entries(PHOTOS).map(([name, p]) => `<li class="credit">
+  const used = photoUsage();
+  const rows = Object.entries(PHOTOS).filter(([name]) => used[name] || name === 'hero').map(([name, p]) => {
+    const isPexels = p.source === 'pexels';
+    const id = isPexels ? (p.page.match(/photo\/(\d+)/) || [])[1] : '';
+    const where = [...(used[name] || [])];
+    if (name === 'hero') where.push('SNS共有用画像（OGP）');
+    return `<li class="credit">
   <img src="${base}assets/photos/${name}-s.jpg" width="200" height="150" alt="" loading="lazy" decoding="async">
   <dl>
-    <dt>使用箇所</dt><dd>${p.usedOn || '-'}</dd>
-    <dt>作品名</dt><dd>${p.title || '（無題）'}</dd>
-    <dt>撮影者・提供者</dt><dd>${p.creator}</dd>
-    <dt>出典</dt><dd><a href="${p.page}" rel="noopener">${p.source === 'pexels' ? 'Pexels' : 'Flickr'}</a></dd>
+    <dt>使用箇所</dt><dd>${where.join('、')}</dd>
+    <dt>作品名</dt><dd>${isPexels ? `Pexels 写真 ID ${id}（タイトルは出典ページを参照）` : p.title}</dd>
+    <dt>撮影者・提供者</dt><dd>${isPexels ? 'Pexels 投稿者（Pexels License ではクレジット表示は任意）' : p.creator}</dd>
+    <dt>出典</dt><dd><a href="${p.page}" rel="noopener">${isPexels ? 'Pexels' : 'Flickr'}</a></dd>
     <dt>ライセンス</dt><dd><a href="${p.licenseUrl}" rel="noopener">${p.license}</a></dd>
   </dl>
-</li>`).join('\n');
-  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。</p>`;
+</li>`;
+  }).join('\n');
+  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。愛媛修繕デスクの施工事例ではありません。</p>`;
 }
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
@@ -100,7 +119,7 @@ function footer(base, slug) {
     <div class="site-footer__brand">
       ${logo(base)}
       <p>松山周辺の法人・事業者様向け<br>建物修繕の相談窓口</p>
-      <p class="site-footer__area">主な対応エリア：松山市・松前町・伊予市・東温市・砥部町<br>今治市は案件内容・工事規模により対応</p>
+      <p class="site-footer__area">主な対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span><br><span class="nw">今治市</span>は案件内容・工事規模により対応</p>
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
   </div>
