@@ -34,7 +34,7 @@ const PHOTOS = existsSync(join(SRC, 'assets', 'photos', 'photos.json')) ? JSON.p
 const nav = [
   { slug: 'kanri', label: '管理会社様' },
   { slug: 'kaitori', label: '買取再販事業者様' },
-  { slug: 'shop', label: '店舗・施設様' },
+  { slug: 'shop', label: '店舗・施設運営者様' },
   { slug: 'partner', label: '協力会社募集' },
 ];
 
@@ -55,9 +55,18 @@ function img(base, spec) {
   const [name, alt = '', sizes = '100vw', eager = ''] = spec.split('|');
   return imgTag(base, name, alt, sizes, eager);
 }
-function creditsHtml() {
-  const rows = Object.entries(PHOTOS).map(([name, p]) => `<tr><td>${name}</td><td><a href="${p.page}" rel="noopener">${p.source === 'pexels' ? 'Pexels' : 'Flickr'}</a></td><td>${p.creator}</td><td><a href="${p.licenseUrl}" rel="noopener">${p.license}</a></td></tr>`).join('\n');
-  return `<table class="trade-table credits"><thead><tr><th scope="col">用途</th><th scope="col">出典</th><th scope="col">撮影者・提供者</th><th scope="col">ライセンス</th></tr></thead><tbody>${rows}</tbody></table>`;
+function creditsHtml(base) {
+  const rows = Object.entries(PHOTOS).map(([name, p]) => `<li class="credit">
+  <img src="${base}assets/photos/${name}-s.jpg" width="200" height="150" alt="" loading="lazy" decoding="async">
+  <dl>
+    <dt>使用箇所</dt><dd>${p.usedOn || '-'}</dd>
+    <dt>作品名</dt><dd>${p.title || '（無題）'}</dd>
+    <dt>撮影者・提供者</dt><dd>${p.creator}</dd>
+    <dt>出典</dt><dd><a href="${p.page}" rel="noopener">${p.source === 'pexels' ? 'Pexels' : 'Flickr'}</a></dd>
+    <dt>ライセンス</dt><dd><a href="${p.licenseUrl}" rel="noopener">${p.license}</a></dd>
+  </dl>
+</li>`).join('\n');
+  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。</p>`;
 }
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
@@ -110,7 +119,7 @@ function layout(page, body) {
     .replace(/\{\{(cta|flow)\}\}/g, (_, k) => PARTIALS[k])
     .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
     .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(base, spec))
-    .replace('{{credits}}', creditsHtml())
+    .replace('{{credits}}', creditsHtml(base))
     .replaceAll('{{base}}', base)
     .replaceAll('{{cta_label}}', CTA_LABEL);
   return `<!doctype html>

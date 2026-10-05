@@ -17,7 +17,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') { setOpen(false); menuBtn.focus(); }
     });
-    window.matchMedia('(min-width: 1081px)').addEventListener('change', function (mq) { if (mq.matches) setOpen(false); });
+    window.matchMedia('(min-width: 1241px)').addEventListener('change', function (mq) { if (mq.matches) setOpen(false); });
   }
 
   /* ---------- header over the home hero ---------- */
@@ -30,7 +30,7 @@
 
   /* ---------- hide mobile CTA near the final CTA / footer ---------- */
   var mobileCta = document.querySelector('.mobile-cta');
-  var hideTargets = document.querySelectorAll('.cta, .site-footer');
+  var hideTargets = document.querySelectorAll('.cta, .site-footer, .hero__actions, .phero .btn-row, .inline-cta, #entry');
   if (mobileCta && 'IntersectionObserver' in window && hideTargets.length) {
     var visible = new Set();
     var io = new IntersectionObserver(function (entries) {
