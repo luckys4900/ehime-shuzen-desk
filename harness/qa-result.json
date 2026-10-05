@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T06:06:17.083Z",
+  "date": "2026-10-05T06:23:26.446Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -63,6 +63,8 @@
     "error summary updates live (11 -> 9)",
     "tel/email format validation",
     "upload preview + type rejection",
+    "summary reports all errors fixed",
+    "summary reappears with 1 error after re-emptying a field",
     "valid submit shows not-connected status",
     "demo robots.txt disallows indexing",
     "partner form validation 7",

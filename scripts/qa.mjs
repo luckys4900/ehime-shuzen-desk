@@ -182,6 +182,12 @@ await page.setInputFiles('#photos', [{ name: 'room.png', mimeType: 'image/png', 
 const thumbs = await page.locator('.js-thumbs li').count();
 if (thumbs !== 1) fail(`upload preview count ${thumbs}`); else ok('upload preview + type rejection');
 await page.locator('label.choice:has(#agree)').click();
+const allFixed = await page.textContent('[data-status-for="contact-form"]');
+if (!/すべて解消/.test(allFixed)) fail('summary does not report all fixed: ' + allFixed.slice(0, 40)); else ok('summary reports all errors fixed');
+await page.fill('#detail', '');
+const again = await page.textContent('[data-status-for="contact-form"]');
+if (!/（1件）/.test(again)) fail('summary does not reappear after re-emptying a field: ' + again.slice(0, 40)); else ok('summary reappears with 1 error after re-emptying a field');
+await page.fill('#detail', '壁紙の剥がれ');
 if (!(await page.isChecked('#agree'))) fail('consent not checked via label');
 await page.click('#contact-form button[type="submit"]');
 const status = await page.textContent('[data-status-for="contact-form"]');

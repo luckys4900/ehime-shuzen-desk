@@ -121,9 +121,11 @@
   /* エラー要約を、項目の再判定に合わせて更新する（フォーカスは動かさない） */
   function refreshSummary(form) {
     var box = document.querySelector('[data-status-for="' + form.id + '"]');
-    if (!box || box.hidden || !box.classList.contains('form-status--error')) return;
+    // 送信後のエラー要約を表示している間（data-live）だけ更新する。送信完了の表示中は触らない
+    if (!box || box.hidden || !box.hasAttribute('data-live')) return;
     var invalid = [];
-    form.querySelectorAll('[data-field].is-invalid').forEach(function (w) { invalid.push(w.getAttribute('data-field')); });
+    // 写真の追加エラーは送信を止めない注意なので、要約には含めない
+    form.querySelectorAll('[data-field].is-invalid').forEach(function (w) { if (!w.querySelector('input[type="file"]')) invalid.push(w.getAttribute('data-field')); });
     // 入力中の更新は控えめに読み上げる（role=alert をやめ、aria-live=polite に切り替える）
     box.setAttribute('role', 'status');
     box.setAttribute('aria-live', 'polite');
@@ -132,6 +134,7 @@
       box.className = 'form-status';
       html = '<p>入力エラーはすべて解消されました。内容をご確認のうえ、送信してください。</p>';
     } else {
+      box.className = 'form-status form-status--error';
       html = summaryHtml(form, invalid.map(function (n) {
         var err = document.getElementById(n + '-err');
         return { name: n, msg: err ? err.textContent : '' };
@@ -157,6 +160,7 @@
     box.setAttribute('role', 'alert');
     box.removeAttribute('aria-live');
     box.setAttribute('data-summary', html);
+    if (type === 'error') box.setAttribute('data-live', ''); else box.removeAttribute('data-live');
     box.className = 'form-status' + (type ? ' form-status--' + type : '');
     box.innerHTML = html;
     box.hidden = false;
