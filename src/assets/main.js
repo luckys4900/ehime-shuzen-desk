@@ -124,15 +124,24 @@
     if (!box || box.hidden || !box.classList.contains('form-status--error')) return;
     var invalid = [];
     form.querySelectorAll('[data-field].is-invalid').forEach(function (w) { invalid.push(w.getAttribute('data-field')); });
+    // 入力中の更新は控えめに読み上げる（role=alert をやめ、aria-live=polite に切り替える）
+    box.setAttribute('role', 'status');
+    box.setAttribute('aria-live', 'polite');
+    var html;
     if (!invalid.length) {
       box.className = 'form-status';
-      box.innerHTML = '<p>入力エラーはすべて解消されました。内容をご確認のうえ、送信してください。</p>';
-      return;
+      html = '<p>入力エラーはすべて解消されました。内容をご確認のうえ、送信してください。</p>';
+    } else {
+      html = summaryHtml(form, invalid.map(function (n) {
+        var err = document.getElementById(n + '-err');
+        return { name: n, msg: err ? err.textContent : '' };
+      }));
     }
-    box.innerHTML = summaryHtml(form, invalid.map(function (n) {
-      var err = document.getElementById(n + '-err');
-      return { name: n, msg: err ? err.textContent : '' };
-    }));
+    // 内容が変わったときだけ書き換える（同じ内容の再読み上げを防ぐ）
+    if (box.getAttribute('data-summary') !== html) {
+      box.setAttribute('data-summary', html);
+      box.innerHTML = html;
+    }
   }
 
   function summaryHtml(form, errors) {
@@ -145,6 +154,9 @@
 
   function showStatus(form, type, html) {
     var box = document.querySelector('[data-status-for="' + form.id + '"]') || form.querySelector('.form-status');
+    box.setAttribute('role', 'alert');
+    box.removeAttribute('aria-live');
+    box.setAttribute('data-summary', html);
     box.className = 'form-status' + (type ? ' form-status--' + type : '');
     box.innerHTML = html;
     box.hidden = false;
