@@ -75,7 +75,7 @@ for (const w of widths) {
           counts.sort((x, y) => x.top - y.top);
           return counts.length > 1 && counts[counts.length - 1].n <= 2 ? h.textContent.trim().slice(0, 14) : null;
         }).filter(Boolean),
-        areaStrongLines: [...document.querySelectorAll('.area__table td strong')].map((el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight || 30))).filter((n) => n > 2).length,
+        areaStrongLines: [...document.querySelectorAll('.area__table td strong')].map((el) => Math.round(el.getBoundingClientRect().height / ((v) => Number.isFinite(v) ? v : parseFloat(getComputedStyle(el).fontSize) * 1.5)(parseFloat(getComputedStyle(el).lineHeight)))).filter((n) => n > 2).length,
         mobileCtaAtTop: innerWidth < 768 && !!document.querySelector('.hero__actions, .phero .btn-row') && document.querySelector('.mobile-cta') && !document.querySelector('.mobile-cta').classList.contains('is-hidden') && getComputedStyle(document.querySelector('.mobile-cta')).display !== 'none',
         placeholderText: /(lorem|ipsum|ダミー|TODO|XXX|000-0000|○○)/i.test(document.body.innerText),
       };
@@ -107,7 +107,7 @@ for (const w of widths) {
 }
 
 // internal links
-const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
 await routeFonts(ctx);
 const req = ctx.request;
 for (const l of linkSet) {
@@ -165,14 +165,16 @@ await page.fill('#email', 'info@example.co.jp');
 await page.selectOption('#city', '松山市');
 await page.fill('#address', '一番町1丁目');
 await page.selectOption('#ptype', { index: 1 });
-await page.check('input[name="occupancy"][value="空室"]', { force: true });
+await page.locator('label.choice:has(input[name="occupancy"][value="空室"])').click();
+if (!(await page.isChecked('input[name="occupancy"][value="空室"]'))) fail('occupancy radio not checked via label');
 await page.fill('#detail', '壁紙の剥がれ');
 await page.selectOption('#timing', { index: 1 });
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
 await page.setInputFiles('#photos', [{ name: 'room.png', mimeType: 'image/png', buffer: png }, { name: 'bad.exe', mimeType: 'application/x-msdownload', buffer: Buffer.from('x') }]);
 const thumbs = await page.locator('.js-thumbs li').count();
 if (thumbs !== 1) fail(`upload preview count ${thumbs}`); else ok('upload preview + type rejection');
-await page.check('#agree', { force: true });
+await page.locator('label.choice:has(#agree)').click();
+if (!(await page.isChecked('#agree'))) fail('consent not checked via label');
 await page.click('#contact-form button[type="submit"]');
 const status = await page.textContent('[data-status-for="contact-form"]');
 if (!/本番接続前/.test(status)) fail('valid submit status: ' + status); else ok('valid submit shows not-connected status');

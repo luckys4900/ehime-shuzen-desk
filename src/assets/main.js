@@ -149,7 +149,9 @@
     });
     form.addEventListener('input', function (e) {
       var t = e.target;
-      if (t.name && touched[t.name]) validateField(form, t.name);
+      // エラー表示中の項目は入力のたびに再判定し、直った時点でメッセージを消す（離脱時のレイアウトのずれを防ぐ）
+      var wrap = t.name && form.querySelector('[data-field="' + t.name + '"]');
+      if (t.name && (touched[t.name] || (wrap && wrap.classList.contains('is-invalid')))) validateField(form, t.name);
     });
 
     form.addEventListener('submit', function (e) {
