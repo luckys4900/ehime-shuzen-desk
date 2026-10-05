@@ -1,9 +1,9 @@
 {
-  "phase": "ENVIRONMENT_INSPECT",
-  "implementation_percent": 0,
-  "required_routes": {"/": false, "/kanri": false, "/kaitori": false, "/shop": false, "/partner": false, "/contact": false},
-  "responsive": false,
-  "public_url": null,
+  "phase": "DEPLOY",
+  "implementation_percent": 80,
+  "required_routes": {"/": true, "/kanri": true, "/kaitori": true, "/shop": true, "/partner": true, "/contact": true},
+  "responsive": true,
+  "public_url": "https://luckys4900.github.io/ehime-shuzen-desk/",
   "audit_score": null,
   "hard_fail": []
 }

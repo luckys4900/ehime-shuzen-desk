@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>写真で相談する｜愛媛修繕デスク</title>
+<meta name="description" content="物件の所在地、修繕内容、写真をお送りください。内容を確認のうえ、担当者からご連絡します。">
+<link rel="canonical" href="https://luckys4900.github.io/ehime-shuzen-desk/contact/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="愛媛修繕デスク">
+<meta property="og:title" content="写真で相談する｜愛媛修繕デスク">
+<meta property="og:description" content="物件の所在地、修繕内容、写真をお送りください。内容を確認のうえ、担当者からご連絡します。">
+<meta property="og:url" content="https://luckys4900.github.io/ehime-shuzen-desk/contact/">
+<meta property="og:image" content="https://luckys4900.github.io/ehime-shuzen-desk/assets/og.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f3a36">
+<meta name="build" content="local">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/main.js" defer></script>
+</head>
+<body class="page-contact">
+<a class="skip" href="#main">本文へスキップ</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="logo" href="../" aria-label="愛媛修繕デスク トップページ">
+  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="17.5" y="23" width="5" height="8" fill="var(--accent)"/></svg>
+  <span class="logo__text"><span class="logo__name">愛媛修繕デスク</span><span class="logo__sub">EHIME SHUZEN DESK</span></span>
+</a>
+    <nav class="gnav" id="gnav" aria-label="メインメニュー">
+      <ul class="gnav__list"><li><a href="../kanri/">管理会社様</a></li><li><a href="../kaitori/">買取再販事業者様</a></li><li><a href="../shop/">店舗・施設様</a></li><li><a href="../partner/">協力会社募集</a></li><li class="gnav__flow"><a href="../#flow">ご相談の流れ</a></li></ul>
+      <a class="btn btn--primary gnav__cta" href="../contact/">写真で相談する</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-controls="gnav" aria-expanded="false"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">メニュー</span></button>
+  </div>
+</header>
+<main id="main">
+<section class="phero phero--compact" aria-labelledby="page-title">
+  <div class="container">
+    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../">トップ</a></li><li aria-current="page">写真で相談する</li></ol></nav>
+  </div>
+  <div class="container phero__inner">
+    <div>
+      <span class="phero__label">CONTACT</span>
+      <h1 id="page-title">写真で相談する</h1>
+      <p class="phero__lead">物件の情報と修繕内容、写真をお送りください。内容を確認のうえ、担当者からご連絡します。<br class="br-pc">分からない項目は「その他」欄にご記入ください。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-label="相談フォーム">
+  <div class="container form-wrap">
+    <div>
+    <p class="form-demo">本サイトは営業提案用のデモです。フォームは本番接続前のため、入力内容の確認までを行い、送信はされません。</p>
+    <form class="form js-form" id="contact-form" data-form="contact" novalidate>
+      <fieldset class="fset">
+        <legend class="fset__legend">お客様の情報<span>CUSTOMER</span></legend>
+        <div class="field" data-field="segment">
+          <span class="field__label" id="segment-label"><span class="req">必須</span>ご相談の区分</span>
+          <div>
+            <div class="choices" role="radiogroup" aria-labelledby="segment-label" aria-describedby="segment-err">
+              <label class="choice"><input type="radio" name="segment" value="kanri" required><span>管理会社</span></label>
+              <label class="choice"><input type="radio" name="segment" value="kaitori"><span>買取再販事業者</span></label>
+              <label class="choice"><input type="radio" name="segment" value="shop"><span>店舗・施設の運営者</span></label>
+              <label class="choice"><input type="radio" name="segment" value="other"><span>その他の法人・事業者</span></label>
+            </div>
+            <p class="field__err" id="segment-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="company">
+          <label class="field__label" for="company"><span class="req">必須</span>会社名</label>
+          <div><input class="input" id="company" name="company" type="text" autocomplete="organization" required aria-describedby="company-err"><p class="field__err" id="company-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="name">
+          <label class="field__label" for="name"><span class="req">必須</span>ご担当者名</label>
+          <div><input class="input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err"><p class="field__err" id="name-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="tel">
+          <label class="field__label" for="tel"><span class="req">必須</span>電話番号</label>
+          <div><input class="input" id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required data-type="tel" aria-describedby="tel-hint tel-err"><p class="field__hint" id="tel-hint">ハイフンの有無はどちらでも構いません。</p><p class="field__err" id="tel-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="email"><span class="req">必須</span>メールアドレス</label>
+          <div><input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="email-err"><p class="field__err" id="email-err" aria-live="polite"></p></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend class="fset__legend">物件の情報<span>PROPERTY</span></legend>
+        <div class="field" data-field="city">
+          <label class="field__label" for="city"><span class="req">必須</span>市町村</label>
+          <div>
+            <select class="select" id="city" name="city" required aria-describedby="city-hint city-err">
+              <option value="">選択してください</option>
+              <option>松山市</option><option>松前町</option><option>伊予市</option><option>東温市</option><option>砥部町</option><option>今治市</option><option>その他</option>
+            </select>
+            <p class="field__hint" id="city-hint">今治市・その他の地域は、案件内容・工事規模により対応します。</p>
+            <p class="field__err" id="city-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="address">
+          <label class="field__label" for="address"><span class="req">必須</span>物件所在地</label>
+          <div><input class="input" id="address" name="address" type="text" autocomplete="off" required placeholder="町名・番地、建物名・部屋番号など" aria-describedby="address-err"><p class="field__err" id="address-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="ptype">
+          <label class="field__label" for="ptype"><span class="req">必須</span>物件種別</label>
+          <div>
+            <select class="select" id="ptype" name="ptype" required aria-describedby="ptype-err">
+              <option value="">選択してください</option>
+              <option>賃貸集合住宅（アパート・マンション）</option>
+              <option>区分所有マンション</option>
+              <option>戸建住宅</option>
+              <option>店舗</option>
+              <option>事務所</option>
+              <option>施設（福祉・医療・宿泊など）</option>
+              <option>その他</option>
+            </select>
+            <p class="field__err" id="ptype-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="occupancy">
+          <span class="field__label" id="occupancy-label"><span class="req">必須</span>物件の状況</span>
+          <div>
+            <div class="choices" role="radiogroup" aria-labelledby="occupancy-label" aria-describedby="occupancy-err">
+              <label class="choice"><input type="radio" name="occupancy" value="空室" required><span>空室</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="入居中"><span>入居中</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="営業中"><span>営業中</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="その他"><span>その他</span></label>
+            </div>
+            <p class="field__err" id="occupancy-err" aria-live="polite"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend class="fset__legend">修繕の内容<span>REQUEST</span></legend>
+        <div class="field" data-field="detail">
+          <label class="field__label" for="detail"><span class="req">必須</span>修繕内容</label>
+          <div><textarea class="textarea" id="detail" name="detail" rows="6" required placeholder="例）6畳洋室の壁紙に剥がれと汚れ。床に家具の跡のへこみが数か所。" aria-describedby="detail-hint detail-err"></textarea><p class="field__hint" id="detail-hint">箇所・状態・おおよその範囲をご記入ください。</p><p class="field__err" id="detail-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="timing">
+          <label class="field__label" for="timing"><span class="req">必須</span>希望時期</label>
+          <div>
+            <select class="select" id="timing" name="timing" required aria-describedby="timing-hint timing-err">
+              <option value="">選択してください</option>
+              <option>できるだけ早く</option>
+              <option>1か月以内</option>
+              <option>2〜3か月以内</option>
+              <option>日程が決まっている（その他欄に記入）</option>
+              <option>時期は未定・相談したい</option>
+            </select>
+            <p class="field__hint" id="timing-hint">ご希望に沿えるかは、施工パートナーの状況を確認のうえご回答します。</p>
+            <p class="field__err" id="timing-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="photos">
+          <span class="field__label" id="photos-label"><span class="opt">推奨</span>写真</span>
+          <div>
+            <div class="upload js-upload">
+              <input type="file" id="photos" name="photos" accept="image/jpeg,image/png,image/heic,image/heif,image/webp,application/pdf" multiple aria-labelledby="photos-label photos-btn" aria-describedby="photos-hint photos-err">
+              <label class="upload__btn" for="photos" id="photos-btn">写真・ファイルを選ぶ</label>
+              <p class="upload__txt" id="photos-hint">最大10枚・1枚あたり10MBまで（JPEG / PNG / HEIC / WebP / PDF）。<br>全体が分かる写真と、近くで撮った写真があると判断しやすくなります。</p>
+            </div>
+            <ul class="thumbs js-thumbs" aria-label="選択した写真"></ul>
+            <p class="field__err" id="photos-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="note">
+          <label class="field__label" for="note"><span class="opt">任意</span>その他</label>
+          <div><textarea class="textarea" id="note" name="note" rows="4" placeholder="作業可能な時間帯、鍵の受け渡し、建物側のルールなど"></textarea></div>
+        </div>
+      </fieldset>
+
+      <div class="consent" data-field="agree">
+        <label class="choice"><input type="checkbox" name="agree" id="agree" value="1" aria-describedby="agree-err"><span>入力した情報を、ご相談への対応に使用することに同意します。</span></label>
+        <p class="field__err" id="agree-err" aria-live="polite"></p>
+      </div>
+      <div class="form__submit"><button class="btn btn--primary" type="submit">入力内容を確認して送信</button></div>
+      <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+    </form>
+    </div>
+
+    <aside class="form-aside" aria-label="ご相談の前に">
+      <div class="notice">
+        <h3>ご相談後の流れ</h3>
+        <ol class="mini-flow">
+          <li>担当者が内容を確認します</li>
+          <li>必要に応じて追加の写真や情報をお願いします</li>
+          <li>対応可能な施工パートナーを調整します</li>
+          <li>現地確認または見積のご案内</li>
+        </ol>
+      </div>
+      <div class="notice notice--muted">
+        <h3>このフォームについて</h3>
+        <p>本サイトは営業提案用のデモサイトです。フォームは本番の送信先に接続する前の状態のため、入力内容の確認までを行い、送信はされません。</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="logo" href="../" aria-label="愛媛修繕デスク トップページ">
+  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="17.5" y="23" width="5" height="8" fill="var(--accent)"/></svg>
+  <span class="logo__text"><span class="logo__name">愛媛修繕デスク</span><span class="logo__sub">EHIME SHUZEN DESK</span></span>
+</a>
+      <p>松山周辺の法人・事業者様向け<br>建物修繕の相談窓口</p>
+      <p class="site-footer__area">主な対応エリア：松山市・松前町・伊予市・東温市・砥部町<br>今治市は案件内容・工事規模により対応</p>
+    </div>
+    <nav aria-label="フッターメニュー"><ul class="site-footer__nav"><li><a href="../">トップページ</a></li><li><a href="../kanri/">管理会社様</a></li><li><a href="../kaitori/">買取再販事業者様</a></li><li><a href="../shop/">店舗・施設様</a></li><li><a href="../partner/">協力会社募集</a></li><li><a href="../contact/">写真で相談する</a></li></ul></nav>
+  </div>
+  <div class="container site-footer__note">
+    <p>本サイトは営業提案用のデモサイトです。運営者情報・連絡先・各種条件は、本番公開時に事業内容の確認を経て掲載します。</p>
+    <p><small>&copy; 2026 愛媛修繕デスク</small></p>
+  </div>
+</footer>
+<div class="mobile-cta" aria-hidden="false"><a class="btn btn--primary" href="../contact/">写真を送って相談する</a></div>
+</body>
+</html>

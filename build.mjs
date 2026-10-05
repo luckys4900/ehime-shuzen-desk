@@ -10,6 +10,7 @@ const SRC = join(ROOT, 'src');
 const DIST = join(ROOT, 'dist');
 const SITE_URL = 'https://luckys4900.github.io/ehime-shuzen-desk/';
 const SITE_NAME = '愛媛修繕デスク';
+const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 
 const pages = [
   { slug: '', file: 'index.html', title: '愛媛修繕デスク｜松山周辺の法人向け 建物修繕の相談窓口', description: '松山市・松前町・伊予市・東温市・砥部町の管理会社様、買取再販事業者様、店舗・施設運営者様向けの建物修繕相談窓口。写真を送るだけで、原状回復や小修繕のご相談を受け付けます。' },
@@ -19,6 +20,8 @@ const pages = [
   { slug: 'partner', file: 'partner.html', title: '協力施工会社の募集｜愛媛修繕デスク', description: '松山周辺で内装・原状回復・小修繕に対応いただける施工会社様、職人様を募集しています。資格が必要な工事は、有資格の方にのみご依頼します。' },
   { slug: 'contact', file: 'contact.html', title: '写真で相談する｜愛媛修繕デスク', description: '物件の所在地、修繕内容、写真をお送りください。内容を確認のうえ、担当者からご連絡します。' },
 ];
+
+const CTA = readFileSync(join(SRC, 'partials', 'cta.html'), 'utf8');
 
 const nav = [
   { slug: 'kanri', label: '管理会社様' },
@@ -88,6 +91,7 @@ function layout(page, body) {
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1f3a36">
+<meta name="build" content="${BUILD_ID}">
 <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,7 +103,7 @@ function layout(page, body) {
 <body class="page-${page.slug || 'home'}">
 ${header(base, page.slug)}
 <main id="main">
-${body.replaceAll('{{base}}', base)}
+${body.replaceAll('{{cta}}', CTA).replaceAll('{{base}}', base)}
 </main>
 ${footer(base)}
 </body>
