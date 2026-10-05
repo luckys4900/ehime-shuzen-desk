@@ -23,13 +23,13 @@ const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近
 // 区切りの位置でだけ改行させる
 const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
-const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
+const CTALINE_TEXT = { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
 const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
 
 const pages = [
-  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者さんがいてもOK。写真を送るだけでご相談いただけます。' },
+  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者がいてもOK。写真を送るだけでご相談いただけます。' },
   { slug: 'partner', file: 'partner.html', title: '協力事業者の募集｜売却前おまかせデスク', description: '松山市・近郊で、残置物整理・清掃・草刈り・小修繕などに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
   { slug: 'credits', file: 'credits.html', title: '写真クレジット｜売却前おまかせデスク', description: '売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
   { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜売却前おまかせデスク', description: '売却前おまかせデスクの案件相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },

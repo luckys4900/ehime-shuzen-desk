@@ -364,7 +364,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
     <div class="container hero__foot-inner">
       <span class="hero__foot-label">役割分担</span>
       <ul class="hero__roles">
-        <li><span>普段の工事・修繕</span><b>いつもの業者さん</b><em>これまで通り</em></li>
+        <li><span>普段の工事・修繕</span><b>いつもの業者</b><em>これまで通り</em></li>
         <li><span>売却前の細かな作業・繁忙時</span><b>売却前おまかせデスク</b><em>受付・整理・事業者の手配</em></li>
       </ul>
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
@@ -390,7 +390,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <span class="eyebrow">CASE</span>
         <h2 class="sec-title" id="cases-title">こんな時にご相談ください</h2>
       </div>
-      <p class="sec-lead">売却準備のすべてをお任せいただく必要はありません。いつもの業者へ頼みにくい案件だけのご相談で構いません。</p>
+      <p class="sec-lead">売却準備のすべてをお任せいただく必要はありません。いつもの業者へ<span class="nw">頼みにくい</span>案件だけのご相談で構いません。</p>
     </div>
     <ol class="problems">
       <li><span class="problems__no">01</span><div><h3>媒介中の相続物件、段取りが進まない</h3><p>売主様が遠方で、片付けから清掃までの手配を組む人がいない。</p></div></li>
@@ -408,18 +408,19 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <div class="overlap__panel">
         <span class="eyebrow">CONCEPT</span>
         <h2 id="concept-title">売却前の<br>「第二の手配先」。</h2>
-        <p><strong>いつもの業者さんは、そのままで大丈夫です。</strong>普段の工事や修繕はこれまで通りに。売却前に重なる細かな作業や、手が回らない時期の案件だけを、売却前おまかせデスクが受け付けます。</p>
-        <p>受付・内容の整理・事業者の手配・完了のご報告までを当窓口が担当し、作業は内容に合う事業者が行います（当窓口は自社で作業を行う会社ではありません）。</p>
+        <p><strong>いつもの業者は、そのままで大丈夫です。</strong>普段の工事や修繕はこれまで通りに。売却前に重なる細かな作業や、手が回らない時期の案件だけを、売却前おまかせデスクが受け付けます。</p>
+        <p class="split"><span><small>当窓口</small>ご相談の受付・内容の整理・事業者の手配・完了のご報告</span><span><small>作業</small>内容に合う事業者が担当（契約・請求の相手先は見積時にご案内）</span></p>
+        <p>ご相談から完了のご報告まで、窓口は当デスクが受け持ちます。当窓口は自社で作業を行う会社ではありません。</p>
       </div>
     </div>
     <div class="concept-detail">
       <div>
         <h3>いつもの取引先との関係</h3>
-        <div class="rel" role="img" aria-label="関係図：御社は、普段の工事をこれまで通りいつもの施工会社に依頼し、売却前の細かな作業や繁忙時だけ売却前おまかせデスクへ相談します。売却前おまかせデスクは、案件ごとに対応できる事業者を手配します。">
+        <div class="rel" role="img" aria-label="関係図：御社は、普段の工事をこれまで通りいつもの業者に依頼し、売却前の細かな作業や繁忙時だけ売却前おまかせデスクへ相談します。売却前おまかせデスクは、案件ごとに対応できる事業者を手配します。">
           <div class="rel__you">御社<small>不動産会社様</small></div>
           <div class="rel__lines" aria-hidden="true"><span class="rel__solid"></span><span class="rel__dash"></span></div>
           <div class="rel__pair">
-            <div class="rel__usual-col"><div class="rel__box"><small>普段の工事・修繕</small>いつもの施工会社</div><p class="rel__usual-note">これまで通り、<br>いつもの業者さんへ</p></div>
+            <div class="rel__usual-col"><div class="rel__box"><small>普段の工事・修繕</small>いつもの業者</div><p class="rel__usual-note">これまで通り、<br>いつもの業者へ</p></div>
             <div class="rel__desk-col">
               <div class="rel__box rel__box--desk"><small>売却前の細かな作業・繁忙時</small><span>売却前<wbr>おまかせデスク</span></div>
               <span class="rel__drop" aria-hidden="true"></span>
@@ -475,8 +476,8 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       </div>
       <div class="svc-row">
         <h3>残置物の整理<span class="en">CLEAR-OUT</span></h3>
-        <div><p><span class="svc-when">媒介開始前・相続物件</span>売主様のご確認後、残った家財の整理と搬出を手配します。</p>
-          <ul><li>売主様確認後の家財の搬出</li><li>物置・倉庫の整理</li><li>収集・運搬は許可を持つ事業者</li></ul></div>
+        <div><p><span class="svc-when">媒介開始前・相続物件</span>売主様のご確認後、残置物の整理と搬出を手配します。収集・運搬は許可を持つ事業者が担当します。</p>
+          <ul><li>売主様確認済みの残置物の搬出手配</li><li>物置・倉庫の整理</li></ul></div>
       </div>
     </div>
     <p class="svc-foot"><span class="mark">※</span> 資格が必要な作業は、資格を持つ事業者が担当できる場合に限ります。記載のない作業も、まずはご相談ください。</p>
@@ -495,10 +496,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
     </div>
     <div class="examples">
       <article class="example">
-        <div class="ba">
-          <figure class="ba__item photo">{{img:wall|壁紙をはがし、下地を補修している室内と脚立|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label">BEFORE<span>内覧準備前</span></figcaption></figure>
-          <figure class="ba__item photo">{{img:fusuma|ふすまと無垢材の床の、片付いた明るい室内|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label ba__label--after">AFTER<span>内覧へ</span></figcaption></figure>
-        </div>
+        <figure class="example__photo photo">{{img:wall|壁紙をはがし、下地を補修している室内と脚立|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">写真はイメージです</figcaption></figure>
         <div class="example__body">
           <p class="example__label">ご相談例 01</p>
           <h3 class="example__q">内覧を控えた空室。壁や建具の傷みが目立つ</h3>
@@ -508,10 +506,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         </div>
       </article>
       <article class="example">
-        <div class="ba">
-          <figure class="ba__item photo">{{img:tatami|家具や生活用品が置かれたままの畳の部屋|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label">BEFORE<span>媒介契約後</span></figcaption></figure>
-          <figure class="ba__item photo">{{img:kitaroom|家具がなく、無垢材の床が見える明るい室内|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label ba__label--after">AFTER<span>売却活動へ</span></figcaption></figure>
-        </div>
+        <figure class="example__photo photo">{{img:kitaroom|家具がなく、無垢材の床が見える明るい室内|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">写真はイメージです</figcaption></figure>
         <div class="example__body">
           <p class="example__label">ご相談例 02</p>
           <h3 class="example__q">媒介中の相続戸建。内覧前に室内を整えたい</h3>
@@ -583,7 +578,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
     </div>
     <div class="faq">
-      <details><summary>いつもの施工業者がいますが利用できますか？</summary><div class="faq__a"><p>はい。業者変更をお願いするサービスではありません。普段の業者さんで対応できない案件や、小規模・急ぎの案件だけでもご利用いただけます。</p></div></details>
+      <details><summary>いつもの業者がいますが利用できますか？</summary><div class="faq__a"><p>はい。業者変更をお願いするサービスではありません。普段の業者で対応できない案件や、小規模・急ぎの案件だけでもご利用いただけます。</p></div></details>
       <details><summary>契約や請求の相手はどこになりますか？</summary><div class="faq__a"><p>見積をご案内する際に、契約・請求の相手先と、作業の責任範囲を書面でお示しします。内容をご確認いただいたうえで、ご依頼をご判断ください。</p></div></details>
       <details><summary>小さい修繕だけでも大丈夫ですか？</summary><div class="faq__a"><p>内容を確認して、対応できるかどうかをご案内します。まずは写真をお送りください。電気工事・給水装置工事など資格が必要な作業は、資格を持つ事業者が担当できる場合に限り対応します。</p></div></details>
       <details><summary>見積だけでも大丈夫ですか？</summary><div class="faq__a"><p>まずは案件内容をご相談ください。内容を確認したうえで、対応方法をご案内します。</p></div></details>
@@ -603,7 +598,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <span class="eyebrow">CONTACT</span>
       <h2 class="sec-title" id="form-title">写真を送って<br>案件相談</h2>
       <p class="form-lead">分かる範囲だけで構いません。写真と簡単な内容をお送りいただければ、必要な作業の整理から始めます。</p>
-      <p class="form-note">相談無料。いつもの業者さんとの併用も問題ありません。</p>
+      <p class="form-note">相談無料。いつもの業者との併用も問題ありません。</p>
     </div>
 
     <div class="case">
@@ -620,7 +615,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <fieldset class="cstep" data-step="1">
           <legend class="cstep__legend">STEP 1　相談内容</legend>
           <div class="field field--stack" data-field="services">
-            <span class="field__label" id="services-label"><span class="req">必須</span>相談したい作業（複数選択できます）</span>
+            <span class="field__label" id="services-label"><span class="req">必須</span>売却準備で必要な作業（複数選択できます）</span>
             <div>
               <div class="choices choices--grid" role="group" aria-labelledby="services-label" aria-describedby="services-err">
                 <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物の整理</span></label>
@@ -1047,13 +1042,13 @@ const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近
 // 区切りの位置でだけ改行させる
 const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
-const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
+const CTALINE_TEXT = { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
 const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
 
 const pages = [
-  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者さんがいてもOK。写真を送るだけでご相談いただけます。' },
+  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者がいてもOK。写真を送るだけでご相談いただけます。' },
   { slug: 'partner', file: 'partner.html', title: '協力事業者の募集｜売却前おまかせデスク', description: '松山市・近郊で、残置物整理・清掃・草刈り・小修繕などに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
   { slug: 'credits', file: 'credits.html', title: '写真クレジット｜売却前おまかせデスク', description: '売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
   { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜売却前おまかせデスク', description: '売却前おまかせデスクの案件相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
@@ -2150,7 +2145,7 @@ for (const [from, hash] of [['kanri/', ''], ['kaitori/', ''], ['shop/', ''], ['c
   const banned = ['地域最安', '最安', 'どんな工事でも', '何でもできます', '安心施工', '自社職人', '自社施工します', 'ご自宅の修繕でお困り', '施工実績', 'お客様の声', '24時間', '即日対応', '満足度', '000-0000'];
   const hits = banned.filter((w) => text.includes(w));
   if (hits.length) fail('banned wording: ' + hits.join(',')); else ok('no banned / unsupported wording');
-  const must = ['松山周辺の不動産会社様向け', 'いつもの業者は', '売却前だけ、', 'もう一つの手配先を。', '写真を送って案件相談', '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応', 'いつもの業者さんは、そのままで大丈夫です。', '第二の手配先', 'ご相談例', '必要な許可を有する事業者', '自社で作業を行う会社ではありません'];
+  const must = ['松山周辺の不動産会社様向け', 'いつもの業者は', '売却前だけ、', 'もう一つの手配先を。', '写真を送って案件相談', '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応', 'いつもの業者は、そのままで大丈夫です。', '第二の手配先', 'ご相談例', '必要な許可を有する事業者', '自社で作業を行う会社ではありません'];
   const miss = must.filter((w) => !text.includes(w));
   if (miss.length) fail('required copy missing: ' + miss.join(',')); else ok('required positioning copy present');
   const ctas = await page.locator('main a[href="#form"], .site-footer__cta a[href$="#form"]').count();
@@ -3232,7 +3227,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 /* hero */
 .hero__bg::after { background: linear-gradient(90deg, rgba(16,22,21,.78) 0%, rgba(16,22,21,.5) 42%, rgba(16,22,21,.08) 78%), linear-gradient(0deg, rgba(16,22,21,.5) 0%, rgba(16,22,21,0) 36%); }
 .hero__bg img { filter: saturate(.95) brightness(1.06); }
-.hero__sub { margin: 18px 0 0; font-size: 13.5px; color: rgba(255,255,255,.88); letter-spacing: .08em; }
+.hero__sub { margin: 24px 0 0; font-size: 14px; color: #fff; letter-spacing: .08em; font-weight: 500; }
 @media (max-width: 767px) {
   .hero__bg::after { background: linear-gradient(0deg, rgba(16,22,21,.86) 0%, rgba(16,22,21,.6) 55%, rgba(16,22,21,.3) 100%); }
   .hero__sub { font-size: 12.5px; letter-spacing: .02em; text-align: center; }
@@ -3261,6 +3256,11 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
   .hero__roles b { font-size: 15px; }
 }
 
+.overlap__panel .split { display: grid; gap: 8px; margin: 20px 0 12px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.overlap__panel .split span { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; font-size: 15px; color: var(--ink); font-weight: 700; }
+.overlap__panel .split small { font-size: 12.5px; color: var(--accent-dark); font-weight: 700; letter-spacing: .06em; }
+@media (max-width: 767px) { .hero__foot-inner .photo__cap { justify-self: end; margin-top: 12px; } .hero__roles li { display: grid; grid-template-columns: 1fr; } .hero__roles em { font-size: 12.5px; } }
+
 /* services */
 .svc-policy { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); gap: 8px 40px; margin: -16px 0 40px; padding: 24px 28px; background: var(--paper); }
 .svc-policy h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
@@ -3268,13 +3268,6 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .svc-when { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--green-2); margin-bottom: 2px; }
 .svc-cta { margin: 28px 0 0; text-align: right; }
 @media (max-width: 767px) { .svc-policy { grid-template-columns: 1fr; margin: 0 0 24px; padding: 20px 18px; } .svc-policy p { font-size: 14px; } .svc-row div > p:not(:only-child) { display: block; font-size: 13.5px; margin-bottom: 8px; } .svc-cta { text-align: left; } }
-
-/* before / after */
-.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #fff; }
-.ba__item { aspect-ratio: 4 / 3; }
-.ba__label { white-space: nowrap; position: absolute; left: 0; bottom: 0; z-index: 2; background: rgba(20,26,25,.78); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .14em; padding: 4px 10px; display: flex; gap: 8px; align-items: baseline; }
-.ba__label span { font-size: 11.5px; font-weight: 500; letter-spacing: .04em; }
-.ba__label--after { background: var(--green); }
 
 /* services footnote */
 .svc-foot { margin: 20px 0 0; font-size: 13px; color: var(--muted); line-height: 1.85; }
@@ -3461,17 +3454,6 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 01"
  },
- "fusuma": {
-  "lw": 913,
-  "lh": 685,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
-  "creator": "scarletgreen",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 13"
- },
  "wall": {
   "lw": 1022,
   "lh": 767,
@@ -3482,17 +3464,6 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "Baby Room, sanded walls"
- },
- "tatami": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/82365211@N00/5953281164",
-  "creator": "kalleboo",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Apartment tatami room"
  }
 }
 
