@@ -10,72 +10,6 @@
   "licenseUrl": "https://www.pexels.com/license/",
   "title": "Bright empty attic room"
  },
- "building": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/72396314@N00/1412767312",
-  "creator": "OiMax",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "apartment"
- },
- "apartments": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/76758469@N00/3820595970",
-  "creator": "Yuya Tamai",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "集合住宅 apartment buildings"
- },
- "wall": {
-  "lw": 1022,
-  "lh": 767,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/36824782@N00/120869477",
-  "creator": "Qole Pejorian",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Baby Room, sanded walls"
- },
- "shop": {
-  "lw": 1536,
-  "lh": 1152,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/91873384@N04/54379225600",
-  "creator": "dalecruse",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Timeless Streets of Kanazawa"
- },
- "shop2": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/42033648@N00/236658788",
-  "creator": "PhillipC",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Interior, Cafe Makara, Wellington, New Zealand"
- },
- "hero": {
-  "lw": 913,
-  "lh": 685,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4201330141",
-  "creator": "scarletgreen",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 16"
- },
  "washitsu": {
   "lw": 913,
   "lh": 685,
@@ -87,70 +21,48 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 08"
  },
- "kitchen": {
-  "lw": 913,
-  "lh": 685,
-  "sw": 800,
+ "akiya_stuff": {
+  "lw": 500,
+  "lh": 375,
+  "sw": 500,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4201328535",
-  "creator": "scarletgreen",
+  "page": "https://www.flickr.com/photos/152342724@N04/42970396042",
+  "creator": "GEEK KAZU",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 02"
+  "title": "空き家バンク 物件紹介 (6)"
  },
- "kitaroom": {
-  "lw": 913,
-  "lh": 685,
+ "akiya_garden": {
+  "lw": 906,
+  "lh": 680,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4202082386",
-  "creator": "scarletgreen",
+  "page": "https://www.flickr.com/photos/152342724@N04/29228918358",
+  "creator": "GEEK KAZU",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 01"
+  "title": "空き家バンク 唐津 七山 (1)"
  },
- "tatami": {
-  "lw": 1600,
-  "lh": 1200,
+ "akiya_ext": {
+  "lw": 910,
+  "lh": 683,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/82365211@N00/5953281164",
-  "creator": "kalleboo",
+  "page": "https://www.flickr.com/photos/152342724@N04/42382961554",
+  "creator": "GEEK KAZU",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Apartment tatami room"
+  "title": "空き家バンク 唐津 七山 (2)"
  },
- "washitsu2": {
-  "lw": 1600,
-  "lh": 1200,
+ "akiya_room": {
+  "lw": 908,
+  "lh": 681,
   "sw": 800,
   "source": "flickr",
-  "page": "https://www.flickr.com/photos/13910409@N05/2886383047",
-  "creator": "TANAKA Juuyoh (田中十洋)",
+  "page": "https://www.flickr.com/photos/152342724@N04/43051294902",
+  "creator": "GEEK KAZU",
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "Japanese house traditional style interior design / 和室(わしつ)の内装(ないそう)"
- },
- "fusuma": {
-  "lw": 913,
-  "lh": 685,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
-  "creator": "scarletgreen",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "House in Kita-ku 13"
- },
- "vacant": {
-  "lw": 1600,
-  "lh": 1200,
-  "sw": 800,
-  "source": "flickr",
-  "page": "https://www.flickr.com/photos/199901739@N04/54281560155",
-  "creator": "incorrectsummary",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-  "title": "空室"
+  "title": "空き家バンク 唐津 七山 (7)"
  }
 }
