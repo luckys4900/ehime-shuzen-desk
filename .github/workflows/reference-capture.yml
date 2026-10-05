@@ -1,0 +1,26 @@
+name: Reference capture (analysis only)
+
+on:
+  push:
+    branches: [main-9c3jqk]
+    paths: ['.github/reference/**', 'scripts/ref-capture.mjs']
+  workflow_dispatch:
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: |
+          npm i --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk >/dev/null
+      - run: node scripts/ref-capture.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ref-captures
+          path: ref-captures/
+          retention-days: 3
