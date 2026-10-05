@@ -18,8 +18,12 @@ const CONFIG = Object.assign(JSON.parse(readFileSync(join(dirname(fileURLToPath(
 const SITE_NAME = CONFIG.serviceName || '売却前おまかせデスク';
 const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
-const CTA_LABEL = '写真を送って相談する';
-const CTA_SUB = '相談無料・いつもの業者がいてもOK';
+const CTA_LABEL = '写真を送って案件相談';
+const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応';
+// 区切りの位置でだけ改行させる
+const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
+// 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
+const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '1つだけでも、まとめてでも。写真から内容を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
 const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
@@ -103,7 +107,7 @@ function creditsHtml(base) {
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
   <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#c8662f"/></svg>
-  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">松山市・近郊の不動産会社向け</span></span>
+  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">PRE-SALE SUPPORT DESK</span></span>
 </a>`;
 
 const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="${track}">電話で相談</a>` : '';
@@ -134,9 +138,9 @@ function footer(base, slug) {
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       ${logo(base)}
-      <p>松山市・近郊の不動産会社向け<br>売却前の残置物・清掃・草刈り・小修繕の相談窓口</p>
+      <p>松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB}</p></div>`}
+      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB_HTML}</p></div>`}
       ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
@@ -159,14 +163,14 @@ function layout(page, body) {
   const base = page.slug ? '../' : '';
   const canonical = SITE_URL + (page.slug ? page.slug + '/' : '');
   const html = body
-    .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => PARTIALS.ctaline.replace('{{pos}}', pos || 'inline'))
+    .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => PARTIALS.ctaline.replace('{{pos}}', pos || 'inline').replace('{{ctaline_text}}', CTALINE_TEXT[pos] || '写真と簡単な内容だけで相談できます。'))
     .replace(/\{\{(cta|flow)\}\}/g, (_, k) => PARTIALS[k])
     .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
     .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(base, spec))
     .replace('{{credits}}', creditsHtml(base))
     .replaceAll('{{base}}', base)
     .replaceAll('{{cta_label}}', CTA_LABEL)
-    .replaceAll('{{cta_sub}}', CTA_SUB)
+    .replaceAll('{{cta_sub}}', CTA_SUB_HTML)
     .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${PHONE}）</a>` : '');
   return `<!doctype html>
 <html lang="ja">

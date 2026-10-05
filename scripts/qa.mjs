@@ -179,11 +179,11 @@ for (const [from, hash] of [['kanri/', ''], ['kaitori/', ''], ['shop/', ''], ['c
   const banned = ['地域最安', '最安', 'どんな工事でも', '何でもできます', '安心施工', '自社職人', '自社施工します', 'ご自宅の修繕でお困り', '施工実績', 'お客様の声', '24時間', '即日対応', '満足度', '000-0000'];
   const hits = banned.filter((w) => text.includes(w));
   if (hits.length) fail('banned wording: ' + hits.join(',')); else ok('no banned / unsupported wording');
-  const must = ['売る前の面倒ごと', 'まとめて1つの窓口へ。', '松山市・近郊対応', '相談無料・既存業者がいてもOK', 'いつもの業者さんは、', 'そのままで大丈夫です。', 'ご相談例', '必要な許可を有する事業者', '自社で作業を行う会社ではありません'];
+  const must = ['松山周辺の不動産会社様向け', 'いつもの業者は', '売却前だけ、', 'もう一つの手配先を。', '写真を送って案件相談', '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応', 'いつもの業者さんは、そのままで大丈夫です。', '第二の手配先', 'ご相談例', '必要な許可を有する事業者', '自社で作業を行う会社ではありません'];
   const miss = must.filter((w) => !text.includes(w));
   if (miss.length) fail('required copy missing: ' + miss.join(',')); else ok('required positioning copy present');
   const ctas = await page.locator('main a[href="#form"], .site-footer__cta a[href$="#form"]').count();
-  if (ctas < 6) fail('CTA count to #form ' + ctas); else ok(`CTAs to the form (hero, services, keep, flow/before FAQ, band, footer): ${ctas}`);
+  if (ctas < 6) fail('CTA count to #form ' + ctas); else ok(`CTAs to the form (hero, concept, services, flow, band, footer): ${ctas}`);
   if (await page.locator('a[href^="tel:"]').count()) fail('phone link shown without a configured number'); else ok('no phone CTA while phone is not configured');
 }
 

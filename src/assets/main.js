@@ -603,10 +603,10 @@
       document.getElementById('case-id').textContent = caseId || '担当者からお知らせします';
       document.getElementById('case-copy').hidden = !caseId || !!demo;
       document.getElementById('case-text').textContent = demo
-        ? 'このサイトは営業提案用のデモで、送信先に接続していないため、実際には送信されていません。本番では、受付ごとに上の形式の案件番号を発行してお知らせします。'
-        : '内容を確認し、担当者からご連絡します。お問い合わせの際は、案件番号をお伝えください。';
+        ? 'このサイトは営業提案用のデモで、送信先に接続していないため、実際には送信されていません。本番では、写真と内容を確認し、担当者から対応方法をご連絡します（下の形式の受付番号もお知らせします）。'
+        : '写真と内容を確認し、担当者から対応方法をご連絡します。お問い合わせの際は、下の受付番号をお伝えください。';
       done.querySelector('.case-done__label').textContent = demo ? '入力内容の確認まで完了しました（デモ）' : 'ご相談を受け付けました';
-      done.querySelector('.case-done__id-label').textContent = demo ? '案件番号の表示例' : '案件番号';
+      done.querySelector('.case-done__id-label').textContent = demo ? '受付番号の表示例' : '受付番号';
       done.focus({ preventScroll: true });
       done.scrollIntoView({ block: 'center' });
     }

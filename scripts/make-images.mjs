@@ -6,7 +6,7 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } });
 await routeFonts(ctx);
 const page = await ctx.newPage();
-const OG_PHOTO = 'washitsu';
+const OG_PHOTO = 'hero';
 const fsMod = await import('node:fs');
 const heroB64 = fsMod.readFileSync(new URL(`../src/assets/photos/${OG_PHOTO}-l.jpg`, import.meta.url)).toString('base64');
 const { createHash } = await import('node:crypto');
@@ -16,9 +16,9 @@ await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.go
 <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,22,21,.86) 0%,rgba(16,22,21,.6) 55%,rgba(16,22,21,.2) 100%)"></div>
 <div style="position:absolute;left:80px;top:72px;right:80px">
 <div style="display:flex;align-items:center;gap:14px"><svg width="52" height="52" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="#fff" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#e0874f"/></svg>
-<div><div style="font-family:'Shippori Mincho B1',serif;font-size:30px;font-weight:700;letter-spacing:.1em">売却前おまかせデスク</div><div style="font-size:13px;letter-spacing:.14em;opacity:.85">松山市・近郊の不動産会社向け</div></div></div>
-<div style="margin-top:70px;font-family:'Shippori Mincho B1',serif;font-size:62px;font-weight:600;line-height:1.5;letter-spacing:.06em">売る前の面倒ごと、<br>まとめて1つの窓口へ。</div>
-<div style="margin-top:30px;font-size:22px;font-weight:500;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.5);padding-top:18px;display:inline-block">残置物・空室清掃・草刈り・小修繕　｜　いつもの業者がいてもOK</div>
+<div><div style="font-family:'Shippori Mincho B1',serif;font-size:30px;font-weight:700;letter-spacing:.1em">売却前おまかせデスク</div><div style="font-size:13px;letter-spacing:.14em;opacity:.85">PRE-SALE SUPPORT DESK</div></div></div>
+<div style="margin-top:70px;font-family:'Shippori Mincho B1',serif;font-size:56px;font-weight:600;line-height:1.5;letter-spacing:.06em">いつもの業者はそのまま。<br>売却前だけ、もう一つの手配先を。</div>
+<div style="margin-top:30px;font-size:22px;font-weight:500;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.5);padding-top:18px;display:inline-block">松山周辺の不動産会社様向け　｜　残置物・空室清掃・草刈り・小修繕</div>
 </div></body></html>`);
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(500);
