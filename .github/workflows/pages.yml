@@ -1,0 +1,65 @@
+name: Build, deploy and verify (GitHub Pages)
+
+on:
+  push:
+    branches: [main, main-9c3jqk]
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node build.mjs
+      - name: Publish dist/ to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "deploy: ${{ github.sha }}"
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      SITE: https://luckys4900.github.io/ehime-shuzen-desk/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for the new build to be live
+        run: |
+          want="${GITHUB_SHA::12}"
+          for i in $(seq 1 60); do
+            got=$(curl -fsSL "$SITE?nocache=$i" 2>/dev/null | grep -o 'name="build" content="[^"]*"' | sed 's/.*content="//;s/"//') || true
+            echo "try $i: live=$got want=$want"
+            [ "$got" = "$want" ] && exit 0
+            sleep 15
+          done
+          echo "::error::Pages did not serve build $want. Check Settings > Pages (source: gh-pages branch)."
+          exit 1
+      - name: Install Playwright
+        run: |
+          npm i --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Browser QA against the public URL
+        run: QA_WRITE=1 node scripts/qa.mjs "$SITE"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-qa
+          path: |
+            docs/screenshots/
+            harness/qa-result.json

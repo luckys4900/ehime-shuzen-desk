@@ -1,0 +1,171 @@
+<section class="phero phero--text" aria-labelledby="page-title">
+  <div class="container">
+    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">トップ</a></li><li aria-current="page">写真を送って相談する</li></ol></nav>
+  </div>
+  <div class="container phero__inner">
+    <div>
+      <span class="eyebrow">CONTACT</span>
+      <h1 id="page-title">写真を送って相談する</h1>
+      <p class="phero__lead">物件の情報と修繕内容、写真をお送りください。内容を確認のうえ、担当者からメールまたはお電話でご連絡します。分からない項目は「その他」欄にご記入ください。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-label="相談フォーム">
+  <div class="container form-wrap">
+    <div>
+    <div class="form-intro">
+      <p>必須項目は、ご相談の区分・会社名・ご担当者名・電話番号・メールアドレス・市町村・物件所在地・物件種別・物件の状況・修繕内容・希望時期の11項目です。写真は任意ですが、あると判断しやすくなります。</p>
+      <p class="form-scope">個人のお客様からのご依頼、新築・大規模な増改築、夜間・休日の緊急駆け付けはお受けしていません。</p>
+      <div class="notice notice--muted"><p>本サイトは営業提案用のデモです。フォームは本番の送信先に接続する前の状態のため、入力内容のチェックまでを行い、送信はされません。</p></div>
+    </div>
+    <div class="form-status" data-status-for="contact-form" role="alert" tabindex="-1" hidden></div>
+    <form class="form js-form" id="contact-form" data-form="contact" novalidate>
+      <fieldset class="fset">
+        <legend class="fset__legend">お客様の情報<span>CUSTOMER</span></legend>
+        <div class="field" data-field="segment">
+          <span class="field__label" id="segment-label"><span class="req">必須</span>ご相談の区分</span>
+          <div>
+            <div class="choices" role="radiogroup" aria-labelledby="segment-label" aria-describedby="segment-err">
+              <label class="choice"><input type="radio" name="segment" value="kanri" required><span>管理会社</span></label>
+              <label class="choice"><input type="radio" name="segment" value="kaitori"><span>買取再販事業者</span></label>
+              <label class="choice"><input type="radio" name="segment" value="shop"><span>店舗・施設の運営者</span></label>
+              <label class="choice"><input type="radio" name="segment" value="other"><span>その他の法人・事業者</span></label>
+            </div>
+            <p class="field__err" id="segment-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="company">
+          <label class="field__label" for="company"><span class="req">必須</span>会社名</label>
+          <div><input class="input" id="company" name="company" type="text" autocomplete="organization" required aria-describedby="company-err"><p class="field__err" id="company-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="name">
+          <label class="field__label" for="name"><span class="req">必須</span>ご担当者名</label>
+          <div><input class="input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err"><p class="field__err" id="name-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="tel">
+          <label class="field__label" for="tel"><span class="req">必須</span>電話番号</label>
+          <div><input class="input" id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required data-type="tel" aria-describedby="tel-hint tel-err"><p class="field__hint" id="tel-hint">ハイフンの有無はどちらでも構いません。</p><p class="field__err" id="tel-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="email"><span class="req">必須</span>メールアドレス</label>
+          <div><input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="email-err"><p class="field__err" id="email-err" aria-live="polite"></p></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend class="fset__legend">物件の情報<span>PROPERTY</span></legend>
+        <div class="field" data-field="city">
+          <label class="field__label" for="city"><span class="req">必須</span>市町村</label>
+          <div>
+            <select class="select" id="city" name="city" required aria-describedby="city-hint city-err">
+              <option value="">選択してください</option>
+              <option>松山市</option><option>松前町</option><option>伊予市</option><option>東温市</option><option>砥部町</option><option>今治市</option><option>その他</option>
+            </select>
+            <p class="field__hint" id="city-hint">今治市は案件内容・工事規模により対応します。その他の地域は、個別にご相談ください。</p>
+            <p class="field__err" id="city-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="address">
+          <label class="field__label" for="address"><span class="req">必須</span>物件所在地</label>
+          <div><input class="input" id="address" name="address" type="text" autocomplete="off" required placeholder="町名・番地、建物名・部屋番号など" aria-describedby="address-err"><p class="field__err" id="address-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="ptype">
+          <label class="field__label" for="ptype"><span class="req">必須</span>物件種別</label>
+          <div>
+            <select class="select" id="ptype" name="ptype" required aria-describedby="ptype-err">
+              <option value="">選択してください</option>
+              <option>賃貸集合住宅（アパート・マンション）</option>
+              <option>区分所有マンション</option>
+              <option>戸建住宅</option>
+              <option>店舗</option>
+              <option>事務所</option>
+              <option>施設（福祉・医療・宿泊など）</option>
+              <option>その他</option>
+            </select>
+            <p class="field__err" id="ptype-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="occupancy">
+          <span class="field__label" id="occupancy-label"><span class="req">必須</span>物件の状況</span>
+          <div>
+            <div class="choices" role="radiogroup" aria-labelledby="occupancy-label" aria-describedby="occupancy-err">
+              <label class="choice"><input type="radio" name="occupancy" value="空室" required><span>空室</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="入居中"><span>入居中</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="営業中"><span>営業中</span></label>
+              <label class="choice"><input type="radio" name="occupancy" value="その他"><span>その他</span></label>
+            </div>
+            <p class="field__err" id="occupancy-err" aria-live="polite"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend class="fset__legend">修繕の内容<span>REQUEST</span></legend>
+        <div class="field" data-field="detail">
+          <label class="field__label" for="detail"><span class="req">必須</span>修繕内容</label>
+          <div><textarea class="textarea" id="detail" name="detail" rows="6" required placeholder="例）6畳洋室の壁紙に剥がれと汚れ。床に家具の跡のへこみが数か所。" aria-describedby="detail-hint detail-err"></textarea><p class="field__hint" id="detail-hint">箇所・状態・おおよその範囲をご記入ください。</p><p class="field__err" id="detail-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field" data-field="timing">
+          <label class="field__label" for="timing"><span class="req">必須</span>希望時期</label>
+          <div>
+            <select class="select" id="timing" name="timing" required aria-describedby="timing-hint timing-err">
+              <option value="">選択してください</option>
+              <option>できるだけ早く</option>
+              <option>1か月以内</option>
+              <option>2〜3か月以内</option>
+              <option>日程が決まっている（その他欄に記入）</option>
+              <option>時期は未定・相談したい</option>
+            </select>
+            <p class="field__hint" id="timing-hint">ご希望に沿えるかは、施工パートナーの状況を確認のうえご回答します。</p>
+            <p class="field__err" id="timing-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="photos">
+          <span class="field__label" id="photos-label"><span class="opt">推奨</span>写真</span>
+          <div>
+            <div class="upload js-upload">
+              <input type="file" id="photos" name="photos" accept="image/jpeg,image/png,image/heic,image/heif,image/webp,application/pdf" multiple aria-labelledby="photos-label photos-btn" aria-describedby="photos-hint photos-err">
+              <label class="upload__btn" for="photos" id="photos-btn">写真・ファイルを選ぶ</label>
+              <p class="upload__txt" id="photos-hint">最大10枚・1枚あたり10MBまで（JPEG / PNG / HEIC / WebP / PDF）。<br>全体が分かる写真と、近くで撮った写真があると判断しやすくなります。</p>
+            </div>
+            <ul class="thumbs js-thumbs" aria-label="選択した写真"></ul>
+            <p class="field__err" id="photos-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="field" data-field="note">
+          <label class="field__label" for="note"><span class="opt">任意</span>その他</label>
+          <div><textarea class="textarea" id="note" name="note" rows="4" placeholder="作業可能な時間帯、鍵の受け渡し、建物側のルールなど"></textarea></div>
+        </div>
+      </fieldset>
+
+      <div class="consent" data-field="agree">
+        <div class="consent__row"><span class="req">必須</span><label class="choice"><input type="checkbox" name="agree" id="agree" value="1" required aria-describedby="agree-err"><span>入力した情報と写真の取扱いについて同意します</span></label><a href="{{base}}privacy/" target="_blank" rel="noopener">個人情報の取扱い（別タブで開きます）</a></div>
+        <p class="field__err" id="agree-err" aria-live="polite"></p>
+      </div>
+      <div class="form__submit"><button class="btn btn--primary" type="submit">この内容で相談を送信する</button></div>
+    </form>
+    </div>
+
+    <aside class="form-aside" aria-label="ご相談の前に">
+      <div class="notice">
+        <h3>ご相談後の流れ</h3>
+        <ol class="mini-flow">
+          <li>担当者が内容を確認します</li>
+          <li>必要に応じて追加の写真や情報をお願いします</li>
+          <li>対応可能な施工パートナーを調整します</li>
+          <li>現地確認または見積のご案内</li>
+          <li>ご連絡はメールまたはお電話で差し上げます</li>
+        </ol>
+      </div>
+      <div class="notice notice--muted">
+        <h3>お引き受けしていない内容</h3>
+        <ul>
+          <li>個人のお客様からのご依頼</li>
+          <li>新築工事、大規模な増改築</li>
+          <li>夜間・休日の緊急駆け付け対応</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>

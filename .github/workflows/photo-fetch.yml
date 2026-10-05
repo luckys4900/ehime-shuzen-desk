@@ -1,0 +1,27 @@
+name: Fetch selected photos
+
+on:
+  push:
+    branches: [main-9c3jqk]
+    paths: ['.github/reference/photo-picks.txt', 'scripts/photo-fetch.mjs']
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: sudo apt-get install -y imagemagick >/dev/null
+      - run: node scripts/photo-fetch.mjs
+      - name: Commit optimized photos
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add src/assets/photos
+          git commit -m "Add optimized photos (automated)" || exit 0
+          git push origin HEAD:${GITHUB_REF_NAME}
