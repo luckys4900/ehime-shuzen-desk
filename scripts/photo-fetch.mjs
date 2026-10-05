@@ -3,10 +3,12 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 const lines = readFileSync('.github/reference/photo-picks.txt', 'utf8').split('\n').map((s) => s.trim()).filter((s) => s && !s.startsWith('#'));
+import { rmSync } from 'node:fs';
+rmSync('src/assets/photos', { recursive: true, force: true });
 mkdirSync('src/assets/photos', { recursive: true });
 const manifest = {};
 for (const line of lines) {
-  const [name, source, page, url, creator, license, licenseUrl, gravity = 'center'] = line.split('|');
+  const [name, source, page, url, creator, license, licenseUrl, gravity = 'center', title = '', usedOn = ''] = line.split('|');
   const fetchUrl = source === 'pexels' ? url + '?auto=compress&cs=tinysrgb&w=2000' : url;
   const r = await fetch(fetchUrl, { headers: { 'user-agent': 'Mozilla/5.0 (ehime-shuzen-desk mockup)' } });
   if (!r.ok) { console.log('FAILED', name, r.status); process.exitCode = 1; continue; }
@@ -19,7 +21,7 @@ for (const line of lines) {
     const h = Math.round(w * 0.75);
     execFileSync('convert', [orig + '[0]', '-auto-orient', '-strip', '-resize', `${w}x${h}^`, '-gravity', gravity, '-extent', `${w}x${h}`, '-interlace', 'Plane', '-sampling-factor', '4:2:0', '-quality', '76', `src/assets/photos/${name}-${suffix}.jpg`]);
   }
-  manifest[name] = { lw, lh: Math.round(lw * 0.75), sw, source, page, creator, license, licenseUrl };
+  manifest[name] = { lw, lh: Math.round(lw * 0.75), sw, source, page, creator, license, licenseUrl, title, usedOn };
   console.log('ok', name, ow, '->', lw, sw);
 }
 writeFileSync('src/assets/photos/photos.json', JSON.stringify(manifest, null, 1) + '\n');

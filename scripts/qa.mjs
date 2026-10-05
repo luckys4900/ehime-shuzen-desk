@@ -52,6 +52,7 @@ for (const w of widths) {
         links: [...document.querySelectorAll('a[href]')].map((a) => a.href),
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
+        narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
         placeholderText: /(lorem|ipsum|ダミー|TODO|XXX|000-0000|○○)/i.test(document.body.innerText),
       };
     });
@@ -63,6 +64,7 @@ for (const w of widths) {
     if (!m.title || !m.desc || !m.og || !m.icon) fail(`${r || '/'}: meta missing`);
     if (m.unlabeled.length) fail(`${r || '/'}: unlabeled inputs ${m.unlabeled}`);
     if (m.smallTap) fail(`${r || '/'} @${w}: ${m.smallTap} tap targets < 40px`);
+    if (m.narrowHeads.length) fail(`${r || '/'} @${w}: headings squeezed ${m.narrowHeads.join(',')}`);
     if (m.placeholderText) fail(`${r || '/'}: placeholder-like text found`);
     if (errors.length) fail(`${r || '/'} @${w}: console errors ${errors.join(' | ')}`);
     m.links.forEach((l) => linkSet.add(l.split('#')[0]));

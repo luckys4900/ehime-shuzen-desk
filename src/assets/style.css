@@ -116,7 +116,7 @@ ul, ol { margin: 0; padding: 0; }
 .sec-title { font-family: var(--serif); font-size: clamp(28px, 3.3vw, 44px); font-weight: 600; line-height: 1.55; }
 .sec-lead { margin-top: 24px; color: var(--ink-2); max-width: 40em; }
 .sec-head { margin-bottom: 64px; }
-.sec-head--split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 24px 80px; align-items: end; }
+.sec-head--split { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 24px 80px; align-items: end; }
 .sec-head--split .sec-lead { margin: 0; }
 @media (max-width: 1023px) { .sec-head--split { grid-template-columns: 1fr; } }
 @media (max-width: 767px) { .section { padding: 88px 0; } .section--tight { padding: 56px 0; } .sec-head { margin-bottom: 40px; } }
@@ -531,6 +531,5 @@ ul, ol { margin: 0; padding: 0; }
 .consent .req { margin-top: 0; }
 .form-intro .notice { margin-top: 14px; font-size: 14px; }
 .form-intro p { margin-bottom: 0; }
-.sec-head--split { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
 .overlap__photo .photo__cap { right: auto; left: 12px; }
 .overlap--rev .overlap__photo .photo__cap { left: auto; right: 12px; }
