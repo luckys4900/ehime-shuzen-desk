@@ -1,0 +1,9 @@
+{
+  "phase": "ENVIRONMENT_INSPECT",
+  "implementation_percent": 0,
+  "required_routes": {"/": false, "/kanri": false, "/kaitori": false, "/shop": false, "/partner": false, "/contact": false},
+  "responsive": false,
+  "public_url": null,
+  "audit_score": null,
+  "hard_fail": []
+}
