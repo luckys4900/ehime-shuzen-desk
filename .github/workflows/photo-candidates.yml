@@ -1,0 +1,37 @@
+name: Photo candidates (Unsplash, free license only)
+
+on:
+  push:
+    branches: [main-9c3jqk]
+    paths: ['.github/reference/photo-queries.txt', 'scripts/photo-candidates.mjs']
+  workflow_dispatch:
+
+jobs:
+  candidates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/photo-candidates.mjs
+      - name: Contact sheets (numbered)
+        run: |
+          sudo apt-get install -y imagemagick >/dev/null
+          cd cand
+          for q in $(ls q*.jpg | cut -c1-3 | sort -u); do
+            montage -label '%t' -pointsize 13 ${q}_*.jpg -tile 4x -geometry 330x220+4+4 ../sheet_${q}.jpg || true
+          done
+      - name: Encrypt and push to a temporary branch
+        run: |
+          tar czf caps.tgz cand sheet_*.jpg
+          openssl rand -out k.bin 32
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in caps.tgz -out caps.enc -pass file:k.bin
+          openssl pkeyutl -encrypt -pubin -inkey .github/reference/capture-pubkey.pem -in k.bin -out k.enc
+          mkdir out && mv caps.enc k.enc out/ && cd out
+          git init -q -b photo-cand-tmp
+          git config user.name github-actions && git config user.email github-actions@users.noreply.github.com
+          git add . && git commit -qm "encrypted photo candidates (temporary)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" photo-cand-tmp
