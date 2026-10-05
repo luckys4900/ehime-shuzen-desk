@@ -1,0 +1,122 @@
+{
+ "hero": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "pexels",
+  "page": "https://www.pexels.com/photo/3284980/",
+  "creator": "Pexels",
+  "license": "Pexels License",
+  "licenseUrl": "https://www.pexels.com/license/"
+ },
+ "room": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "pexels",
+  "page": "https://www.pexels.com/photo/8146330/",
+  "creator": "Pexels",
+  "license": "Pexels License",
+  "licenseUrl": "https://www.pexels.com/license/"
+ },
+ "cta": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "pexels",
+  "page": "https://www.pexels.com/photo/8082324/",
+  "creator": "Pexels",
+  "license": "Pexels License",
+  "licenseUrl": "https://www.pexels.com/license/"
+ },
+ "building": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/72396314@N00/1412767312",
+  "creator": "OiMax",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "worker": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/62177673@N05/37138902306",
+  "creator": "Austin Community College",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "wall": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/36824782@N00/120869477",
+  "creator": "Qole Pejorian",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "corridor": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/89135377@N03/8142185768",
+  "creator": "Seward Construction CO",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "kitchen": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/26042955@N00/3324039940",
+  "creator": "Fazimoto",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "shop": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/91873384@N04/54379225600",
+  "creator": "dalecruse",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "shop2": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/42033648@N00/236658788",
+  "creator": "PhillipC",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "office": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/56087830@N00/4492973490",
+  "creator": "markhillary",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ },
+ "partner": {
+  "lw": 1024,
+  "lh": 768,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/62177673@N05/37138917516",
+  "creator": "Austin Community College",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+ }
+}
