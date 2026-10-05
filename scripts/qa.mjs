@@ -12,7 +12,7 @@ if (!arg) srv = await serve(4173);
 const SHOT_DIR = new URL('../docs/screenshots/', import.meta.url).pathname;
 mkdirSync(SHOT_DIR, { recursive: true });
 
-const routes = ['', 'kanri/', 'kaitori/', 'shop/', 'partner/', 'contact/'];
+const routes = ['', 'kanri/', 'kaitori/', 'shop/', 'partner/', 'contact/', 'privacy/'];
 const widths = [390, 430, 768, 1024, 1440];
 const shots = { '': ['desktop', 'mobile'], 'kanri/': ['desktop', 'mobile'], 'kaitori/': ['mobile'], 'shop/': ['mobile'], 'partner/': ['mobile'], 'contact/': ['mobile'] };
 const results = { base: BASE, date: new Date().toISOString(), checks: [], failures: [] };
@@ -116,8 +116,13 @@ if (!(await page.isChecked('input[name="segment"][value="shop"]'))) fail('?type 
 await page.click('#contact-form button[type="submit"]');
 const errCount = await page.locator('#contact-form .is-invalid').count();
 if (errCount < 9) fail(`empty submit invalid fields = ${errCount}`); else ok(`empty submit shows ${errCount} invalid fields`);
-const focused = await page.evaluate(() => document.activeElement?.name);
-if (!focused) fail('focus not moved to first invalid field'); else ok('focus moved to ' + focused);
+const focused = await page.evaluate(() => document.activeElement?.getAttribute('data-status-for'));
+if (focused !== 'contact-form') fail('focus not moved to error summary'); else ok('focus moved to error summary');
+const links = await page.locator('[data-status-for="contact-form"] a[data-goto]').count();
+if (links < 10) fail('error summary links ' + links); else ok('error summary has ' + links + ' links');
+await page.locator('[data-status-for="contact-form"] a[data-goto]').first().click();
+const jumped = await page.evaluate(() => document.activeElement?.name);
+if (!jumped) fail('error summary link does not focus field'); else ok('error summary link focuses ' + jumped);
 await page.fill('#company', 'テスト株式会社');
 await page.fill('#name', '山田');
 await page.fill('#tel', '089-000-12');
@@ -140,13 +145,27 @@ const thumbs = await page.locator('.js-thumbs li').count();
 if (thumbs !== 1) fail(`upload preview count ${thumbs}`); else ok('upload preview + type rejection');
 await page.check('#agree', { force: true });
 await page.click('#contact-form button[type="submit"]');
-const status = await page.textContent('#contact-form .form-status');
+const status = await page.textContent('[data-status-for="contact-form"]');
 if (!/本番接続前/.test(status)) fail('valid submit status: ' + status); else ok('valid submit shows not-connected status');
+const robots = await (await req.get(BASE + 'robots.txt')).text();
+if (!/Disallow: \//.test(robots)) fail('demo robots.txt should disallow'); else ok('demo robots.txt disallows indexing');
 
 await page.goto(BASE + 'partner/', { waitUntil: 'networkidle' });
 await page.click('#partner-form button[type="submit"]');
 const pErr = await page.locator('#partner-form .is-invalid').count();
 if (pErr < 6) fail('partner empty submit invalid ' + pErr); else ok('partner form validation ' + pErr);
+
+// home header transparency over hero, solid after scroll
+await page.goto(BASE, { waitUntil: 'networkidle' });
+const over = await page.evaluate(() => document.querySelector('.site-header').classList.contains('is-over'));
+await page.evaluate(() => window.scrollTo(0, 800));
+await page.waitForTimeout(200);
+const solid = await page.evaluate(() => !document.querySelector('.site-header').classList.contains('is-over'));
+if (!over || !solid) fail('header over-hero state'); else ok('header transparent on hero, solid after scroll');
+// partner mobile CTA
+await page.goto(BASE + 'partner/', { waitUntil: 'networkidle' });
+const pm = await page.getAttribute('.mobile-cta a', 'href');
+if (pm !== '#entry') fail('partner mobile cta ' + pm); else ok('partner mobile CTA goes to #entry');
 
 // keyboard focus visibility
 await page.goto(BASE, { waitUntil: 'networkidle' });

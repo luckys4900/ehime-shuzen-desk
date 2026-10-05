@@ -20,6 +20,14 @@
     window.matchMedia('(min-width: 1081px)').addEventListener('change', function (mq) { if (mq.matches) setOpen(false); });
   }
 
+  /* ---------- header over the home hero ---------- */
+  var siteHeader = document.querySelector('.site-header');
+  if (document.body.classList.contains('page-home') && siteHeader) {
+    var onScroll = function () { siteHeader.classList.toggle('is-over', window.scrollY < 40); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   /* ---------- hide mobile CTA near the final CTA / footer ---------- */
   var mobileCta = document.querySelector('.mobile-cta');
   var hideTargets = document.querySelectorAll('.cta, .site-footer');
@@ -53,6 +61,7 @@
 
   function fieldLabel(form, name) {
     var wrap = form.querySelector('[data-field="' + name + '"]');
+    if (/agree$/.test(name)) return '個人情報の取扱いへの同意';
     var lab = wrap && wrap.querySelector('.field__label');
     return lab ? lab.textContent.replace(/必須|任意|推奨/g, '').trim() : name;
   }
@@ -76,7 +85,7 @@
       if (first.required && !form.querySelector('[name="' + name + '"]:checked')) msg = MESSAGES.choose;
     } else if (first.type === 'checkbox') {
       var wrap = form.querySelector('[data-field="' + name + '"]');
-      var isReq = wrap && wrap.querySelector('.req');
+      var isReq = (wrap && wrap.querySelector('.req')) || first.required;
       var checked = form.querySelector('[name="' + name + '"]:checked');
       if (/agree$/.test(name) && !checked) msg = MESSAGES.agree;
       else if (isReq && !checked) msg = '1つ以上選択してください。';
@@ -110,13 +119,21 @@
   }
 
   function showStatus(form, type, html) {
-    var box = form.querySelector('.form-status');
+    var box = document.querySelector('[data-status-for="' + form.id + '"]') || form.querySelector('.form-status');
     box.className = 'form-status' + (type ? ' form-status--' + type : '');
     box.innerHTML = html;
     box.hidden = false;
     box.focus({ preventScroll: true });
     box.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
   }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-goto]');
+    if (!a) return;
+    e.preventDefault();
+    var el = document.querySelector('[name="' + a.getAttribute('data-goto') + '"]');
+    if (el) { el.focus({ preventScroll: true }); (el.closest('.field, .consent') || el).scrollIntoView({ block: 'center' }); }
+  });
 
   document.querySelectorAll('.js-form').forEach(function (form) {
     var touched = {};
@@ -143,13 +160,11 @@
         if (m) errors.push({ name: n, msg: m });
       });
       if (errors.length) {
-        var list = errors.map(function (er) { return '<li>' + fieldLabel(form, er.name) + '：' + er.msg + '</li>'; }).join('');
+        var list = errors.map(function (er) {
+          var el = form.querySelector('[name="' + er.name + '"]');
+          return '<li><a href="#' + (el && el.id ? el.id : '') + '" data-goto="' + er.name + '">' + fieldLabel(form, er.name) + '</a>：' + er.msg + '</li>';
+        }).join('');
         showStatus(form, 'error', '<h3>入力内容をご確認ください（' + errors.length + '件）</h3><ul>' + list + '</ul>');
-        var firstEl = form.querySelector('[name="' + errors[0].name + '"]');
-        if (firstEl) {
-          var target = firstEl.type === 'file' ? form.querySelector('.upload__btn') : firstEl;
-          setTimeout(function () { (firstEl.type === 'file' ? firstEl : target).focus(); target.scrollIntoView({ block: 'center' }); }, 0);
-        }
         return;
       }
       var fd = new FormData(form);

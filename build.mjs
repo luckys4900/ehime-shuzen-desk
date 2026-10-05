@@ -23,6 +23,7 @@ const pages = [
   { slug: 'shop', file: 'shop.html', title: '店舗・施設運営者様へ｜愛媛修繕デスク', description: '店舗・事務所・施設の床や壁の補修、退店時の原状回復など。営業への影響を確認しながら、作業日時を含めてご相談いただけます。' },
   { slug: 'partner', file: 'partner.html', title: '協力施工会社の募集｜愛媛修繕デスク', description: '松山周辺で内装・原状回復・小修繕に対応いただける施工会社様、職人様を募集しています。資格が必要な工事は、有資格の方にのみご依頼します。' },
   { slug: 'contact', file: 'contact.html', title: '写真を送って相談する｜愛媛修繕デスク', description: '物件の所在地、修繕内容、写真をお送りください。内容を確認のうえ、担当者からメールまたはお電話でご連絡します。' },
+  { slug: 'credits', file: 'credits.html', title: '写真クレジット｜愛媛修繕デスク', description: '愛媛修繕デスクのサイトで使用している写真の出典とライセンス。' },
   { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜愛媛修繕デスク', description: '愛媛修繕デスクにおける、ご相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
 ];
 
@@ -37,14 +38,26 @@ const nav = [
   { slug: 'partner', label: '協力会社募集' },
 ];
 
-// {{photo:name|代替テキスト|追加クラス|キャプション|eager}} を <figure> に展開する
-function photo(base, spec) {
-  const [name, alt = '', cls = '', cap = '写真はイメージです', eager = ''] = spec.split('|');
+// 写真：{{photo:name|代替テキスト|追加クラス|キャプション|eager}} は <figure>、{{img:name|代替テキスト|sizes|eager}} は <img> に展開する
+function imgTag(base, name, alt, sizes, eager) {
   const p = PHOTOS[name];
   if (!p) throw new Error(`photo not found: ${name}`);
-  const src = (w) => `${base}assets/photos/${name}-${w}.jpg`;
+  const f = (k) => `${base}assets/photos/${name}-${k}.jpg`;
+  return `<img src="${f('l')}" srcset="${f('s')} ${p.sw}w, ${f('l')} ${p.lw}w" sizes="${sizes}" width="${p.lw}" height="${p.lh}" alt="${alt}"${eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"'}>`;
+}
+function photo(base, spec) {
+  const [name, alt = '', cls = '', cap = '写真はイメージです', eager = ''] = spec.split('|');
+  const sizes = /hero__bg|cta__bg/.test(cls) ? '100vw' : '(max-width: 1023px) 100vw, 55vw';
   const capHtml = cap === '-' ? '' : `<figcaption class="photo__cap">${cap}</figcaption>`;
-  return `<figure class="photo ${cls}"><img src="${src(1600)}" srcset="${src(800)} 800w, ${src(1600)} 1600w" sizes="(max-width: 767px) 100vw, 60vw" width="${p.w}" height="${p.h}" alt="${alt}"${eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"'}>${capHtml}</figure>`;
+  return `<figure class="photo ${cls}">${imgTag(base, name, alt, sizes, eager)}${capHtml}</figure>`;
+}
+function img(base, spec) {
+  const [name, alt = '', sizes = '100vw', eager = ''] = spec.split('|');
+  return imgTag(base, name, alt, sizes, eager);
+}
+function creditsHtml() {
+  const rows = Object.entries(PHOTOS).map(([name, p]) => `<tr><td>${name}</td><td><a href="${p.page}" rel="noopener">${p.source === 'pexels' ? 'Pexels' : 'Flickr'}</a></td><td>${p.creator}</td><td><a href="${p.licenseUrl}" rel="noopener">${p.license}</a></td></tr>`).join('\n');
+  return `<table class="trade-table credits"><thead><tr><th scope="col">用途</th><th scope="col">出典</th><th scope="col">撮影者・提供者</th><th scope="col">ライセンス</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
@@ -68,7 +81,7 @@ function header(base, current) {
 }
 
 function footer(base, slug) {
-  const items = [{ slug: '', label: 'トップページ' }, ...nav, { slug: 'contact', label: CTA_LABEL }, { slug: 'privacy', label: '個人情報の取扱い' }]
+  const items = [{ slug: '', label: 'トップページ' }, ...nav, { slug: 'contact', label: CTA_LABEL }, { slug: 'privacy', label: '個人情報の取扱い' }, { slug: 'credits', label: '写真クレジット' }]
     .map((n) => `<li><a href="${base}${n.slug ? n.slug + '/' : ''}">${n.label}</a></li>`).join('');
   const mobile = slug === 'partner'
     ? `<a class="btn btn--primary" href="#entry">協力会社として登録を相談する</a>`
@@ -94,8 +107,10 @@ function layout(page, body) {
   const base = page.slug ? '../' : '';
   const canonical = SITE_URL + (page.slug ? page.slug + '/' : '');
   const html = body
-    .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
     .replace(/\{\{(cta|flow)\}\}/g, (_, k) => PARTIALS[k])
+    .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
+    .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(base, spec))
+    .replace('{{credits}}', creditsHtml())
     .replaceAll('{{base}}', base)
     .replaceAll('{{cta_label}}', CTA_LABEL);
   return `<!doctype html>
