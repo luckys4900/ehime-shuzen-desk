@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T14:54:34.897Z",
+  "date": "2026-10-05T17:06:07.520Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "partner/ @390: no horizontal overflow",
@@ -45,7 +45,7 @@
     "old URL contact/ redirects to top#form",
     "no banned / unsupported wording",
     "required positioning copy present",
-    "CTAs to the form (hero, services, keep, flow/before FAQ, band, footer): 6",
+    "CTAs to the form (hero, concept, services, flow, band, footer): 6",
     "no phone CTA while phone is not configured",
     "hero CTA scrolls to the form",
     "sticky CTA hides while the form is on screen",

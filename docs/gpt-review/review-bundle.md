@@ -125,7 +125,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 ```json
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T14:54:34.897Z",
+  "date": "2026-10-05T17:06:07.520Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "partner/ @390: no horizontal overflow",
@@ -170,7 +170,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
     "old URL contact/ redirects to top#form",
     "no banned / unsupported wording",
     "required positioning copy present",
-    "CTAs to the form (hero, services, keep, flow/before FAQ, band, footer): 6",
+    "CTAs to the form (hero, concept, services, flow, band, footer): 6",
     "no phone CTA while phone is not configured",
     "hero CTA scrolls to the form",
     "sticky CTA hides while the form is on screen",
@@ -256,7 +256,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 | 廃棄物：許可を有する事業者へ手配（サービス欄・FAQ） | 一般廃棄物収集運搬（市町村許可）・産業廃棄物・古物商の確認手順。デスク自身が収集運搬を受託する形にしない契約構成 |
 | 資格が必要な作業は有資格の事業者が担当する場合に限る | 電気工事士・指定給水装置工事事業者等の確認手順 |
 | 「作業の前に見積をご案内し、確認後に手配」（FAQ・利用の流れ） | 見積書の書式、契約・請求の主体（デスク／協力事業者） |
-| 「不動産会社以外でも、案件の内容によっては対応」（FAQ） | 個人の相談を受けるか |
+| 「不動産会社以外でも、案件の内容によっては対応」（FAQ）／「不動産会社様向けの窓口です」（相談案内・フォーム） | 個人の相談を受けるか。受けない場合は FAQ の回答を「個人の方からのご依頼はお受けしていません」に変更（独立レビューで信頼感が上がると指摘） |
 | 写真：最大10枚、送信前に長辺1600pxへ縮小（フォーム） | 受け側の保存容量 |
 | 個人情報の取扱い（/privacy の記載案） | 運営者・窓口・保管期間を確定し、法務確認 |
 
@@ -477,7 +477,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <div class="svc-row">
         <h3>残置物の整理<span class="en">CLEAR-OUT</span></h3>
         <div><p><span class="svc-when">媒介開始前・相続物件</span>売主様のご確認後、残置物の整理と搬出を手配します。収集・運搬は許可を持つ事業者が担当します。</p>
-          <ul><li>売主様確認済みの残置物の搬出手配</li><li>物置・倉庫の整理</li></ul></div>
+          <ul><li>売主様確認済みの残置物の搬出手配</li><li>物置・倉庫内の残置物の搬出手配</li></ul></div>
       </div>
     </div>
     <p class="svc-foot"><span class="mark">※</span> 資格が必要な作業は、資格を持つ事業者が担当できる場合に限ります。記載のない作業も、まずはご相談ください。</p>
@@ -598,7 +598,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <span class="eyebrow">CONTACT</span>
       <h2 class="sec-title" id="form-title">写真を送って<br>案件相談</h2>
       <p class="form-lead">分かる範囲だけで構いません。写真と簡単な内容をお送りいただければ、必要な作業の整理から始めます。</p>
-      <p class="form-note">相談無料。いつもの業者との併用も問題ありません。</p>
+      <p class="form-note">不動産会社様向けの窓口です。相談無料、いつもの業者との併用も問題ありません。</p>
     </div>
 
     <div class="case">
@@ -618,11 +618,11 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
             <span class="field__label" id="services-label"><span class="req">必須</span>売却準備で必要な作業（複数選択できます）</span>
             <div>
               <div class="choices choices--grid" role="group" aria-labelledby="services-label" aria-describedby="services-err">
-                <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物の整理</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物の搬出手配</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="空室清掃"><span>空室清掃</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="草刈り・外回り"><span>草刈り・外回り</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="小修繕"><span>小修繕</span></label>
-                <label class="choice"><input type="checkbox" name="services" value="その他"><span>その他</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="その他"><span>その他の売却前作業</span></label>
               </div>
               <p class="field__err" id="services-err" aria-live="polite"></p>
             </div>
@@ -954,6 +954,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <p class="cta__lead">内容が固まっていなくても構いません。写真と分かる範囲の情報から、必要な作業を整理して、対応できる事業者を確認します。</p>
     </div>
     <div class="cta__box">
+      <p class="cta__only">不動産会社様向けの窓口です</p>
       <h3>送っていただくもの</h3>
       <ol>
         <li>相談したい作業（複数可）</li>
@@ -962,7 +963,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <li>会社名・ご担当者名・ご連絡先</li>
       </ol>
       <a class="btn btn--primary btn--block" href="#form" data-track="cta_click" data-track-pos="band">{{cta_label}}</a>
-      <small>{{cta_sub}}</small>
+      <small>{{cta_sub2}}</small>
     </div>
   </div>
 </section>
@@ -1039,8 +1040,12 @@ const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
 const CTA_LABEL = '写真を送って案件相談';
 const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応';
+// ヒーロー以外の補足（最後の相談案内・フッター）
+const CTA_SUB2 = '不動産会社様向け ｜ 既存業者との併用OK ｜ 松山市・近郊';
 // 区切りの位置でだけ改行させる
-const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
+const subHtml = (t) => t.split(' ｜ ').map((x) => `<span class="nw">${x}</span>`).join('<span class="sub-sep"> ｜ </span>');
+const CTA_SUB_HTML = subHtml(CTA_SUB);
+const CTA_SUB2_HTML = subHtml(CTA_SUB2);
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
 const CTALINE_TEXT = { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
@@ -1159,7 +1164,7 @@ function footer(base, slug) {
       ${logo(base)}
       <p>松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB_HTML}</p></div>`}
+      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB2_HTML}</p></div>`}
       ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
@@ -1189,7 +1194,7 @@ function layout(page, body) {
     .replace('{{credits}}', creditsHtml(base))
     .replaceAll('{{base}}', base)
     .replaceAll('{{cta_label}}', CTA_LABEL)
-    .replaceAll('{{cta_sub}}', CTA_SUB_HTML)
+    .replaceAll('{{cta_sub}}', CTA_SUB_HTML).replaceAll('{{cta_sub2}}', CTA_SUB2_HTML)
     .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${PHONE}）</a>` : '');
   return `<!doctype html>
 <html lang="ja">
@@ -3268,6 +3273,8 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .svc-when { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--green-2); margin-bottom: 2px; }
 .svc-cta { margin: 28px 0 0; text-align: right; }
 @media (max-width: 767px) { .svc-policy { grid-template-columns: 1fr; margin: 0 0 24px; padding: 20px 18px; } .svc-policy p { font-size: 14px; } .svc-row div > p:not(:only-child) { display: block; font-size: 13.5px; margin-bottom: 8px; } .svc-cta { text-align: left; } }
+
+.cta__only { margin: 0 0 14px; font-size: 12.5px; font-weight: 700; letter-spacing: .1em; color: var(--accent-dark); }
 
 /* services footnote */
 .svc-foot { margin: 20px 0 0; font-size: 13px; color: var(--muted); line-height: 1.85; }

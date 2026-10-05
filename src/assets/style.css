@@ -614,6 +614,8 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .svc-cta { margin: 28px 0 0; text-align: right; }
 @media (max-width: 767px) { .svc-policy { grid-template-columns: 1fr; margin: 0 0 24px; padding: 20px 18px; } .svc-policy p { font-size: 14px; } .svc-row div > p:not(:only-child) { display: block; font-size: 13.5px; margin-bottom: 8px; } .svc-cta { text-align: left; } }
 
+.cta__only { margin: 0 0 14px; font-size: 12.5px; font-weight: 700; letter-spacing: .1em; color: var(--accent-dark); }
+
 /* services footnote */
 .svc-foot { margin: 20px 0 0; font-size: 13px; color: var(--muted); line-height: 1.85; }
 

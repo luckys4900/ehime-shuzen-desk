@@ -20,8 +20,12 @@ const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
 const CTA_LABEL = '写真を送って案件相談';
 const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応';
+// ヒーロー以外の補足（最後の相談案内・フッター）
+const CTA_SUB2 = '不動産会社様向け ｜ 既存業者との併用OK ｜ 松山市・近郊';
 // 区切りの位置でだけ改行させる
-const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
+const subHtml = (t) => t.split(' ｜ ').map((x) => `<span class="nw">${x}</span>`).join('<span class="sub-sep"> ｜ </span>');
+const CTA_SUB_HTML = subHtml(CTA_SUB);
+const CTA_SUB2_HTML = subHtml(CTA_SUB2);
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
 const CTALINE_TEXT = { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
@@ -140,7 +144,7 @@ function footer(base, slug) {
       ${logo(base)}
       <p>松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB_HTML}</p></div>`}
+      ${slug === 'partner' ? '' : `<div class="site-footer__cta"><a class="btn btn--primary" href="${base}#form" data-track="cta_click" data-track-pos="footer">${CTA_LABEL}</a><p>${CTA_SUB2_HTML}</p></div>`}
       ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
@@ -170,7 +174,7 @@ function layout(page, body) {
     .replace('{{credits}}', creditsHtml(base))
     .replaceAll('{{base}}', base)
     .replaceAll('{{cta_label}}', CTA_LABEL)
-    .replaceAll('{{cta_sub}}', CTA_SUB_HTML)
+    .replaceAll('{{cta_sub}}', CTA_SUB_HTML).replaceAll('{{cta_sub2}}', CTA_SUB2_HTML)
     .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${PHONE}）</a>` : '');
   return `<!doctype html>
 <html lang="ja">
