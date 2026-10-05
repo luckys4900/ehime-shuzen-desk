@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://luckys4900.github.io/ehime-shuzen-desk/sitemap.xml
