@@ -1,3 +1,4 @@
+# Deletes temporary branches used to hand over encrypted analysis data (reference captures, photo candidates).
 name: Remove temporary analysis branches
 
 on:
