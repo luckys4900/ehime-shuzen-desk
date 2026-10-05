@@ -1,4 +1,4 @@
-// 愛媛修繕デスク 静的サイトビルド
+// 売却前おまかせデスク（愛媛修繕デスク）静的サイトビルド
 // src/pages/*.html（本文）に共通 header/footer を合成し dist/ へ出力する。
 // GitHub Pages のサブパス配信に対応するため、全リンクは相対パスで生成する。
 // 本番公開時は PRODUCTION=1 でビルドすると、検索エンジン向けの noindex を外す。
@@ -13,32 +13,41 @@ const SRC = join(ROOT, 'src');
 const DIST = join(ROOT, 'dist');
 const SITE_URL = 'https://luckys4900.github.io/ehime-shuzen-desk/';
 const BASE_PATH = new URL(SITE_URL).pathname;
-const SITE_NAME = '愛媛修繕デスク';
+const CONFIG = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'site.config.json'), 'utf8'));
+const SITE_NAME = CONFIG.serviceName || '売却前おまかせデスク';
 const BUILD_ID = (process.env.GITHUB_SHA || 'local').slice(0, 12);
 const PRODUCTION = process.env.PRODUCTION === '1';
 const CTA_LABEL = '写真を送って相談する';
+const CTA_SUB = '相談無料・いつもの業者がいてもOK';
+// 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
+const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
+const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
 
 const pages = [
-  { slug: '', file: 'index.html', title: '愛媛修繕デスク｜松山周辺の法人向け 建物修繕の相談窓口', description: '松山市・松前町・伊予市・東温市・砥部町の管理会社様、買取再販事業者様、店舗・施設運営者様向けの建物修繕の相談窓口。写真と物件情報から、原状回復や小修繕のご相談を受け付けます。' },
-  { slug: 'kanri', file: 'kanri.html', title: '管理会社様へ｜愛媛修繕デスク', description: '退去後の原状回復、入居中の小修繕など、賃貸管理の修繕手配を写真から相談できる、もう一つの修繕窓口。いつもの施工会社との取引はそのままにご利用いただけます。' },
-  { slug: 'kaitori', file: 'kaitori.html', title: '買取再販事業者様へ｜愛媛修繕デスク', description: '仕入れ後の内装補修や販売前の手直しなど、買取再販物件の修繕を写真から相談できる窓口。工事範囲ごとに内訳の分かる見積をご案内します。' },
-  { slug: 'shop', file: 'shop.html', title: '店舗・施設運営者様へ｜愛媛修繕デスク', description: '店舗・事務所・施設の床や壁の補修、退店時の原状回復など。営業への影響を確認しながら、作業日時を含めてご相談いただけます。' },
-  { slug: 'partner', file: 'partner.html', title: '協力施工会社の募集｜愛媛修繕デスク', description: '松山周辺で内装・原状回復・小修繕に対応いただける施工会社様、職人様を募集しています。資格が必要な工事は、有資格の方にのみご依頼します。' },
-  { slug: 'contact', file: 'contact.html', title: '写真を送って相談する｜愛媛修繕デスク', description: '物件の所在地、修繕内容、写真をお送りください。内容を確認のうえ、担当者からメールまたはお電話でご連絡します。' },
-  { slug: 'credits', file: 'credits.html', title: '写真クレジット｜愛媛修繕デスク', description: '愛媛修繕デスクのサイトで使用している写真の出典とライセンス。' },
-  { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜愛媛修繕デスク', description: '愛媛修繕デスクにおける、ご相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
+  { slug: '', file: 'index.html', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などをまとめて相談。いつもの業者さんがいてもOK。写真を送るだけでご相談いただけます。' },
+  { slug: 'partner', file: 'partner.html', title: '協力事業者の募集｜売却前おまかせデスク', description: '松山市・近郊で、残置物整理・清掃・草刈り・小修繕などに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
+  { slug: 'credits', file: 'credits.html', title: '写真クレジット｜売却前おまかせデスク', description: '売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
+  { slug: 'privacy', file: 'privacy.html', title: '個人情報の取扱い｜売却前おまかせデスク', description: '売却前おまかせデスクの案件相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
+];
+// 旧ページ（前バージョンの業種別ページ・問い合わせページ）は、リンク切れを防ぐため新しいページへ転送する
+const redirects = [
+  { slug: 'kanri', to: '' },
+  { slug: 'kaitori', to: '' },
+  { slug: 'shop', to: '' },
+  { slug: 'contact', to: '#form' },
 ];
 
 const partial = (name) => readFileSync(join(SRC, 'partials', name), 'utf8');
-const PARTIALS = { cta: partial('cta.html'), flow: partial('flow.html') };
+const PARTIALS = { cta: partial('cta.html'), flow: partial('flow.html'), ctaline: partial('ctaline.html') };
 const OG = JSON.parse(readFileSync(join(SRC, 'assets', 'og.json'), 'utf8'));
 const PHOTOS = existsSync(join(SRC, 'assets', 'photos', 'photos.json')) ? JSON.parse(readFileSync(join(SRC, 'assets', 'photos', 'photos.json'), 'utf8')) : {};
 
+// ページ内の主要セクションへの目次
 const nav = [
-  { slug: 'kanri', label: '管理会社様' },
-  { slug: 'kaitori', label: '買取再販事業者様' },
-  { slug: 'shop', label: '店舗・施設運営者様' },
-  { slug: 'partner', label: '協力会社募集' },
+  { href: '#services', label: '対応内容' },
+  { href: '#examples', label: 'ご相談例' },
+  { href: '#flow', label: '利用の流れ' },
+  { href: '#faq', label: 'よくある質問' },
 ];
 
 // 写真：{{photo:name|代替テキスト|追加クラス|キャプション|eager}} は <figure>、{{img:name|代替テキスト|sizes|eager}} は <img> に展開する
@@ -58,7 +67,7 @@ function img(base, spec) {
   const [name, alt = '', sizes = '100vw', eager = ''] = spec.split('|');
   return imgTag(base, name, alt, sizes, eager);
 }
-const PAGE_LABEL = { 'index.html': 'トップページ', 'kanri.html': '管理会社様ページ', 'kaitori.html': '買取再販事業者様ページ', 'shop.html': '店舗・施設運営者様ページ', 'partner.html': '協力会社募集ページ', 'cta.html': '各ページ末尾のご相談案内（背景）' };
+const PAGE_LABEL = { 'index.html': 'トップページ', 'partner.html': '協力事業者の募集ページ', 'cta.html': 'トップページ末尾のご相談案内（背景）' };
 function photoUsage() {
   const used = {};
   const files = [...pages.map((p) => ['pages', p.file]), ['partials', 'cta.html'], ['partials', 'flow.html']];
@@ -88,23 +97,26 @@ function creditsHtml(base) {
   </dl>
 </li>`;
   }).join('\n');
-  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。愛媛修繕デスクの施工事例ではありません。</p>`;
+  return `<ul class="credits">${rows}</ul><p class="credits-note">いずれの写真も、本サイトの表示に合わせて縦横比 4:3 にトリミングし、縮小・圧縮しています（改変あり）。売却前おまかせデスクの作業事例ではありません。</p>`;
 }
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
   <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#c8662f"/></svg>
-  <span class="logo__text"><span class="logo__name">愛媛修繕デスク</span><span class="logo__sub">EHIME SHUZEN DESK</span></span>
+  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">松山市・近郊の不動産会社向け</span></span>
 </a>`;
 
+const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="${track}">電話で相談</a>` : '';
+
 function header(base, current) {
-  const items = nav.map((n) => `<li><a href="${base}${n.slug}/"${current === n.slug ? ' aria-current="page"' : ''}>${n.label}</a></li>`).join('');
+  const items = nav.map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
   return `<a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
   <div class="site-header__inner">
     ${logo(base)}
     <nav class="gnav" id="gnav" aria-label="メインメニュー">
-      <ul class="gnav__list">${items}<li><a href="${base}#flow">ご相談の流れ</a></li></ul>
-      <a class="btn btn--primary gnav__cta" href="${base}contact/">${CTA_LABEL}</a>
+      <ul class="gnav__list">${items}</ul>
+      ${phoneLink('gnav__tel', 'header')}
+      <a class="btn btn--primary gnav__cta" href="${base}#form" data-track="cta_click" data-track-pos="header">${CTA_LABEL}</a>
     </nav>
     <button class="menu-btn" type="button" aria-controls="gnav" aria-expanded="false"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">メニュー</span></button>
   </div>
@@ -112,38 +124,48 @@ function header(base, current) {
 }
 
 function footer(base, slug) {
-  const items = [{ slug: '', label: 'トップページ' }, ...nav, { slug: 'contact', label: CTA_LABEL }, { slug: 'privacy', label: '個人情報の取扱い' }, { slug: 'credits', label: '写真クレジット' }]
-    .map((n) => `<li><a href="${base}${n.slug ? n.slug + '/' : ''}">${n.label}</a></li>`).join('');
+  const items = [{ href: '', label: 'トップページ' }, { href: '#form', label: '案件相談フォーム' }, { href: 'partner/', label: '協力事業者の募集' }, { href: 'privacy/', label: '個人情報の取扱い' }, { href: 'credits/', label: '写真クレジット' }]
+    .map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
   const mobile = slug === 'partner'
-    ? `<a class="btn btn--primary" href="#entry">協力会社として登録を相談する</a>`
-    : `<a class="btn btn--primary" href="${base}contact/">${CTA_LABEL}</a>`;
+    ? `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`
+    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">写真を送って相談</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       ${logo(base)}
-      <p>松山周辺の法人・事業者様向け<br>建物修繕の相談窓口</p>
-      <p class="site-footer__area">主な対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span><br><span class="nw">今治市</span>は案件内容・工事規模により対応</p>
+      <p>松山市・近郊の不動産会社向け<br>売却前の残置物・清掃・草刈り・小修繕の相談窓口</p>
+      <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
+      ${PHONE ? `<p class="site-footer__tel">電話：<a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${PHONE}</a>${CONFIG.phoneHours ? `（${CONFIG.phoneHours}）` : ''}</p>` : ''}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
   </div>
   <div class="container site-footer__note">
     <p>本サイトは営業提案用のデモサイトです。運営者情報・連絡先・各種条件は、事業内容の確認を経て本番公開時に掲載します。</p>
-    <p><small>&copy; 2026 愛媛修繕デスク</small></p>
+    <p><small>&copy; 2026 ${SITE_NAME}</small></p>
   </div>
 </footer>
-<div class="mobile-cta">${mobile}</div>`;
+<div class="mobile-cta${PHONE && slug !== 'partner' ? ' mobile-cta--two' : ''}">${mobile}</div>`;
 }
+
+// GA4 は測定IDが設定されている場合のみ読み込む（IDを自動生成しない）
+const GA = CONFIG.ga4MeasurementId ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${CONFIG.ga4MeasurementId}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${CONFIG.ga4MeasurementId}');</script>
+` : '';
+const RUNTIME_CONFIG = `<script>window.OSD_CONFIG=${JSON.stringify({ formEndpoint: CONFIG.formEndpoint || null, casePrefix: CONFIG.casePrefix || 'MAT' })};</script>`;
 
 function layout(page, body) {
   const base = page.slug ? '../' : '';
   const canonical = SITE_URL + (page.slug ? page.slug + '/' : '');
   const html = body
+    .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => PARTIALS.ctaline.replace('{{pos}}', pos || 'inline'))
     .replace(/\{\{(cta|flow)\}\}/g, (_, k) => PARTIALS[k])
     .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(base, spec))
     .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(base, spec))
     .replace('{{credits}}', creditsHtml(base))
     .replaceAll('{{base}}', base)
-    .replaceAll('{{cta_label}}', CTA_LABEL);
+    .replaceAll('{{cta_label}}', CTA_LABEL)
+    .replaceAll('{{cta_sub}}', CTA_SUB)
+    .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${PHONE}）</a>` : '');
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -161,6 +183,8 @@ ${PRODUCTION ? '' : '<meta name="robots" content="noindex, nofollow">\n'}<link r
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1e3d38">
+${RUNTIME_CONFIG}
+${GA}
 <meta name="build" content="${BUILD_ID}">
 <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png">
@@ -196,10 +220,21 @@ for (const page of pages) {
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'index.html'), layout(page, body));
 }
+for (const r of redirects) {
+  mkdirSync(join(DIST, r.slug), { recursive: true });
+  const to = `../${r.to}`;
+  writeFileSync(join(DIST, r.slug, 'index.html'), `<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>${SITE_NAME}</title><link rel="canonical" href="${SITE_URL}${r.to}">
+<meta http-equiv="refresh" content="0; url=${to}">
+<script>location.replace(${JSON.stringify(to)});</script>
+</head><body><p>このページは移動しました。<a href="${to}">${SITE_NAME}のページへ</a></p></body></html>
+`);
+}
 
 // 404（GitHub Pages はルート直下の 404.html を任意パスで返すため、サイトのベースパスからの絶対パスで参照）
 const notFoundBody = readFileSync(join(SRC, 'pages', '404.html'), 'utf8');
-const nf = layout({ slug: '', title: 'ページが見つかりません｜愛媛修繕デスク', description: 'お探しのページは見つかりませんでした。' }, notFoundBody)
+const nf = layout({ slug: '', title: 'ページが見つかりません｜売却前おまかせデスク', description: 'お探しのページは見つかりませんでした。' }, notFoundBody)
   .replace(/(href|src)="(?!https?:|\/|#|mailto:|tel:)([^"]*)"/g, `$1="${BASE_PATH}$2"`)
   .replace(/href="#(?!main")([^"]+)"/g, `href="${BASE_PATH}#$1"`)
   .replaceAll(`${BASE_PATH}./`, BASE_PATH)

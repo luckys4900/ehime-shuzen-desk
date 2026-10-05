@@ -1,0 +1,9 @@
+{
+  "_comment": "本番投入前に人間が設定する項目。未設定（null）の項目はサイトに表示されません。架空の値は入れないでください。",
+  "serviceName": "売却前おまかせデスク",
+  "phone": null,
+  "phoneHours": null,
+  "formEndpoint": null,
+  "ga4MeasurementId": null,
+  "casePrefix": "MAT"
+}
