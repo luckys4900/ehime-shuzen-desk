@@ -15,8 +15,8 @@ for (const line of lines) {
     try {
       const html = await (await fetch(page, { headers: { 'user-agent': 'Mozilla/5.0 (ehime-shuzen-desk mockup)' } })).text();
       const id = page.split('/').filter(Boolean).pop();
-      const found = [...html.matchAll(new RegExp(`live\\.staticflickr\\.com\\\\?/\\d+\\\\?/${id}_[0-9a-f]+_(k|h)\\.jpg`, 'g'))].map((m) => m[0].replace(/\\\//g, '/'));
-      const best = found.find((u) => u.endsWith('_k.jpg')) || found.find((u) => u.endsWith('_h.jpg'));
+      const found = [...html.matchAll(new RegExp(`live\\.staticflickr\\.com\\\\?/\\d+\\\\?/${id}_[0-9a-f]+_(k|h|b)\\.jpg`, 'g'))].map((m) => m[0].replace(/\\\//g, '/'));
+      const best = found.find((u) => u.endsWith('_k.jpg')) || found.find((u) => u.endsWith('_h.jpg')) || found.find((u) => u.endsWith('_b.jpg'));
       if (best) fetchUrl = 'https://' + best;
       console.log(name, 'size candidates', found.length, best || '(none)');
     } catch (e) { console.log(name, 'page lookup failed', String(e).slice(0, 80)); }
