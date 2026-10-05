@@ -64,5 +64,49 @@
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 16"
+ },
+ "kitaroom": {
+  "lw": 913,
+  "lh": 685,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202082386",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 01"
+ },
+ "fusuma": {
+  "lw": 913,
+  "lh": 685,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 13"
+ },
+ "wall": {
+  "lw": 1022,
+  "lh": 767,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/36824782@N00/120869477",
+  "creator": "Qole Pejorian",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Baby Room, sanded walls"
+ },
+ "tatami": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/82365211@N00/5953281164",
+  "creator": "kalleboo",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Apartment tatami room"
  }
 }

@@ -362,9 +362,10 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
   </div>
   <div class="hero__foot">
     <div class="container hero__foot-inner">
-      <span class="hero__foot-label">売却前の現場手配・調整</span>
-      <ul class="hero__segs hero__segs--plain">
-        <li>残置物・片付け</li><li>空室清掃</li><li>草刈り・外回り</li><li>小修繕</li>
+      <span class="hero__foot-label">役割分担</span>
+      <ul class="hero__roles">
+        <li><span>普段の工事・修繕</span><b>いつもの業者さん</b><em>これまで通り</em></li>
+        <li><span>売却前の細かな作業・繁忙時</span><b>売却前おまかせデスク</b><em>受付・整理・事業者の手配</em></li>
       </ul>
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
     </div>
@@ -374,9 +375,9 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 <section class="facts" aria-label="サービスの概要">
   <div class="container">
     <ul class="facts__list">
-      <li class="facts__item"><span class="facts__k">対象</span><span class="facts__v">松山周辺の<br>不動産会社様</span></li>
-      <li class="facts__item"><span class="facts__k">ご相談の範囲</span><span class="facts__v">売却前の残置物・清掃<br>草刈り・小修繕</span></li>
+      <li class="facts__item"><span class="facts__k">対象</span><span class="facts__v">不動産会社様向けの<br>売却前の手配窓口</span></li>
       <li class="facts__item"><span class="facts__k">ご相談方法</span><span class="facts__v">写真と物件エリアを<br>フォームから送信</span></li>
+      <li class="facts__item"><span class="facts__k">主な対応エリア</span><span class="facts__v">松山市・松前町・伊予市<br>東温市・砥部町</span></li>
       <li class="facts__item"><span class="facts__k">ご利用の形</span><span class="facts__v">いつもの業者と併用<br>業者変更は不要です</span></li>
     </ul>
   </div>
@@ -389,10 +390,10 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <span class="eyebrow">CASE</span>
         <h2 class="sec-title" id="cases-title">こんな時にご相談ください</h2>
       </div>
-      <p class="sec-lead">売却準備のすべてをお任せいただく必要はありません。いつもの業者へ<span class="nw">頼みにくい案件</span>だけのご相談を想定しています。</p>
+      <p class="sec-lead">売却準備のすべてをお任せいただく必要はありません。いつもの業者へ頼みにくい案件だけのご相談で構いません。</p>
     </div>
     <ol class="problems">
-      <li><span class="problems__no">01</span><div><h3>相続物件・空き家に、家財が残ったまま</h3><p>売主様が遠方で、片付けから清掃までの段取りを組む人がいない。</p></div></li>
+      <li><span class="problems__no">01</span><div><h3>媒介中の相続物件、段取りが進まない</h3><p>売主様が遠方で、片付けから清掃までの手配を組む人がいない。</p></div></li>
       <li><span class="problems__no">02</span><div><h3>内覧・撮影の前に、室内と庭を整えたい</h3><p>清掃・草刈り・小修繕が重なり、業者ごとに連絡する時間がない。</p></div></li>
       <li><span class="problems__no">03</span><div><h3>いつもの業者の予定が取れない</h3><p>繁忙期で、引き渡しや販売開始の日程に間に合いそうにない。</p></div></li>
       <li><span class="problems__no">04</span><div><h3>小さすぎて、頼みにくい</h3><p>建具1か所の調整や網戸の張替えなど、リフォーム会社へ頼むほどではない。</p></div></li>
@@ -408,7 +409,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <span class="eyebrow">CONCEPT</span>
         <h2 id="concept-title">売却前の<br>「第二の手配先」。</h2>
         <p><strong>いつもの業者さんは、そのままで大丈夫です。</strong>普段の工事や修繕はこれまで通りに。売却前に重なる細かな作業や、手が回らない時期の案件だけを、売却前おまかせデスクが受け付けます。</p>
-        <p>当窓口は自社で作業を行う会社ではありません。内容を整理し、対応できる事業者を確認・手配します。</p>
+        <p>受付・内容の整理・事業者の手配・完了のご報告までを当窓口が担当し、作業は内容に合う事業者が行います（当窓口は自社で作業を行う会社ではありません）。</p>
       </div>
     </div>
     <div class="concept-detail">
@@ -452,30 +453,34 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       </div>
       <p class="sec-lead">売却準備に必要な作業を整理し、内容に合う事業者へ手配します。1つだけでも、組み合わせても構いません。</p>
     </div>
+    <div class="svc-policy">
+      <h3>手配の考え方</h3>
+      <p>作業ごとに、内容に合う事業者を手配します。廃棄物の収集・運搬など許可が必要な業務は必要な許可を有する事業者が、電気・給水装置工事など資格が必要な作業は資格を持つ事業者が担当する場合に限り手配します。</p>
+    </div>
     <div class="svc-rows">
       <div class="svc-row">
-        <h3>残置物・片付け<span class="en">CLEAR-OUT</span></h3>
-        <div><p>相続物件・空き家に残った家財の整理と搬出。</p>
-          <ul><li>家具・家電・生活用品の搬出</li><li>物置・倉庫の片付け</li></ul></div>
-      </div>
-      <div class="svc-row">
         <h3>空室清掃<span class="en">CLEANING</span></h3>
-        <div><p>内覧・撮影・引き渡し前の室内清掃。</p>
-          <ul><li>室内全体の清掃</li><li>水まわりの清掃</li></ul></div>
-      </div>
-      <div class="svc-row">
-        <h3>草刈り・外回り<span class="en">OUTDOOR</span></h3>
-        <div><p>庭・空き地・建物まわりの整理。</p>
-          <ul><li>庭・空き地の草刈り</li><li>庭木の剪定</li></ul></div>
+        <div><p><span class="svc-when">撮影前・内覧前・引き渡し前</span>室内全体と水まわりを清掃します。</p>
+          <ul><li>室内全体の清掃</li><li>キッチン・浴室・トイレの清掃</li><li>窓・サッシの清掃</li></ul></div>
       </div>
       <div class="svc-row">
         <h3>小修繕<span class="en">SMALL REPAIRS</span></h3>
-        <div><p>建具・壁・床・設備の軽微な補修。</p>
-          <ul><li>建具の開閉調整</li><li>壁紙・床の部分補修</li><li>網戸・障子・ふすまの張替え</li></ul></div>
+        <div><p><span class="svc-when">内覧前・引き渡し前</span>建具・壁・床・設備の軽微な補修。</p>
+          <ul><li>建具の開閉調整</li><li>壁紙・床の部分補修</li><li>網戸・障子・ふすまの張替え</li><li>水栓・照明など部品の交換<span class="mark">※</span></li></ul></div>
+      </div>
+      <div class="svc-row">
+        <h3>草刈り・外回り<span class="en">OUTDOOR</span></h3>
+        <div><p><span class="svc-when">撮影前・内覧前</span>庭・空き地・建物まわりを整えます。</p>
+          <ul><li>庭・空き地の草刈り</li><li>庭木の剪定</li><li>建物まわりの片付け</li></ul></div>
+      </div>
+      <div class="svc-row">
+        <h3>残置物の整理<span class="en">CLEAR-OUT</span></h3>
+        <div><p><span class="svc-when">媒介開始前・相続物件</span>売主様のご確認後、残った家財の整理と搬出を手配します。</p>
+          <ul><li>売主様確認後の家財の搬出</li><li>物置・倉庫の整理</li><li>収集・運搬は許可を持つ事業者</li></ul></div>
       </div>
     </div>
-    <p class="svc-foot">※ 廃棄物の収集・運搬など許可が必要な業務は必要な許可を有する事業者が、電気・給水装置工事など資格が必要な作業は資格を持つ事業者が担当する場合に限り手配します。記載のない作業も、まずはご相談ください。</p>
-    {{ctaline:services}}
+    <p class="svc-foot"><span class="mark">※</span> 資格が必要な作業は、資格を持つ事業者が担当できる場合に限ります。記載のない作業も、まずはご相談ください。</p>
+    <p class="svc-cta"><a class="more" href="#form" data-track="cta_click" data-track-pos="services">写真を送って案件相談</a></p>
   </div>
 </section>
 
@@ -486,26 +491,32 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
         <span class="eyebrow">EXAMPLES</span>
         <h2 class="sec-title" id="ex-title">写真1枚から、<br>売却準備の段取りまで。</h2>
       </div>
-      <p class="sec-lead">実際の作業事例ではなく、ご相談の進め方の例です。作業内容と順番は、物件の状況を確認してご案内します。</p>
+      <p class="sec-lead">実際の作業事例ではなく、ご相談の進め方の例です（写真はすべてイメージです）。作業内容と順番は、物件の状況を確認してご案内します。</p>
     </div>
     <div class="examples">
       <article class="example">
-        <figure class="example__photo photo">{{img:akiya_kitchen|調理器具や生活用品が残ったままの、空き家の台所|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">ご相談時の状態のイメージ</figcaption></figure>
+        <div class="ba">
+          <figure class="ba__item photo">{{img:wall|壁紙をはがし、下地を補修している室内と脚立|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label">BEFORE<span>内覧準備前</span></figcaption></figure>
+          <figure class="ba__item photo">{{img:fusuma|ふすまと無垢材の床の、片付いた明るい室内|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label ba__label--after">AFTER<span>内覧へ</span></figcaption></figure>
+        </div>
         <div class="example__body">
           <p class="example__label">ご相談例 01</p>
-          <h3 class="example__q">相続した戸建に、家財が大量に残っている</h3>
+          <h3 class="example__q">内覧を控えた空室。壁や建具の傷みが目立つ</h3>
           <ol class="chain">
-            <li>残置物整理</li><li>空室清掃</li><li>必要箇所のみ補修</li><li class="chain__goal">売却活動へ</li>
+            <li>補修範囲のご確認（御社）</li><li>小修繕</li><li>空室清掃</li><li class="chain__goal">内覧へ</li>
           </ol>
         </div>
       </article>
       <article class="example">
-        <figure class="example__photo photo">{{img:akiya_garden|草木が伸びた空き家の玄関まわり|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">ご相談時の状態のイメージ</figcaption></figure>
+        <div class="ba">
+          <figure class="ba__item photo">{{img:tatami|家具や生活用品が置かれたままの畳の部屋|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label">BEFORE<span>媒介契約後</span></figcaption></figure>
+          <figure class="ba__item photo">{{img:kitaroom|家具がなく、無垢材の床が見える明るい室内|(max-width: 1023px) 50vw, 25vw}}<figcaption class="ba__label ba__label--after">AFTER<span>売却活動へ</span></figcaption></figure>
+        </div>
         <div class="example__body">
           <p class="example__label">ご相談例 02</p>
-          <h3 class="example__q">内覧前だが、庭と外回りが荒れている</h3>
+          <h3 class="example__q">媒介中の相続戸建。内覧前に室内を整えたい</h3>
           <ol class="chain">
-            <li>草刈り</li><li>外回り整理</li><li>室内清掃</li><li class="chain__goal">内覧へ</li>
+            <li>売主様のご了承（御社）</li><li>残置物整理</li><li>空室清掃</li><li class="chain__goal">売却活動へ</li>
           </ol>
         </div>
       </article>
@@ -527,20 +538,59 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
   <div class="container">{{ctaline:flow}}</div>
 </section>
 
-<section class="section section--paper" id="faq" aria-labelledby="faq-title">
+<section class="section section--paper" id="area-map" aria-labelledby="area-title">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow">AREA</span>
+      <h2 class="sec-title" id="area-title">対応エリア</h2>
+    </div>
+    <div class="area">
+      <figure class="area__map">
+        <svg class="draw" viewBox="0 78 420 262" role="img" aria-labelledby="area-t">
+          <title id="area-t">対応エリアの位置関係の概略図。松山市を中心に、松前町・伊予市・東温市・砥部町が主な対応エリア。</title>
+          <g fill="none" stroke-width="1.5">
+                        <path d="M205 140 L312 166 M205 140 L224 250 M205 140 L130 218 M130 218 L92 284" stroke="#1e3d38"/>
+          </g>
+          <g font-size="15" font-weight="700" text-anchor="middle">
+            <circle cx="205" cy="140" r="46" fill="#1e3d38"/>
+            <text x="205" y="145" fill="#fff" font-size="18">松山市</text>
+            <rect x="268" y="146" width="88" height="40" fill="#fff" stroke="#1e3d38"/>
+            <text x="312" y="171" fill="#23292a">東温市</text>
+            <rect x="180" y="232" width="88" height="40" fill="#fff" stroke="#1e3d38"/>
+            <text x="224" y="257" fill="#23292a">砥部町</text>
+            <rect x="86" y="198" width="88" height="40" fill="#fff" stroke="#1e3d38"/>
+            <text x="130" y="223" fill="#23292a">松前町</text>
+            <rect x="48" y="266" width="88" height="40" fill="#fff" stroke="#1e3d38"/>
+            <text x="92" y="291" fill="#23292a">伊予市</text>
+          </g>
+          <text x="12" y="330" font-size="11" fill="#6a7370">N↑</text>
+        </svg>
+        <figcaption>位置関係の概略図です。縮尺・形状は実際の地図とは<span class="nw">異なります。</span></figcaption>
+      </figure>
+      <table class="area__table">
+        <tbody>
+          <tr><th scope="row">主な対応エリア</th><td><strong><span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span></strong><span>上記エリアの物件を中心に、ご相談を受け付けています。</span></td></tr>
+          <tr><th scope="row">上記以外</th><td><strong>個別にご相談ください</strong><span>案件内容と対応できる事業者の状況により、お引き受けできない場合があります。</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
     <div>
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
     </div>
     <div class="faq">
       <details><summary>いつもの施工業者がいますが利用できますか？</summary><div class="faq__a"><p>はい。業者変更をお願いするサービスではありません。普段の業者さんで対応できない案件や、小規模・急ぎの案件だけでもご利用いただけます。</p></div></details>
+      <details><summary>契約や請求の相手はどこになりますか？</summary><div class="faq__a"><p>見積をご案内する際に、契約・請求の相手先と、作業の責任範囲を書面でお示しします。内容をご確認いただいたうえで、ご依頼をご判断ください。</p></div></details>
       <details><summary>小さい修繕だけでも大丈夫ですか？</summary><div class="faq__a"><p>内容を確認して、対応できるかどうかをご案内します。まずは写真をお送りください。電気工事・給水装置工事など資格が必要な作業は、資格を持つ事業者が担当できる場合に限り対応します。</p></div></details>
       <details><summary>見積だけでも大丈夫ですか？</summary><div class="faq__a"><p>まずは案件内容をご相談ください。内容を確認したうえで、対応方法をご案内します。</p></div></details>
       <details><summary>複数の作業をまとめて相談できますか？</summary><div class="faq__a"><p>できます。残置物・清掃・草刈り・小修繕など、売却前に必要な作業をまとめてご相談いただけます。</p></div></details>
-      <details><summary>不動産会社以外でも利用できますか？</summary><div class="faq__a"><p>基本的には法人・不動産関連事業者様向けですが、案件の内容によっては対応できます。</p></div></details>
-      <details><summary>廃棄物の処理はできますか？</summary><div class="faq__a"><p>残置物の収集・運搬・処分など、法令上の許可が必要な業務は、必要な許可を有する事業者へ手配します。内容を確認し、対応方法をご案内します。</p></div></details>
-      <details><summary>対応エリアはどこですか？</summary><div class="faq__a"><p>松山市・松前町・伊予市・東温市・砥部町を中心とした近郊です。その他の地域は、案件内容によりご相談ください。</p></div></details>
+      <details><summary>残置物の搬出・処分は、どの事業者が担当しますか？</summary><div class="faq__a"><p>収集・運搬・処分など法令上の許可が必要な業務は、必要な許可を有する事業者が担当します。当窓口は内容を確認し、その事業者への手配と日程の調整を行います。</p></div></details>
       <details><summary>費用はいつ分かりますか？</summary><div class="faq__a"><p>内容を確認したうえで、作業の前に見積をご案内します。見積の内容をご確認いただいてから手配します。写真は任意のため、写真がない段階でもご相談いただけます。</p></div></details>
+      <details><summary>不動産会社以外でも利用できますか？</summary><div class="faq__a"><p>基本的には法人・不動産関連事業者様向けですが、案件の内容によっては対応できます。</p></div></details>
     </div>
   </div>
 </section>
@@ -573,7 +623,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
             <span class="field__label" id="services-label"><span class="req">必須</span>相談したい作業（複数選択できます）</span>
             <div>
               <div class="choices choices--grid" role="group" aria-labelledby="services-label" aria-describedby="services-err">
-                <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物・片付け</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="残置物・片付け"><span>残置物の整理</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="空室清掃"><span>空室清掃</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="草刈り・外回り"><span>草刈り・外回り</span></label>
                 <label class="choice"><input type="checkbox" name="services" value="小修繕"><span>小修繕</span></label>
@@ -931,7 +981,6 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
       <p class="ctaline__text">{{ctaline_text}}</p>
       <div class="ctaline__act">
         <a class="btn btn--primary" href="#form" data-track="cta_click" data-track-pos="{{pos}}">{{cta_label}}</a>
-        <p class="ctaline__sub">{{cta_sub}}</p>
       </div>
     </div>
 
@@ -942,9 +991,10 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 ```html
 <ol class="flow">
         <li><div><h3>写真を送る</h3><p>フォームから、写真・相談したい作業・物件エリアをお送りください。分かる範囲で構いません。</p></div></li>
-        <li><div><h3>内容の整理</h3><p>必要な作業と順番を整理し、足りない情報があればお問い合わせします。</p></div></li>
-        <li><div><h3>事業者の確認・見積<span class="flow__opt">必要に応じて現地確認</span></h3><p>作業に合う事業者の対応可否と日程を確認し、見積をご案内します。</p></div></li>
-        <li><div><h3>手配・作業</h3><p>見積の内容をご確認いただいてから、事業者が作業します。完了後に状況をお伝えします。</p></div></li>
+        <li><div><h3>内容の整理</h3><p>当窓口が必要な作業と順番を整理し、足りない情報があればお問い合わせします。</p></div></li>
+        <li><div><h3>事業者の確認・見積<span class="flow__opt">必要に応じて現地確認</span></h3><p>作業に合う事業者の対応可否と日程を確認し、見積と、契約・請求の相手先をご案内します。</p></div></li>
+        <li><div><h3>ご承認後に手配・作業</h3><p>見積の内容を御社でご確認いただき、ご承認後に手配します。作業は手配した事業者が行います。</p></div></li>
+        <li><div><h3>完了のご報告</h3><p>作業後の状況をお伝えします。売却活動・内覧の準備にお進みください。</p></div></li>
       </ol>
 
 ```
@@ -997,7 +1047,7 @@ const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近
 // 区切りの位置でだけ改行させる
 const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
-const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '1つだけでも、まとめてでも。写真から内容を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
+const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
 const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
@@ -1081,7 +1131,7 @@ function creditsHtml(base) {
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
   <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#c8662f"/></svg>
-  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">PRE-SALE SUPPORT DESK</span></span>
+  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">松山周辺の不動産会社様向け</span></span>
 </a>`;
 
 const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="${track}">電話で相談</a>` : '';
@@ -1107,7 +1157,7 @@ function footer(base, slug) {
     .map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
   const mobile = slug === 'partner'
     ? `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`
-    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">写真を送って相談</a>`;
+    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">${PHONE ? '写真を送って相談' : CTA_LABEL}</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
@@ -3183,25 +3233,48 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .hero__bg::after { background: linear-gradient(90deg, rgba(16,22,21,.78) 0%, rgba(16,22,21,.5) 42%, rgba(16,22,21,.08) 78%), linear-gradient(0deg, rgba(16,22,21,.5) 0%, rgba(16,22,21,0) 36%); }
 .hero__bg img { filter: saturate(.95) brightness(1.06); }
 .hero__sub { margin: 18px 0 0; font-size: 13.5px; color: rgba(255,255,255,.88); letter-spacing: .08em; }
-.hero__segs--plain li { font-size: 15px; letter-spacing: .06em; padding: 2px 0; }
-.hero__segs--plain { gap: 4px 0; }
-.hero__segs--plain li + li { margin-left: 24px; padding-left: 24px; border-left: 1px solid rgba(255,255,255,.4); line-height: 1.2; }
-.hero__segs--plain li:first-child { line-height: 1.2; }
 @media (max-width: 767px) {
   .hero__bg::after { background: linear-gradient(0deg, rgba(16,22,21,.86) 0%, rgba(16,22,21,.6) 55%, rgba(16,22,21,.3) 100%); }
   .hero__sub { font-size: 12.5px; letter-spacing: .02em; text-align: center; }
-  .hero__segs--plain { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; margin-top: 6px; }
-  .hero__segs--plain li { border: 0; font-size: 13.5px; padding: 3px 0; }
-  .hero__segs--plain li + li { margin-left: 0; padding-left: 0; border-left: 0; }
-  .hero__segs--plain li::before { content: "・"; color: #f0b994; }
   .hero__foot-inner .photo__cap { justify-self: start; margin-top: 10px; }
 }
 
 .hero__title { font-size: clamp(30px, 4.2vw, 60px); }
 .hero__lead { max-width: 38em; }
+.hero__eyebrow { font-size: 15px; font-weight: 500; }
+@media (max-width: 767px) { .hero__eyebrow { font-size: 13.5px; } }
 @media (max-width: 767px) { .hero__title { font-size: clamp(28px, 8vw, 34px); letter-spacing: .04em; line-height: 1.55; } }
 .rel__box--desk span { word-break: keep-all; }
 @media (max-width: 600px) { .rel__box { font-size: 14px; } }
+
+.hero__roles { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hero__roles li { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 0 14px; padding: 6px 32px; border-left: 1px solid rgba(255,255,255,.28); }
+.hero__roles li:first-child { border-left: 0; padding-left: 0; }
+.hero__roles li span { grid-column: 1 / -1; font-size: 12px; letter-spacing: .1em; color: rgba(255,255,255,.7); }
+.hero__roles b { font-size: 17px; letter-spacing: .06em; }
+.hero__roles em { font-style: normal; font-size: 13px; color: #f3d3bd; letter-spacing: .04em; }
+.hero__roles li:last-child b { color: #f3d3bd; }
+.hero__roles li:last-child em { color: rgba(255,255,255,.8); }
+@media (max-width: 767px) {
+  .hero__roles { grid-template-columns: 1fr; gap: 10px; margin-top: 8px; }
+  .hero__roles li, .hero__roles li:first-child { border: 0; padding: 0; }
+  .hero__roles b { font-size: 15px; }
+}
+
+/* services */
+.svc-policy { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); gap: 8px 40px; margin: -16px 0 40px; padding: 24px 28px; background: var(--paper); }
+.svc-policy h3 { font-family: var(--serif); font-size: 18px; margin: 0; }
+.svc-policy p { margin: 0; font-size: 15px; color: var(--ink-2); }
+.svc-when { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--green-2); margin-bottom: 2px; }
+.svc-cta { margin: 28px 0 0; text-align: right; }
+@media (max-width: 767px) { .svc-policy { grid-template-columns: 1fr; margin: 0 0 24px; padding: 20px 18px; } .svc-policy p { font-size: 14px; } .svc-row div > p:not(:only-child) { display: block; font-size: 13.5px; margin-bottom: 8px; } .svc-cta { text-align: left; } }
+
+/* before / after */
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #fff; }
+.ba__item { aspect-ratio: 4 / 3; }
+.ba__label { white-space: nowrap; position: absolute; left: 0; bottom: 0; z-index: 2; background: rgba(20,26,25,.78); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .14em; padding: 4px 10px; display: flex; gap: 8px; align-items: baseline; }
+.ba__label span { font-size: 11.5px; font-weight: 500; letter-spacing: .04em; }
+.ba__label--after { background: var(--green); }
 
 /* services footnote */
 .svc-foot { margin: 20px 0 0; font-size: 13px; color: var(--muted); line-height: 1.85; }
@@ -3210,8 +3283,6 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .ctaline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-top: 56px; padding: 28px 32px; border: 1px solid var(--line); border-left: 4px solid var(--accent); background: #fff; }
 .ctaline__text { margin: 0; font-family: var(--serif); font-size: 19px; font-weight: 600; }
 .ctaline__act { display: grid; justify-items: center; gap: 6px; }
-.ctaline__sub { margin: 0; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
-.ctaline__sub--light { color: rgba(255,255,255,.85); }
 @media (max-width: 767px) { .ctaline { padding: 22px 18px; margin-top: 40px; } .ctaline__act, .ctaline__act .btn { width: 100%; } }
 
 /* examples */
@@ -3293,7 +3364,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .logo { min-width: 0; }
 @media (max-width: 430px) {
   .logo__name { font-size: 18px; letter-spacing: .06em; }
-  .logo__sub { font-size: 8.5px; letter-spacing: .18em; }
+  .logo__sub { font-size: 9px; letter-spacing: .08em; }
   .logo__mark { width: 32px; height: 32px; }
   .logo { gap: 8px; }
 }
@@ -3378,6 +3449,50 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
   "license": "CC BY 2.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
   "title": "House in Kita-ku 16"
+ },
+ "kitaroom": {
+  "lw": 913,
+  "lh": 685,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202082386",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 01"
+ },
+ "fusuma": {
+  "lw": 913,
+  "lh": 685,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/9160678@N06/4202084114",
+  "creator": "scarletgreen",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "House in Kita-ku 13"
+ },
+ "wall": {
+  "lw": 1022,
+  "lh": 767,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/36824782@N00/120869477",
+  "creator": "Qole Pejorian",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Baby Room, sanded walls"
+ },
+ "tatami": {
+  "lw": 1600,
+  "lh": 1200,
+  "sw": 800,
+  "source": "flickr",
+  "page": "https://www.flickr.com/photos/82365211@N00/5953281164",
+  "creator": "kalleboo",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+  "title": "Apartment tatami room"
  }
 }
 

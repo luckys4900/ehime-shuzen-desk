@@ -23,7 +23,7 @@ const CTA_SUB = '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近
 // 区切りの位置でだけ改行させる
 const CTA_SUB_HTML = CTA_SUB.split(' ｜ ').map((t) => `<span class="nw">${t}</span>`).join('<span class="sub-sep"> ｜ </span>');
 // 本文中の相談導線（{{ctaline:pos}}）の一文。位置ごとに文脈に合わせる
-const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '1つだけでも、まとめてでも。写真から内容を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
+const CTALINE_TEXT = { keep: 'いつもの業者さんはそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' };
 // 電話番号は設定されている場合のみ表示する（ダミー番号は入れない）
 const PHONE = CONFIG.phone ? String(CONFIG.phone).trim() : '';
 const PHONE_HREF = PHONE ? 'tel:' + PHONE.replace(/[^\d+]/g, '') : '';
@@ -107,7 +107,7 @@ function creditsHtml(base) {
 
 const logo = (base) => `<a class="logo" href="${base || './'}" aria-label="${SITE_NAME} トップページ">
   <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#c8662f"/></svg>
-  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">PRE-SALE SUPPORT DESK</span></span>
+  <span class="logo__text"><span class="logo__name">${SITE_NAME}</span><span class="logo__sub">松山周辺の不動産会社様向け</span></span>
 </a>`;
 
 const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="${track}">電話で相談</a>` : '';
@@ -133,7 +133,7 @@ function footer(base, slug) {
     .map((n) => `<li><a href="${base}${n.href}">${n.label}</a></li>`).join('');
   const mobile = slug === 'partner'
     ? `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`
-    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">写真を送って相談</a>`;
+    : `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${base}#form" data-track="sticky_cta_click">${PHONE ? '写真を送って相談' : CTA_LABEL}</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
