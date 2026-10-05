@@ -54,14 +54,14 @@ for (const w of widths) {
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
         narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
-        orphanLines: [...document.querySelectorAll('h1, h2, h3, main p, main li, main dd, main th, main td, main figcaption, .faq summary, .prep__list span, .facts__v')].filter((h) => h.offsetParent !== null).map((h) => {
+        orphanLines: [...document.querySelectorAll('h1, h2, h3, main p, main li, main dd, main th, main td, main small, main figcaption, .faq summary, .prep__list span, .facts__v')].filter((h) => h.offsetParent !== null).map((h) => {
           const counts = [];
           const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
           let node;
           while ((node = walker.nextNode())) {
             // 同じブロックの文字だけを数える（子ブロックの文字は別に評価する）
             if (node.parentElement !== h && !node.parentElement.matches('a, .nw, .mark, strong, em, small')) continue;
-            if (node.parentElement.matches('small') && getComputedStyle(node.parentElement).display === 'block') continue;
+            if (node.parentElement !== h && node.parentElement.matches('small') && getComputedStyle(node.parentElement).display === 'block') continue;
             for (let i = 0; i < node.length; i++) {
               if (/\s/.test(node.data[i])) continue;
               const r = document.createRange(); r.setStart(node, i); r.setEnd(node, i + 1);
@@ -225,6 +225,32 @@ if (r500.disabledAfter) fail('submit button stays disabled after failure'); else
 const rNet = await sendWith(async (route) => { await route.abort('failed'); });
 if (!/通信に失敗しました/.test(rNet.text)) fail('network failure message missing: ' + rNet.text.slice(0, 30)); else ok('network failure message shown');
 const rOk = await sendWith(async (route) => { await route.fulfill({ status: 200, body: 'ok' }); }, false);
+{
+  const p3 = await ctx.newPage();
+  await p3.addInitScript((u) => { window.EHIME_FORM_ENDPOINT = u; }, BASE + '__qa_endpoint');
+  const bodies = [];
+  await p3.route('**/__qa_endpoint', async (route) => { bodies.push(route.request().postDataBuffer() || Buffer.alloc(0)); await route.fulfill({ status: 200, body: 'ok' }); });
+  await p3.goto(BASE + 'contact/?type=kanri', { waitUntil: 'networkidle' });
+  const fillAll = async () => {
+    await p3.fill('#company', 'テスト株式会社'); await p3.fill('#name', '山田'); await p3.fill('#tel', '089−912−3456'); await p3.fill('#email', 'info@example.co.jp');
+    await p3.selectOption('#city', '松山市'); await p3.fill('#address', '一番町'); await p3.selectOption('#ptype', { index: 1 });
+    await p3.locator('label.choice:has(input[name="occupancy"][value="空室"])').click();
+    await p3.fill('#detail', '壁紙'); await p3.selectOption('#timing', { index: 1 });
+    await p3.locator('label.choice:has(#agree)').click();
+  };
+  await fillAll();
+  const png1 = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+  await p3.setInputFiles('#photos', [{ name: 'first-property.png', mimeType: 'image/png', buffer: png1 }]);
+  await p3.click('#contact-form button[type="submit"]'); await p3.waitForTimeout(500);
+  const thumbsLeft = await p3.locator('.js-thumbs li').count();
+  await fillAll();
+  await p3.click('#contact-form button[type="submit"]'); await p3.waitForTimeout(500);
+  await p3.close();
+  if (bodies.length !== 2) fail('expected two sends, got ' + bodies.length);
+  else if (!bodies[0].includes('first-property.png')) fail('first send did not include its photo');
+  else if (bodies[1].includes('first-property.png') || thumbsLeft) fail('previous photo carried over to next inquiry');
+  else ok('photos cleared after successful send (no carry-over); U+2212 phone accepted');
+}
 if (!/送信しました/.test(rOk.text)) fail('success message missing: ' + rOk.text.slice(0, 30)); else ok('success message shown when endpoint is connected');
 
 await page.goto(BASE + 'partner/', { waitUntil: 'networkidle' });

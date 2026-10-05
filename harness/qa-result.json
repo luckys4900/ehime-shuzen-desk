@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T06:43:00.036Z",
+  "date": "2026-10-05T07:09:19.918Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "kanri/ @390: no horizontal overflow",
@@ -71,6 +71,7 @@
     "submit button prevents double submit",
     "submit button re-enabled after failure",
     "network failure message shown",
+    "photos cleared after successful send (no carry-over); U+2212 phone accepted",
     "success message shown when endpoint is connected",
     "partner form validation 7",
     "header transparent on hero, solid after scroll",

@@ -288,7 +288,7 @@ ul, ol { margin: 0; padding: 0; }
 .flow h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
 .flow p { font-size: 15px; color: var(--ink-2); margin: 0; }
 .flow li > div { min-width: 0; }
-main li, main p, main dd, main span, .faq summary { word-break: auto-phrase; text-wrap: pretty; }
+main li, main p, main dd, main span, main small, main td, .faq summary { word-break: auto-phrase; text-wrap: pretty; }
 .flow__opt { display: inline-block; font-size: 11px; font-weight: 700; padding: 0 8px; border: 1px solid var(--green-2); color: var(--green-2); margin-left: 10px; vertical-align: 2px; letter-spacing: .04em; line-height: 1.8; }
 .flow-note { margin-top: 24px; font-size: 13.5px; color: var(--muted); }
 @media (max-width: 1023px) { .flow-wrap { grid-template-columns: 1fr; } .flow-wrap__head { position: static; } }

@@ -56,7 +56,7 @@
 
   function toHalfWidth(s) {
     return s.replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
-      .replace(/[－ー―‐]/g, '-');
+      .replace(/[－ー―‐−–—]/g, '-');
   }
 
   function fieldLabel(form, name) {
@@ -227,6 +227,9 @@
         if (res.ok) {
           showStatus(form, 'done', '<h3>送信しました</h3><p>内容を確認のうえ、担当者からご連絡します。</p>');
           form.reset();
+          // 次の相談に前回の写真や入力状態が残らないよう、写真の選択と判定状態も初期化する
+          touched = {};
+          form.dispatchEvent(new CustomEvent('form:cleared'));
         } else if (res.reason === 'not_connected') {
           showStatus(form, 'done', '<h3>入力内容の確認が完了しました</h3><p>本サイトは営業提案用のデモサイトのため、フォームは送信先に接続されていません（本番接続前）。実際の送信は行われていません。</p>');
         } else if (res.reason === 'network') {
@@ -288,16 +291,21 @@
     }
 
     input.addEventListener('change', function () { addFiles(input.files); input.value = ''; });
+    form.addEventListener('form:cleared', function () { input._files = []; input._fileError = ''; setError(form, input.name, ''); render(); });
     ['dragenter', 'dragover'].forEach(function (ev) { upload.addEventListener(ev, function (e) { e.preventDefault(); upload.classList.add('is-drag'); }); });
     ['dragleave', 'drop'].forEach(function (ev) { upload.addEventListener(ev, function (e) { e.preventDefault(); upload.classList.remove('is-drag'); }); });
     upload.addEventListener('drop', function (e) { if (e.dataTransfer) addFiles(e.dataTransfer.files); });
   });
 
   /* ---------- preset segment from ?type= ---------- */
-  var params = new URLSearchParams(location.search);
-  var type = params.get('type');
-  if (type) {
+  var type = new URLSearchParams(location.search).get('type');
+  function presetSegment() {
+    if (!type) return;
     var radio = document.querySelector('#contact-form input[name="segment"][value="' + type.replace(/[^a-z]/g, '') + '"]');
     if (radio) radio.checked = true;
   }
+  presetSegment();
+  // 送信完了後のリセットでも、ページを開いたときの区分を保つ
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) contactForm.addEventListener('form:cleared', presetSegment);
 })();
