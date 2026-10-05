@@ -20,6 +20,8 @@ jobs:
           npm i --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
       - run: node scripts/photo-candidates.mjs
+        env:
+          OPENVERSE_ONLY: "1"
       - name: Contact sheets (numbered)
         run: |
           sudo apt-get install -y imagemagick >/dev/null

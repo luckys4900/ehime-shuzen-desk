@@ -21,7 +21,7 @@ async function save(prefix, n, url, info) {
 for (const [qi, q] of qs.entries()) {
   const prefix = 'q' + String(qi).padStart(2, '0');
   let n = 0;
-  for (const site of ['unsplash', 'pexels']) {
+  for (const site of (process.env.OPENVERSE_ONLY ? [] : ['unsplash', 'pexels'])) {
     try {
       const url = site === 'unsplash'
         ? `https://unsplash.com/s/photos/${encodeURIComponent(q.replace(/ /g, '-'))}?license=free&orientation=landscape`
@@ -58,11 +58,11 @@ for (const [qi, q] of qs.entries()) {
     await page.waitForTimeout(4000);
   }
   try {
-    const r = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&license_type=commercial&page_size=6&aspect_ratio=wide&mature=false`, { headers: { 'user-agent': 'ehime-shuzen-desk-mockup/1.0' } });
+    const r = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&license_type=commercial&page_size=${process.env.OPENVERSE_ONLY ? 20 : 6}${process.env.OPENVERSE_ONLY ? '' : '&aspect_ratio=wide'}&mature=false`, { headers: { 'user-agent': 'ehime-shuzen-desk-mockup/1.0' } });
     if (r.ok) {
       const j = await r.json();
       for (const it of j.results || []) {
-        if (n >= 26) break;
+        if (n >= 30) break;
         if (!['cc0', 'pdm', 'by'].includes(it.license)) continue;
         const thumb = it.thumbnail || it.url;
         if (await save(prefix, n, thumb, { q, source: 'openverse:' + it.source, page: it.foreign_landing_url, raw: it.url, alt: it.title, creator: it.creator, creatorUrl: it.creator_url, license: it.license, licenseVersion: it.license_version, licenseUrl: it.license_url, w: it.width, h: it.height })) n++;

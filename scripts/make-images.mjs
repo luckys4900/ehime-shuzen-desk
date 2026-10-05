@@ -6,14 +6,16 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } });
 await routeFonts(ctx);
 const page = await ctx.newPage();
-await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=block"></head><body style="margin:0;width:1200px;height:630px;background:#f6f4ef;font-family:'Noto Sans JP',sans-serif;position:relative;overflow:hidden">
-<div style="position:absolute;inset:0;opacity:.6;background-image:linear-gradient(#e8e5de 1px,transparent 1px),linear-gradient(90deg,#e8e5de 1px,transparent 1px);background-size:32px 32px"></div>
-<div style="position:absolute;left:80px;top:80px;right:80px">
-<div style="display:flex;align-items:center;gap:16px"><svg width="64" height="64" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" fill="none" stroke="#1f3a36" stroke-width="2"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="#1f3a36" stroke-width="2.4"/><path d="M12 18 V31 H28 V18" fill="none" stroke="#1f3a36" stroke-width="2.4"/><rect x="17.5" y="23" width="5" height="8" fill="#c25a22"/></svg>
-<div><div style="font-size:34px;font-weight:900;letter-spacing:.06em;color:#1b2422">愛媛修繕デスク</div><div style="font-size:14px;letter-spacing:.2em;color:#5f6a66">EHIME SHUZEN DESK</div></div></div>
-<div style="margin-top:56px;font-size:64px;font-weight:900;line-height:1.35;color:#1b2422;letter-spacing:.03em">いつもの施工会社を<br>変える必要はありません。</div>
-<div style="margin-top:36px;display:inline-block;background:#1f3a36;color:#fff;font-size:24px;font-weight:700;padding:12px 24px">松山周辺の法人・事業者様向け　建物修繕の相談窓口</div>
-</div><div style="position:absolute;left:0;right:0;bottom:0;height:14px;background:#c25a22"></div></body></html>`);
+const heroB64 = (await import('node:fs')).readFileSync(new URL('../src/assets/photos/hero-l.jpg', import.meta.url)).toString('base64');
+await page.setContent(`<html><head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Shippori+Mincho+B1:wght@600;700&display=block"></head><body style="margin:0;width:1200px;height:630px;position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;color:#fff">
+<img src="data:image/jpeg;base64,${heroB64}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,22,21,.86) 0%,rgba(16,22,21,.6) 55%,rgba(16,22,21,.2) 100%)"></div>
+<div style="position:absolute;left:80px;top:72px;right:80px">
+<div style="display:flex;align-items:center;gap:14px"><svg width="52" height="52" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M8 20 L20 9 L32 20" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 18 V31 H28 V18" fill="none" stroke="#fff" stroke-width="2"/><rect x="17.5" y="23" width="5" height="8" fill="#e0874f"/></svg>
+<div><div style="font-family:'Shippori Mincho B1',serif;font-size:30px;font-weight:700;letter-spacing:.1em">愛媛修繕デスク</div><div style="font-size:12px;letter-spacing:.26em;opacity:.8">EHIME SHUZEN DESK</div></div></div>
+<div style="margin-top:70px;font-family:'Shippori Mincho B1',serif;font-size:62px;font-weight:600;line-height:1.5;letter-spacing:.06em">いつもの施工会社を<br>変える必要はありません。</div>
+<div style="margin-top:30px;font-size:22px;font-weight:500;letter-spacing:.08em;border-top:1px solid rgba(255,255,255,.5);padding-top:18px;display:inline-block">松山周辺の法人・事業者様向け　建物修繕の相談窓口</div>
+</div></body></html>`);
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(500);
 await page.screenshot({ path: out + 'og.png' });
