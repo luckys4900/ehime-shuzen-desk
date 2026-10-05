@@ -73,7 +73,7 @@ for (const w of widths) {
             }
           }
           counts.sort((x, y) => x.top - y.top);
-          return counts.length > 1 && counts[counts.length - 1].n <= 2 ? h.textContent.trim().slice(0, 14) : null;
+          return counts.length > 1 && counts.some((c, i) => c.n <= (i === counts.length - 1 ? 2 : 1)) ? h.textContent.trim().slice(0, 14) : null;
         }).filter(Boolean),
         areaStrongLines: [...document.querySelectorAll('.area__table td strong')].map((el) => Math.round(el.getBoundingClientRect().height / ((v) => Number.isFinite(v) ? v : parseFloat(getComputedStyle(el).fontSize) * 1.5)(parseFloat(getComputedStyle(el).lineHeight)))).filter((n) => n > 2).length,
         mobileCtaAtTop: innerWidth < 768 && !!document.querySelector('.hero__actions, .phero .btn-row') && document.querySelector('.mobile-cta') && !document.querySelector('.mobile-cta').classList.contains('is-hidden') && getComputedStyle(document.querySelector('.mobile-cta')).display !== 'none',
@@ -152,8 +152,12 @@ if (links < 10) fail('error summary links ' + links); else ok('error summary has
 await page.locator('[data-status-for="contact-form"] a[data-goto]').first().click();
 const jumped = await page.evaluate(() => document.activeElement?.name);
 if (!jumped) fail('error summary link does not focus field'); else ok('error summary link focuses ' + jumped);
+const before = await page.textContent('[data-status-for="contact-form"] h3');
 await page.fill('#company', 'テスト株式会社');
 await page.fill('#name', '山田');
+const after = await page.textContent('[data-status-for="contact-form"] h3');
+const nb = Number((before.match(/（(\d+)件）/) || [])[1]), na = Number((after.match(/（(\d+)件）/) || [])[1]);
+if (na !== nb - 2) fail(`error summary not live: ${nb} -> ${na}`); else ok(`error summary updates live (${nb} -> ${na})`);
 await page.fill('#tel', '089-000-12');
 await page.fill('#email', 'bad');
 await page.click('#contact-form button[type="submit"]');

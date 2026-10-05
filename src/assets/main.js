@@ -118,6 +118,31 @@
     return fetch(ENDPOINT, { method: 'POST', body: formData }).then(function (r) { return { ok: r.ok }; });
   }
 
+  /* エラー要約を、項目の再判定に合わせて更新する（フォーカスは動かさない） */
+  function refreshSummary(form) {
+    var box = document.querySelector('[data-status-for="' + form.id + '"]');
+    if (!box || box.hidden || !box.classList.contains('form-status--error')) return;
+    var invalid = [];
+    form.querySelectorAll('[data-field].is-invalid').forEach(function (w) { invalid.push(w.getAttribute('data-field')); });
+    if (!invalid.length) {
+      box.className = 'form-status';
+      box.innerHTML = '<p>入力エラーはすべて解消されました。内容をご確認のうえ、送信してください。</p>';
+      return;
+    }
+    box.innerHTML = summaryHtml(form, invalid.map(function (n) {
+      var err = document.getElementById(n + '-err');
+      return { name: n, msg: err ? err.textContent : '' };
+    }));
+  }
+
+  function summaryHtml(form, errors) {
+    var list = errors.map(function (er) {
+      var el = form.querySelector('[name="' + er.name + '"]');
+      return '<li><a href="#' + (el && el.id ? el.id : '') + '" data-goto="' + er.name + '">' + fieldLabel(form, er.name) + '</a>：' + er.msg + '</li>';
+    }).join('');
+    return '<h3>入力内容をご確認ください（' + errors.length + '件）</h3><ul>' + list + '</ul>';
+  }
+
   function showStatus(form, type, html) {
     var box = document.querySelector('[data-status-for="' + form.id + '"]') || form.querySelector('.form-status');
     box.className = 'form-status' + (type ? ' form-status--' + type : '');
@@ -142,16 +167,17 @@
       if (!t.name || t.type === 'file') return;
       touched[t.name] = true;
       validateField(form, t.name);
+      refreshSummary(form);
     }, true);
     form.addEventListener('change', function (e) {
       var t = e.target;
-      if (t.name && (t.type === 'radio' || t.type === 'checkbox' || t.tagName === 'SELECT')) validateField(form, t.name);
+      if (t.name && (t.type === 'radio' || t.type === 'checkbox' || t.tagName === 'SELECT')) { validateField(form, t.name); refreshSummary(form); }
     });
     form.addEventListener('input', function (e) {
       var t = e.target;
       // エラー表示中の項目は入力のたびに再判定し、直った時点でメッセージを消す（離脱時のレイアウトのずれを防ぐ）
       var wrap = t.name && form.querySelector('[data-field="' + t.name + '"]');
-      if (t.name && (touched[t.name] || (wrap && wrap.classList.contains('is-invalid')))) validateField(form, t.name);
+      if (t.name && (touched[t.name] || (wrap && wrap.classList.contains('is-invalid')))) { validateField(form, t.name); refreshSummary(form); }
     });
 
     form.addEventListener('submit', function (e) {
@@ -162,11 +188,7 @@
         if (m) errors.push({ name: n, msg: m });
       });
       if (errors.length) {
-        var list = errors.map(function (er) {
-          var el = form.querySelector('[name="' + er.name + '"]');
-          return '<li><a href="#' + (el && el.id ? el.id : '') + '" data-goto="' + er.name + '">' + fieldLabel(form, er.name) + '</a>：' + er.msg + '</li>';
-        }).join('');
-        showStatus(form, 'error', '<h3>入力内容をご確認ください（' + errors.length + '件）</h3><ul>' + list + '</ul>');
+        showStatus(form, 'error', summaryHtml(form, errors));
         return;
       }
       var fd = new FormData(form);
