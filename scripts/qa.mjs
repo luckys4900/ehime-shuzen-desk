@@ -54,11 +54,14 @@ for (const w of widths) {
         unlabeled: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-labelledby') && !el.getAttribute('aria-label')).map((el) => el.name),
         smallTap: [...document.querySelectorAll('a.btn, button')].filter((el) => { const b = el.getBoundingClientRect(); return b.width && b.height < 40; }).length,
         narrowHeads: innerWidth < 768 ? [...document.querySelectorAll('h1, h2')].filter((h) => h.getBoundingClientRect().width && h.getBoundingClientRect().width < de.clientWidth * 0.7 && !h.closest('.cta__box, .rel')).map((h) => h.textContent.trim().slice(0, 12)) : [],
-        orphanLines: [...document.querySelectorAll('h1, h2, h3, main li, .faq summary')].filter((h) => h.offsetParent !== null).map((h) => {
+        orphanLines: [...document.querySelectorAll('h1, h2, h3, main p, main li, main dd, .faq summary, .prep__list span, .facts__v')].filter((h) => h.offsetParent !== null).map((h) => {
           const counts = [];
           const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
           let node;
           while ((node = walker.nextNode())) {
+            // 同じブロックの文字だけを数える（子ブロックの文字は別に評価する）
+            if (node.parentElement !== h && !node.parentElement.matches('a, .nw, .mark, strong, em, small')) continue;
+            if (node.parentElement.matches('small') && getComputedStyle(node.parentElement).display === 'block') continue;
             for (let i = 0; i < node.length; i++) {
               if (/\s/.test(node.data[i])) continue;
               const r = document.createRange(); r.setStart(node, i); r.setEnd(node, i + 1);
