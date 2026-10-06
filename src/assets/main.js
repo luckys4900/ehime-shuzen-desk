@@ -35,13 +35,43 @@
     if (saved) return saved;
     var q = new URLSearchParams(location.search);
     var parts = [];
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ref'].forEach(function (k) { if (q.get(k)) parts.push(k + '=' + q.get(k).slice(0, 80)); });
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ref', 'offer'].forEach(function (k) { if (q.get(k)) parts.push(k + '=' + q.get(k).slice(0, 80)); });
     var ref = document.referrer && document.referrer.indexOf(location.origin) !== 0 ? document.referrer.slice(0, 200) : '';
     var v = [parts.join('&') || '(パラメータなし)', 'landing=' + location.pathname, ref ? 'referrer=' + ref : ''].filter(Boolean).join(' | ');
     try { if (st) st.setItem(ENTRY_KEY, v); } catch (e) { /* noop */ }
     return v;
   }
   var ENTRY = entryInfo();
+
+  /* ---------- 入口コピーの比較（営業実験）：URL の ?offer= でヒーローの主CTAの文言と相談の種類を切り替える ----------
+     quote（今ある1件を見積相談）／feasibility（写真で対応可否を確認）／second（繁忙時の第二施工店として相談・愛媛修繕デスクのみ）。
+     どの入口から来たかは、送信データの entry と計測イベントの offer に残る。 */
+  var OFFERS = {
+    quote: { label: '今ある1件を見積相談', intent: 'quote' },
+    feasibility: { label: '写真で対応可否を確認', intent: 'feasibility' },
+    second: { label: '繁忙時の第二施工店として相談', intent: 'quote', only: 'repair' }
+  };
+  var OFFER = (function () {
+    // 最初に開いたURLの ?offer= を、同じタブ内のページ移動（業種別ページ→フォーム等）でも引き継ぐ
+    var st; try { st = window.sessionStorage; } catch (e) { st = null; }
+    var k = new URLSearchParams(location.search).get('offer');
+    try { if (k && OFFERS[k]) st && st.setItem('osd-offer-v1', k); else k = st && st.getItem('osd-offer-v1'); } catch (e) { /* noop */ }
+    var o = k && OFFERS[k];
+    if (!o || (o.only && o.only !== SITE_TYPE)) return '';
+    var hero = document.querySelector('.hero [data-track="hero_cta_click"]');
+    if (hero) { hero.textContent = o.label; hero.setAttribute('data-intent', o.intent); }
+    return k;
+  })();
+
+  /* ---------- 2段階CTA：見積相談（quote）と対応可否の確認（feasibility）を別イベントで計測し、フォームの「ご相談の種類」に反映 ---------- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-intent]');
+    if (!a || a.tagName === 'INPUT') return;
+    var intent = a.getAttribute('data-intent');
+    track(intent === 'feasibility' ? 'feasibility_check_click' : 'quote_request_click', { position: a.getAttribute('data-track-pos') || (a.closest('.hero') ? 'hero' : ''), offer: OFFER });
+    var r = document.querySelector('#case-form input[name="intent"][data-intent="' + intent + '"]');
+    if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+  });
 
   /* ---------- mobile navigation ---------- */
   var menuBtn = document.querySelector('.menu-btn');
@@ -659,6 +689,7 @@
       payload.business_line = BUSINESS_LINE;  // repair_desk / sale_support：どちらのサイトの案件かを台帳に残す
       payload.site_type = SITE_TYPE;
       payload.entry = ENTRY;
+      payload.offer = OFFER;
       payload.page = location.href;
       payload.photos = photos.map(function (p) { return { name: p.name, dataUrl: p.dataUrl }; });
       delete payload.website;

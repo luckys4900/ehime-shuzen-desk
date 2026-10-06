@@ -189,11 +189,11 @@ for (const [from, to] of [['kanri/', 'repair/kanri/'], ['kaitori/', 'repair/kait
 
 // ---- 文言：2サイトそれぞれのヒーローと立ち位置、根拠のない表現・架空情報がないこと ----
 const COPY = {
-  repair: { url: REPAIR, h1: 'いつもの施工会社を変える必要はありません。', cta: '修繕案件を相談する', minCtas: 5,
-    must: ['松山周辺の法人・事業者様向け', '建物修繕の相談窓口', '修繕案件を相談する', 'ご相談の流れ', '第二施工店', '普段の工事は、いつもの施工会社へ。', '手が回らない時だけ、愛媛修繕デスクへ。', '御社のお取引先への営業', '必要な許可・資格を有する', '管理会社様', '買取再販事業者様', '店舗・施設運営者様'],
+  repair: { url: REPAIR, h1: 'いつもの施工会社を変える必要はありません。', cta: '今ある1件を見積相談', minCtas: 5,
+    must: ['松山周辺の法人・事業者様向け', '建物修繕の相談窓口', '修繕案件を相談する', 'ご相談の流れ', '第二施工店', '普段の工事は、いつもの施工会社へ。', '手が回らない時だけ、愛媛修繕デスクへ。', '御社のお取引先への営業', '必要な許可・資格を有する', '写真で対応可否を確認', '案件を送った後に', '見積提出予定のご案内', '管理会社様', '買取再販事業者様', '店舗・施設運営者様'],
     mustNot: ['残置物', '草刈り'] },
-  sale: { url: SALE, h1: 'いつもの業者はそのまま。売却前だけ、もう一つの手配先を。', cta: '写真を送って案件相談', minCtas: 6,
-    must: ['松山周辺の不動産会社様向け', '写真を送って案件相談', '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応', 'いつもの業者は、そのままで大丈夫です。', '第二の手配先', '既存業者の置き換えではありません', 'ご相談例', '必要な許可を有する事業者', '自社で作業を行う会社ではありません'],
+  sale: { url: SALE, h1: '売却前の現地対応を、1件から外注できます。', cta: '今ある1件を見積相談', minCtas: 6,
+    must: ['不動産会社向け｜売却前の現地対応・物件整備窓口', '今ある1件を見積相談', '写真で対応可否を確認', '案件を送った後に', '見積提出予定のご案内', '1案件から', '既存業者との併用OK', '物件の所在地・写真・希望時期', '現地確認・状況整理', '完了確認', '写真報告', '書式サンプル｜実案件ではありません', 'いつもの業者は、そのままで大丈夫です。', '第二の手配先', '既存業者の置き換えではありません', 'ご相談例', '必要な許可を有する事業者'],
     mustNot: ['第二施工店'] },
 };
 for (const [key, c] of Object.entries(COPY)) {
@@ -298,10 +298,11 @@ async function caseSend(handler, site = 'sale') {
     await p2.locator('label.choice:has(input[name="timing"][value="急ぎ"])').click();
     await p2.fill('#note', '内覧前に清掃したい');
   } else {
-    await p2.goto(REPAIR + 'kanri/', { waitUntil: 'networkidle' });
+    await p2.goto(REPAIR + 'kanri/?offer=second', { waitUntil: 'networkidle' });
     await p2.click('.phero a.btn--primary');
     await p2.waitForLoadState('networkidle');
     await p2.click('.hero a[data-track="hero_cta_click"]');
+    await p2.click('.hero a[data-intent="feasibility"]');
     await p2.locator('label.choice:has(input[value="建具・設備まわり"])').click();
     await p2.locator('label.choice:has(input[name="reason"][value="繁忙で手が回らない"])').click();
     await p2.locator('label.choice:has(input[name="urgency"][value="早めに対応したい"])').click();
@@ -326,7 +327,7 @@ if (live.bodies.length !== 1) fail('live send count ' + live.bodies.length); els
 {
   let j = {};
   try { j = JSON.parse(live.bodies[0] || '{}'); } catch (e) { fail('payload is not JSON'); }
-  const okPayload = j.formType === 'case' && j.business_line === 'sale_support' && j.site_type === 'sale_support' && /utm_source=qa&utm_campaign=sales-test/.test(j.entry) && j.company === '伊予不動産' && j.name === '佐藤' && j.tel === '0899123456' && j.area === '伊予市' && j.address === '伊予市米湊' && j.status === '媒介中' && j.timing === '急ぎ' && j.note === '内覧前に清掃したい'
+  const okPayload = j.formType === 'case' && j.business_line === 'sale_support' && j.intent === '見積の相談' && j.site_type === 'sale_support' && /utm_source=qa&utm_campaign=sales-test/.test(j.entry) && j.company === '伊予不動産' && j.name === '佐藤' && j.tel === '0899123456' && j.area === '伊予市' && j.address === '伊予市米湊' && j.status === '媒介中' && j.timing === '急ぎ' && j.note === '内覧前に清掃したい'
     && Array.isArray(j.services) && j.services.join() === '空室清掃,小修繕' && Array.isArray(j.photos) && j.photos.length === 2 && /^data:image\/jpeg;base64,/.test(j.photos[0].dataUrl) && !('website' in j);
   if (!okPayload) fail('payload content: ' + JSON.stringify({ ...j, photos: (j.photos || []).length })); else ok('sale payload: business_line=sale_support, entry (utm), all fields, services array, 2 compressed photos, normalized phone');
   const kb = Math.round((j.photos?.[0]?.dataUrl.length || 0) / 1024);
@@ -351,11 +352,13 @@ if (!/通信に失敗/.test(lnet.out.err)) fail('network failure message: ' + ln
   const rr = await caseSend(toBackend, 'repair');
   const [sr, rrow] = be.rows['案件'];
   const okSale = sr && be.col(sr, 'サービス') === '売却前おまかせデスク' && be.col(sr, 'サービス区分') === 'sale_support' && be.col(sr, '会社名') === '伊予不動産' && be.col(sr, '売却工程') === '媒介中' && be.col(sr, '相談内容') === '空室清掃、小修繕' && be.col(sr, '写真枚数') === 2 && /utm_source=qa/.test(be.col(sr, '流入元'));
-  const okRepair = rrow && be.col(rrow, 'サービス') === '愛媛修繕デスク' && be.col(rrow, 'サービス区分') === 'repair_desk' && be.col(rrow, '会社名') === '伊予管理' && be.col(rrow, '業種') === '管理会社' && be.col(rrow, '普段の施工会社で対応できない理由') === '繁忙で手が回らない' && be.col(rrow, '相談内容') === '建具・設備まわり';
+  const okRepair = rrow && be.col(rrow, 'サービス') === '愛媛修繕デスク' && be.col(rrow, 'サービス区分') === 'repair_desk' && be.col(rrow, '会社名') === '伊予管理' && be.col(rrow, '業種') === '管理会社' && be.col(rrow, '普段の施工会社で対応できない理由') === '繁忙で手が回らない' && be.col(rrow, '相談内容') === '建具・設備まわり' && be.col(rrow, '相談の種類') === '対応可否の確認' && be.col(rrow, '入口コピー') === 'second' && /offer=second/.test(be.col(rrow, '流入元'));
   if (!okSale || !okRepair || be.rows['案件'].length !== 2) fail('backend sheet rows: ' + JSON.stringify(be.rows['案件'].map((r) => r.slice(0, 20)))); else ok('contract: both sites land in the same sheet, told apart by サービス (sale_support / repair_desk); seg preset and utm entry saved');
   if (be.files.length !== 4 || !be.files.every((f) => f.type === 'image/jpeg')) fail('backend drive files: ' + JSON.stringify(be.files.map((f) => [f.folder, f.type]))); else ok('contract: photos from both sites saved per case folder in Drive');
   if (be.mails.length !== 2 || !/【案件相談｜売却前おまかせデスク】/.test(be.mails[0].subject) || !/【案件相談｜愛媛修繕デスク】/.test(be.mails[1].subject)) fail('backend mail: ' + JSON.stringify(be.mails.map((m) => m.subject))); else ok('contract: notification mail subject names the service');
   if (rs.out.id !== `MAT-${today}-001` || rr.out.id !== `MAT-${today}-002`) fail('contract case ids on page: ' + JSON.stringify([rs.out, rr.out])); else ok('contract: case numbers issued by the shared backend are shown on each site');
+  if (!rs.evs.includes('quote_request_click|sale_support') || !rr.evs.includes('feasibility_check_click|repair')) fail('two-level CTA events: ' + rs.evs.join(',') + ' / ' + rr.evs.join(','));
+  else ok('two-level CTA: quote_request_click / feasibility_check_click fire and set 相談の種類; ?offer= recorded as 入口コピー');
   for (const ev of ['hero_cta_click', 'form_start', 'photo_upload', 'form_submit']) {
     if (!rr.evs.includes(ev + '|repair')) fail('repair event not fired: ' + ev + ' ' + rr.evs.join(',')); else ok('event fired with site_type=repair: ' + ev);
   }
@@ -375,7 +378,7 @@ if (!arg) {
   await p4.addInitScript(() => document.addEventListener('osd:track', (e) => window.__qaEv(e.detail.name + '|' + e.detail.params.site_type)));
   await p4.goto('http://localhost:4174/ehime-shuzen-desk/sale-support/', { waitUntil: 'networkidle' });
   const tel = await p4.evaluate(() => ({ n: document.querySelectorAll('a[href="tel:0899123456"]').length, sticky: [...document.querySelectorAll('.mobile-cta a')].map((a) => a.textContent.trim()).join('|'), two: document.querySelector('.mobile-cta').classList.contains('mobile-cta--two') }));
-  if (tel.n < 3 || tel.sticky !== '電話で相談|写真を送って相談' || !tel.two) fail('phone build: ' + JSON.stringify(tel)); else ok(`phone build: tel links shown (${tel.n}) incl. sticky 電話で相談`);
+  if (tel.n < 3 || tel.sticky !== '電話で相談|1件を見積相談' || !tel.two) fail('phone build: ' + JSON.stringify(tel)); else ok(`phone build: tel links shown (${tel.n}) incl. sticky 電話で相談`);
   await p4.evaluate(() => document.addEventListener('click', (e) => { if (e.target.closest('a[href^="tel:"]')) e.preventDefault(); }));
   await p4.click('.mobile-cta a[href^="tel:"]');
   if (!ev4.includes('phone_click|sale_support')) fail('phone_click not fired ' + ev4); else ok('event fired with site_type=sale_support: phone_click');

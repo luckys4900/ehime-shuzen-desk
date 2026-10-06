@@ -55,16 +55,16 @@ t('case row is saved with all fields', () => {
   assert.equal(rows['案件'].length, 2);
   const r = rows['案件'][0];
   assert.equal(col(r, '会社名'), '松山不動産'); assert.equal(col(r, '物件エリア'), '松山市'); assert.equal(col(r, '相談内容'), '残置物・片付け、空室清掃');
-  assert.equal(col(r, '写真枚数'), 2); assert.equal(col(r, '対応状況'), '未対応');
+  assert.equal(col(r, '写真枚数'), 2); assert.equal(col(r, '対応状況'), '案件受付');
   assert.equal(col(r, 'サービス'), '売却前おまかせデスク'); assert.equal(col(r, 'サービス区分'), 'sale_support');
 });
 t('repair desk cases are labelled and keep repair-only fields', () => {
-  const r = post({ ...base, business_line: 'repair_desk', company: '松山管理', services: ['建具・設備まわり'], reason: ['繁忙で手が回らない', '対応外の工種'], urgency: '早めに対応したい', segment: '管理会社', entry: 'utm_source=mail | landing=/repair/' });
+  const r = post({ ...base, business_line: 'repair_desk', company: '松山管理', services: ['建具・設備まわり'], reason: ['繁忙で手が回らない', '対応外の工種'], urgency: '早めに対応したい', segment: '管理会社', entry: 'utm_source=mail | landing=/repair/', intent: '対応可否の確認', offer: 'second' });
   assert.equal(r.ok, true);
   const row = rows['案件'].at(-1);
   assert.equal(col(row, 'サービス'), '愛媛修繕デスク'); assert.equal(col(row, 'サービス区分'), 'repair_desk');
   assert.equal(col(row, '普段の施工会社で対応できない理由'), '繁忙で手が回らない、対応外の工種'); assert.equal(col(row, '緊急度'), '早めに対応したい');
-  assert.equal(col(row, '業種'), '管理会社'); assert.equal(col(row, '流入元'), 'utm_source=mail | landing=/repair/');
+  assert.equal(col(row, '業種'), '管理会社'); assert.equal(col(row, '相談の種類'), '対応可否の確認'); assert.equal(col(row, '入口コピー'), 'second'); assert.equal(col(row, '流入元'), 'utm_source=mail | landing=/repair/');
   assert.match(mails.at(-1).subject, /【案件相談｜愛媛修繕デスク】/);
   rows['案件'].pop(); mails.pop();
 });
@@ -77,7 +77,7 @@ t('unknown business line is still saved, marked as unknown', () => {
 t('sales KPI columns exist for manual tracking', () => {
   const headers = makeEnv().env.CASE_HEADERS;
   assert.equal(rows['案件'][0].length, headers.length);
-  for (const h of ['見積日', '見積金額', '成約', '成約金額', '粗利', '再依頼']) assert.ok(headers.includes(h), h);
+  for (const h of ['見積提出（quote_at）', '初回返信（first_reply_at）', '現調実施（site_visit_at）', '完了（completed_at）', '写真報告（report_at）', '見積金額', '成約', '成約金額', '粗利', '再依頼']) assert.ok(headers.includes(h), h);
 });
 t('photos are stored in a per-case folder', () => {
   assert.equal(files.length, 2);

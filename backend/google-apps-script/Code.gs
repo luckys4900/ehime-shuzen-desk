@@ -17,9 +17,14 @@ var MAX_PHOTO_BYTES = 8 * 1024 * 1024;
 var CASE_HEADERS = [
   '受付日時', '案件番号', 'サービス', 'サービス区分', '会社名', 'ご担当者名', '電話番号', 'メールアドレス', '業種',
   '物件エリア', '物件住所', '物件・建物種別', '使用状況', '売却工程', '物件の状況', '緊急度', '普段の施工会社で対応できない理由',
-  '希望時期', '相談内容', '補足説明', '写真枚数', '写真フォルダ', '流入元', '送信元ページ',
-  '対応状況', '見積日', '見積金額', '成約', '成約金額', '粗利', '再依頼', 'メモ'
+  '希望時期', '相談の種類', '相談内容', '補足説明', '写真枚数', '写真フォルダ', '流入元', '入口コピー', '送信元ページ',
+  // ここから右は人が記入する。段階ごとの日時は、運用実績（中央値・達成率）を集計して社内の目標（SLA）を決めるために使う
+  '対応状況', '初回返信（first_reply_at）', '対応可否回答（feasibility_at）', '現調日確定（site_visit_scheduled_at）', '現調実施（site_visit_at）',
+  '見積提出予定（quote_due_at）', '見積提出（quote_at）', '発注（ordered_at）', '着工（work_start_at）', '完了（completed_at）', '写真報告（report_at）',
+  '見積金額', '成約', '成約金額', '粗利', '再依頼', 'メモ'
 ];
+// 「対応状況」の選択肢（サイトに掲載している12段階の流れと同じ）
+var CASE_STAGES = ['案件受付', '内容確認', '対応可否の確認', '必要情報の追加確認', '現地調査の要否判断', '現地調査日の調整', '見積提出予定のご案内', '正式見積', '発注', '施工・作業', '完了確認', '写真報告', '見送り・失注'];
 // サイトから届く business_line と、台帳に表示するサービス名
 var BUSINESS_LINES = { repair_desk: '愛媛修繕デスク', sale_support: '売却前おまかせデスク' };
 var PARTNER_HEADERS = ['受付日時', '受付番号', '会社名・屋号', 'ご担当者名', '電話番号', 'メールアドレス', '所在地', '対応できる作業', '保有している許可・資格', '対応可能なエリア', 'その他', '送信元ページ'];
@@ -39,6 +44,10 @@ function setup() {
     cases.setName('案件');
     cases.appendRow(CASE_HEADERS);
     cases.setFrozenRows(1);
+    try {
+      var col = CASE_HEADERS.indexOf('対応状況') + 1;
+      cases.getRange(2, col, 1000, 1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(CASE_STAGES, true).build());
+    } catch (e) { /* 入力規則の設定に失敗しても台帳は使える */ }
     var partners = ss.insertSheet('協力事業者');
     partners.appendRow(PARTNER_HEADERS);
     partners.setFrozenRows(1);
@@ -115,13 +124,13 @@ function handleCase_(d, now) {
     '物件エリア': str_(d.area, 50), '物件住所': str_(d.address, 300), '物件・建物種別': str_(d.ptype, 30), '使用状況': str_(d.occupancy, 30),
     '売却工程': str_(d.status, 30), '物件の状況': list_(d.features).join('、'), '緊急度': str_(d.urgency, 50), '普段の施工会社で対応できない理由': list_(d.reason).join('、'),
     '希望時期': str_(d.timing, 30), '相談内容': services, '補足説明': str_(d.note, 3000), '写真枚数': photos.count, '写真フォルダ': photos.url,
-    '流入元': str_(d.entry, 500), '送信元ページ': str_(d.page, 300), '対応状況': '未対応'
+    '相談の種類': str_(d.intent, 30), '流入元': str_(d.entry, 500), '入口コピー': str_(d.offer, 30), '送信元ページ': str_(d.page, 300), '対応状況': '案件受付'
   };
   var row = CASE_HEADERS.map(function (h) { return v[h] === undefined ? '' : v[h]; });
   SpreadsheetApp.openById(prop_('SHEET_ID')).getSheetByName('案件').appendRow(row);
   var lines = ['【' + lineName + '】に案件相談が届きました。', ''];
   // 入力のあった項目だけを載せる（サービスごとに質問が異なるため）
-  CASE_HEADERS.slice(0, 24).forEach(function (h) { if (['受付日時', 'サービス区分', '写真フォルダ'].indexOf(h) < 0 && v[h] !== '' && v[h] !== undefined) lines.push(h + '：' + v[h]); });
+  CASE_HEADERS.slice(0, CASE_HEADERS.indexOf('対応状況')).forEach(function (h) { if (['受付日時', 'サービス区分', '写真フォルダ'].indexOf(h) < 0 && v[h] !== '' && v[h] !== undefined) lines.push(h + '：' + v[h]); });
   lines.push('写真フォルダ：' + (photos.url || '－'), '', '台帳：https://docs.google.com/spreadsheets/d/' + prop_('SHEET_ID') + '/edit');
   notify_('【案件相談｜' + lineName + '】' + caseId + '｜' + str_(d.company, 60) + '｜' + services, lines);
   return { ok: true, caseId: caseId };

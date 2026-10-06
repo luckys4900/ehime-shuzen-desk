@@ -12,6 +12,13 @@
       <form class="case-form js-case-form" id="case-form" data-services-msg="{{services_msg}}" novalidate>
         <fieldset class="cstep" data-step="1">
           <legend class="cstep__legend">STEP 1　{{step1_label}}</legend>
+          <div class="field field--stack" data-field="intent">
+            <span class="field__label" id="intent-label"><span class="opt">任意</span>ご相談の種類</span>
+            <div class="choices" role="radiogroup" aria-labelledby="intent-label">
+              <label class="choice"><input type="radio" name="intent" value="見積の相談" data-intent="quote"><span>見積を相談したい</span></label>
+              <label class="choice"><input type="radio" name="intent" value="対応可否の確認" data-intent="feasibility"><span>まず対応できるか確認したい</span></label>
+            </div>
+          </div>
 {{form_step1}}          <div class="cstep__nav">
             <button type="button" class="btn btn--primary btn--block" data-next="2">次へ（{{step2_label}}）</button>
           </div>

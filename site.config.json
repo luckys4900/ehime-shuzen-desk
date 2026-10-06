@@ -1,12 +1,32 @@
 {
   "_comment": "本番投入前に人間が設定する項目。未設定（null）の項目はサイトに表示されません。架空の値は入れないでください。",
   "operator": {
-    "_comment": "運営者情報。設定した項目だけが両サイトのフッターに表示されます。phone を設定すると「電話で相談」ボタンも表示されます。",
+    "_comment": "運営者・取引情報。設定した項目だけが両サイトのフッターと、売却前おまかせデスクの「会社・取引情報」に表示されます。phone を設定すると電話の相談導線も表示されます。",
     "name": null,
     "address": null,
     "phone": null,
     "phoneHours": null,
-    "email": null
+    "email": null,
+    "invoiceNumber": null,
+    "insurance": null,
+    "licensePolicy": null
+  },
+  "salePolicies": {
+    "_comment": "売却前おまかせデスクのヒーロー直下に出す取引方針。true にした項目だけを表示します。事業方針として確定してから true にしてください（docs/business-assumptions.md）。",
+    "oneJob": true,
+    "freeConsultation": true,
+    "existingVendorsOk": true,
+    "competitiveQuotesWelcome": null,
+    "noRetainer": null
+  },
+  "operations": {
+    "_comment": "法人のご担当者向けの運用情報。確定した項目だけを文章で設定すると、両サイトの「取引の進め方」に表示されます（未設定は非表示）。",
+    "siteSurvey": null,
+    "quoteMethod": null,
+    "changeOrderRule": null,
+    "paymentTerms": null,
+    "keyHandling": null,
+    "reportFormat": null
   },
   "formEndpoint": null,
   "ga4MeasurementId": null,

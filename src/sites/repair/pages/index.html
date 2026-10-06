@@ -5,8 +5,8 @@
     <h1 class="hero__title" id="hero-title">いつもの施工会社を<br>変える必要は<br class="br-sp">ありません。</h1>
     <p class="hero__lead">手が回らない時、頼みたい工種の手配先がない時の「もう一つの相談先」として。写真と物件情報から建物修繕のご相談を受け付け、案件ごとに対応できる施工パートナーを手配します。</p>
     <div class="btn-row hero__actions">
-      <a class="btn btn--primary" href="#form" data-track="hero_cta_click">{{cta_label}}</a>
-      <a class="more more--light" href="#flow">ご相談の流れ</a>
+      <a class="btn btn--primary" href="#form" data-track="hero_cta_click" data-intent="quote">今ある1件を見積相談</a>
+      <a class="btn btn--line" href="#form" data-intent="feasibility">{{cta2_label}}</a>
     </div>
     <p class="hero__sub">{{cta_sub}}</p>
     {{phone_cta}}
@@ -195,8 +195,15 @@
   <div class="container flow-wrap">
     <div class="flow-wrap__head">
       <span class="eyebrow">FLOW</span>
-      <h2 class="sec-title" id="flow-title">ご相談から<br>完了確認までの流れ</h2>
-      <p class="sec-lead">最初の一歩は、フォームから写真と物件情報をお送りいただくことです。現地確認は、写真で判断できない場合に日程を調整して行います。</p>
+      <h2 class="sec-title" id="flow-title">案件を送った後に、<br>起きること</h2>
+      <p class="sec-lead">繁忙期でもご相談いただけます。対応できるかどうか、現地調査が必要か、見積がいつ出るか、いつ着工できるかを、段階ごとに先にお知らせします。</p>
+      <ul class="assure">
+        <li>対応可否を先にご案内</li>
+        <li>内訳つきの見積</li>
+        <li>着工可能な時期のご案内</li>
+        <li>施工前後の写真と完了報告</li>
+        <li>手直しのご連絡も同じ窓口へ</li>
+      </ul>
     </div>
     <div>
       {{flow}}

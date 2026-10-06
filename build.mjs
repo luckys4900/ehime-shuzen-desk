@@ -40,22 +40,25 @@ const SITES = {
     ctaline: { concept: '普段の工事はそのままで。手が回らない案件だけ、ご相談ください。', services: '写真と物件情報から、対応できる施工パートナーを確認します。', flow: '写真と物件情報だけで、ご相談いただけます。' },
     nav: [{ href: 'kanri/', label: '管理会社様' }, { href: 'kaitori/', label: '買取再販事業者様' }, { href: 'shop/', label: '店舗・施設運営者様' }, { href: '#flow', label: 'ご相談の流れ' }],
     footerText: '松山周辺の法人・事業者様向け<br>建物修繕の相談窓口',
-    step1: '修繕内容', step2: '写真・物件情報',
+    step1: '修繕内容', step2: '写真・物件情報', partnerWord: '施工パートナー', workWord: '施工',
+    cta2: '写真で対応可否を確認',
     photoHint: '修繕箇所に近づいた写真と、部屋や場所の全体が分かる写真があると判断しやすくなります。',
     services: '工事内容を1つ以上選んでください。',
   },
   sale: {
-    dir: 'sale', slug: 'sale-support', name: '売却前おまかせデスク', sub: '松山周辺の不動産会社様向け', subJa: true,
+    dir: 'sale', slug: 'sale-support', name: '売却前おまかせデスク', sub: '不動産会社向け 売却前の現地対応窓口', subJa: true,
     theme: 'theme-sale', siteType: 'sale_support', businessLine: 'sale_support', themeColor: '#1e3d38', og: 'og-sale.png',
-    cta: '写真を送って案件相談', sticky: '写真を送って案件相談', stickyShort: '写真を送って相談',
-    ctaSub: '不動産会社様向け ｜ 既存業者との併用OK ｜ 松山市・近郊',
-    heroSub: '相談無料 ｜ 既存業者との併用OK ｜ 松山市・近郊対応',
-    ctaline: { keep: 'いつもの業者はそのままで。売却前の案件だけ、ご相談ください。', services: '物件の写真から、必要な手配を整理します。', flow: '写真と物件エリアだけで、ご相談いただけます。' },
-    nav: [{ href: '#services', label: '対応内容' }, { href: '#examples', label: 'ご相談例' }, { href: '#flow', label: '利用の流れ' }, { href: '#faq', label: 'よくある質問' }],
-    footerText: '松山周辺の不動産会社様向け<br>売却前の現場手配・調整の窓口',
-    step1: '売却工程・作業', step2: '写真・物件情報',
+    cta: '今ある1件を見積相談', sticky: '今ある1件を見積相談', stickyShort: '1件を見積相談',
+    ctaSub: '不動産会社様向け ｜ 1案件から ｜ 既存業者との併用OK',
+    ctaline: { keep: 'いつもの業者はそのままで。まず1物件、見積をご相談ください。', services: '物件の所在地・写真・希望時期だけで、相談を始められます。', deliverables: '書類の形式は、ご依頼前のご相談でも確認いただけます。' },
+    nav: [{ href: '#services', label: '担当範囲' }, { href: '#flow', label: 'ご相談後の流れ' }, { href: '#deliverables', label: 'お渡しする書類' }, { href: '#faq', label: 'よくある質問' }],
+    footerText: '不動産会社様向け<br>売却前の現地対応・物件整備窓口',
+    // ヒーロー直下の取引方針（site.config.json の salePolicies で true のものだけ表示）
+    policies: [['oneJob', '1案件から'], ['freeConsultation', '相談無料'], ['competitiveQuotesWelcome', '相見積歓迎'], ['existingVendorsOk', '既存業者との併用OK'], ['noRetainer', '顧問契約不要']],
+    step1: '物件と作業', step2: '写真・物件情報', partnerWord: '協力事業者', workWord: '作業',
+    cta2: '写真で対応可否を確認',
     photoHint: '全体が分かる写真と、気になる箇所の写真があると整理しやすくなります。',
-    services: '必要な作業を1つ以上選んでください。',
+    services: '必要な作業を1つ以上選んでください（決まっていなければ「内容から相談したい」）。',
   },
   // 分岐ページと共通ページ（協力事業者の募集・個人情報・写真クレジット）
   hub: {
@@ -72,7 +75,7 @@ const pages = [
   { site: 'repair', slug: 'repair/kanri', file: 'sites/repair/pages/kanri.html', label: '愛媛修繕デスク 管理会社様', title: '管理会社様へ｜愛媛修繕デスク', description: '退去後の原状回復、入居中の小修繕など、賃貸管理の修繕手配を写真から相談できる、もう一つの修繕窓口。いつもの施工会社との取引はそのままにご利用いただけます。' },
   { site: 'repair', slug: 'repair/kaitori', file: 'sites/repair/pages/kaitori.html', label: '愛媛修繕デスク 買取再販事業者様', title: '買取再販事業者様へ｜愛媛修繕デスク', description: '仕入れ後の内装補修や販売前の手直しなど、買取再販物件の修繕を写真から相談できる窓口。工事範囲ごとに内訳の分かる見積をご案内します。' },
   { site: 'repair', slug: 'repair/shop', file: 'sites/repair/pages/shop.html', label: '愛媛修繕デスク 店舗・施設運営者様', title: '店舗・施設運営者様へ｜愛媛修繕デスク', description: '店舗・事務所・施設の床や壁の補修、退店時の原状回復など。営業への影響を確認しながら、作業日時を含めてご相談いただけます。' },
-  { site: 'sale', slug: 'sale-support', home: true, file: 'sites/sale/pages/index.html', label: '売却前おまかせデスク トップ', title: '松山の不動産会社向け｜売却前の残置物・清掃・小修繕をまとめて相談｜売却前おまかせデスク', description: '松山市周辺の不動産会社向け。売却前の残置物整理、空室清掃、草刈り、小修繕などの手配をまとめて相談。いつもの業者はそのままで、写真を送るだけでご相談いただけます。' },
+  { site: 'sale', slug: 'sale-support', home: true, file: 'sites/sale/pages/index.html', label: '売却前おまかせデスク トップ', title: '不動産会社向け｜売却前の現地対応・物件整備窓口｜売却前おまかせデスク（松山）', description: '松山周辺の不動産会社様向け、売却前の現地対応・物件整備の外部窓口。現地確認・必要作業の整理・見積・協力事業者の手配・完了確認・写真報告までを当デスクが窓口となって進めます。1案件から、いつもの業者はそのままでご相談いただけます。' },
   { site: 'hub', slug: 'partner', file: 'pages/partner.html', label: '協力事業者の募集', title: '協力事業者の募集｜愛媛修繕デスク・売却前おまかせデスク', description: '松山市・近郊で、建物の修繕や、売却前の残置物整理・清掃・草刈りなどに対応いただける事業者様を募集しています。許可や資格が必要な業務は、該当する許可・資格をお持ちの方にのみご依頼します。' },
   { site: 'hub', slug: 'credits', file: 'pages/credits.html', label: '写真クレジット', title: '写真クレジット｜愛媛修繕デスク・売却前おまかせデスク', description: '愛媛修繕デスク・売却前おまかせデスクのサイトで使用している写真の出典とライセンス。' },
   { site: 'hub', slug: 'privacy', file: 'pages/privacy.html', label: '個人情報の取扱い', title: '個人情報の取扱い｜愛媛修繕デスク・売却前おまかせデスク', description: '愛媛修繕デスク・売却前おまかせデスクの相談フォーム等でお預かりする個人情報・写真の取扱いについて。' },
@@ -173,7 +176,8 @@ function operatorHtml() {
     OP.name && `<dt>運営</dt><dd>${esc(OP.name)}</dd>`,
     OP.address && `<dt>所在地</dt><dd>${esc(OP.address)}</dd>`,
     OP.phone && `<dt>電話</dt><dd><a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="footer">${esc(OP.phone)}</a>${OP.phoneHours ? `（${esc(OP.phoneHours)}）` : ''}</dd>`,
-    OP.email && `<dt>メール</dt><dd><a href="mailto:${esc(OP.email)}">${esc(OP.email)}</a></dd>`,
+    OP.email && `<dt>メール</dt><dd><a href="mailto:${esc(OP.email)}" data-track="mail_click" data-track-pos="footer">${esc(OP.email)}</a></dd>`,
+    OP.invoiceNumber && `<dt>適格請求書発行事業者</dt><dd>登録番号 ${esc(OP.invoiceNumber)}</dd>`,
   ].filter(Boolean).join('');
   return rows ? `<dl class="site-footer__op">${rows}</dl>` : '';
 }
@@ -206,6 +210,35 @@ function footer(site, root, siteBase, page) {
 ${mobile ? `<div class="mobile-cta${PHONE && !isPartner ? ' mobile-cta--two' : ''}">${mobile}</div>` : ''}`;
 }
 
+/* ---------- 取引方針・連絡方法・会社情報（設定された項目だけを表示） ---------- */
+const POLICIES = CONFIG.salePolicies || {};
+function policyChips(site) {
+  const on = (site.policies || []).filter(([k]) => POLICIES[k] === true);
+  return on.length ? `<ul class="policy-chips" aria-label="ご利用の条件">${on.map(([, label]) => `<li>${label}</li>`).join('')}</ul>` : '';
+}
+function contactMethods(site) {
+  const items = [`<li><span class="cm__k">フォーム</span><a href="#form" data-track="cta_click" data-track-pos="methods">このページの相談フォーム</a><small>写真を添付できます</small></li>`];
+  if (OP.phone) items.push(`<li><span class="cm__k">電話</span><a href="${PHONE_HREF}" data-track="phone_click" data-track-pos="methods">${esc(OP.phone)}</a>${OP.phoneHours ? `<small>${esc(OP.phoneHours)}</small>` : ''}</li>`);
+  if (OP.email) items.push(`<li><span class="cm__k">メール</span><a href="mailto:${esc(OP.email)}" data-track="mail_click" data-track-pos="methods">${esc(OP.email)}</a><small>写真の添付も可能です</small></li>`);
+  return `<ul class="contact-methods">${items.join('')}</ul>`;
+}
+// 法人のご担当者が確認したい運用情報（site.config.json の operations。確定した項目だけを表示）
+const OPS = Object.fromEntries(Object.entries(CONFIG.operations || {}).filter(([k, v]) => !k.startsWith('_') && v !== null && String(v).trim() !== ''));
+const OPS_LABELS = { siteSurvey: '現地調査の方法', quoteMethod: '見積の方法', changeOrderRule: '追加作業の承認ルール', paymentTerms: '支払条件', keyHandling: '鍵の受け渡し・入室', reportFormat: '報告の方法' };
+function opsRows() {
+  return Object.entries(OPS_LABELS).filter(([k]) => OPS[k]).map(([k, label]) => `<tr><th scope="row">${label}</th><td>${esc(OPS[k])}</td></tr>`).join('');
+}
+function companyInfo() {
+  const rows = [
+    OP.name && ['運営者', esc(OP.name)], OP.address && ['所在地', esc(OP.address)],
+    OP.phone && ['電話', `${esc(OP.phone)}${OP.phoneHours ? `（${esc(OP.phoneHours)}）` : ''}`], OP.email && ['メール', esc(OP.email)],
+    OP.invoiceNumber && ['適格請求書発行事業者', `登録番号 ${esc(OP.invoiceNumber)}`], OP.insurance && ['保険', esc(OP.insurance)],
+    OP.licensePolicy && ['許可・資格の確認', esc(OP.licensePolicy)],
+  ].filter(Boolean);
+  if (!rows.length) return '';
+  return `<div class="company-info"><h3>会社・取引情報</h3><table class="terms-table"><tbody>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
 /* ---------- 案件相談フォーム：共通のエンジンと枠に、サービスごとの質問を差し込む ---------- */
 function caseForm(site) {
   return partial(site, 'case-form.html')
@@ -234,7 +267,8 @@ function layout(page, body) {
   let html = body
     .replace('{{case_form}}', () => caseForm(site))
     .replace(/\{\{ctaline(?::(\w+))?\}\}/g, (_, pos) => partial(site, 'ctaline.html').replace('{{pos}}', pos || 'inline').replace('{{ctaline_text}}', (site.ctaline || {})[pos] || '写真と簡単な内容だけで相談できます。'))
-    .replace(/\{\{(cta|flow)\}\}/g, (_, k) => partial(site, k + '.html'));
+    .replace(/\{\{(cta|flow)\}\}/g, (_, k) => partial(site, k + '.html'))
+    .replaceAll('{{ladder}}', () => partial(site, 'ladder.html').replaceAll('{{p_partner}}', site.partnerWord).replaceAll('{{p_work}}', site.workWord));
   html = html
     .replace(/\{\{photo:([^}]+)\}\}/g, (_, spec) => photo(root, spec))
     .replace(/\{\{img:([^}]+)\}\}/g, (_, spec) => img(root, spec))
@@ -242,9 +276,14 @@ function layout(page, body) {
     .replaceAll('{{base}}', root)
     .replaceAll('{{site}}', siteBase || './')
     .replaceAll('{{cta_label}}', site.cta || '')
+    .replaceAll('{{cta2_label}}', site.cta2 || '')
     .replaceAll('{{cta_sub}}', subHtml(site.heroSub || site.ctaSub || ''))
     .replaceAll('{{cta_sub2}}', subHtml(site.ctaSub || ''))
     .replaceAll('{{operator_name}}', OP.name ? esc(OP.name) : '本サイトの運営者')
+    .replace('{{policy_chips}}', () => policyChips(site))
+    .replace('{{contact_methods}}', () => contactMethods(site))
+    .replace('{{company_info}}', () => companyInfo())
+    .replace('{{ops_rows}}', () => opsRows())
     .replaceAll('{{phone_cta}}', PHONE ? `<a class="btn btn--line" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="inline">電話で相談（${esc(PHONE)}）</a>` : '');
   const bodyClass = [page.home ? 'page-home' : `page-${(page.slug.split('/').pop()) || 'hub'}`, site.theme].join(' ');
   return `<!doctype html>
