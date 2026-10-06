@@ -1,5 +1,5 @@
 {
-  "phase": "TARGET_80_COMPLETE",
+  "phase": "PR_STABILIZATION",
   "score": 82,
   "audit_round": 1,
   "rubric": "100: clarity15 / credibility20 / target15 / conversion15 / responsiveness15 / visual_mobile10 / technical10. Gates: total>=80, clarity>=11, credibility>=15, responsiveness>=11, visual>=8, technical>=8, HARD_FAIL=0, CRITICAL=0",
@@ -27,7 +27,7 @@
     }
   ],
   "agent_runs": {
-    "opus_main": 3,
+    "opus_main": 4,
     "opus_auditor": 1,
     "sonnet_research": 1,
     "sonnet_ux": 1,
@@ -79,5 +79,47 @@
     "A_repair": "YES（費用と書式見本が弱い）",
     "A_sale": "YES",
     "B": "YES（条件付き：受付連絡の目安がない）"
+  },
+  "pr_stabilization": {
+    "pr": 2,
+    "state": "open",
+    "mergeable_state": "clean",
+    "base": "main @ 9271f785db569f78af18a2caab0fd34762ad3820",
+    "head_checked": "f6788752e646fb75b4039d154fb77079f5a36370",
+    "audited_code": "9a4506a (post-audit diff = docs/screenshots/harness only)",
+    "changed_files": 75,
+    "ci": "Build, deploy and verify (GitHub Pages): success on head (run 37411693721, workflow_dispatch: the push-triggered run for the head was lost when the push reported a ref-lock error)",
+    "required_checks": "none configured on main",
+    "qa": "116 pass / 0 fail (local, head)",
+    "backend_tests": "14 pass",
+    "reviews": 0,
+    "review_threads": 0,
+    "comments": 0,
+    "must_fix": [],
+    "should_fix": [],
+    "business_decision_required": [
+      "受付連絡の目安・受付時間",
+      "取引モデル（契約・請求・施工責任の主体）",
+      "相談料・現調料・見積料",
+      "鍵預かり・キーボックス・入室",
+      "保険・インボイス",
+      "相見積歓迎・顧問契約不要",
+      "運営者情報"
+    ],
+    "re_audit": "not required (no user-facing change since audit)"
+  },
+  "status": {
+    "TARGET_80_COMPLETE": true,
+    "PR_READY": true,
+    "PRODUCTION_READY": false,
+    "EXTERNAL_SALES_READY": false,
+    "production_blockers": [
+      "Apps Script 実環境未接続",
+      "formEndpoint 未設定",
+      "GA4 未設定",
+      "運営者情報 未確定",
+      "取引モデル 未確定",
+      "受付目安 未確定"
+    ]
   }
 }
