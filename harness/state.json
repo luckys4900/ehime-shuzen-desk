@@ -3,20 +3,54 @@
   "score": null,
   "audit_round": 0,
   "rubric": "100: clarity15 / credibility20 / target15 / conversion15 / responsiveness15 / visual_mobile10 / technical10. Gates: total>=80, clarity>=11, credibility>=15, responsiveness>=11, visual>=8, technical>=8, HARD_FAIL=0, CRITICAL=0",
-  "routes": ["/repair/", "/repair/kanri/", "/repair/kaitori/", "/repair/shop/", "/sale-support/"],
+  "routes": [
+    "/repair/",
+    "/repair/kanri/",
+    "/repair/kaitori/",
+    "/repair/shop/",
+    "/sale-support/"
+  ],
   "hard_fail": [],
   "critical": [],
-  "high": [],
+  "high": [
+    "UX-001 subpage 2-level CTA",
+    "UX-002 kaitori flow",
+    "UX-003 attendance/key wording",
+    "UX-004 相談無料 consistency",
+    "UX-005 repair terms/company block",
+    "VIS-001 empty image cards",
+    "VIS-002 sale vs repair template similarity",
+    "VIS-005 small low-contrast text"
+  ],
   "history": [
-    {"note": "pre-harness audits (115-pt rubric, /sale-support/ only): r1 96/115, r2 97/115, HARD_FAIL 0"}
+    {
+      "note": "pre-harness audits (115-pt rubric, /sale-support/ only): r1 96/115, r2 97/115, HARD_FAIL 0"
+    }
   ],
   "agent_runs": {
-    "opus_main": 1,
+    "opus_main": 2,
     "opus_auditor": 0,
-    "sonnet_research": 0,
-    "sonnet_ux": 0,
-    "sonnet_visual": 0,
-    "sonnet_tech": 0,
+    "sonnet_research": 1,
+    "sonnet_ux": 1,
+    "sonnet_visual": 1,
+    "sonnet_tech": 1,
     "sonnet_implementer": 0
-  }
+  },
+  "pre_audit_scores": {
+    "ux_by_route": {
+      "repair": 72,
+      "kanri": 70,
+      "kaitori": 66,
+      "shop": 67,
+      "sale": 79
+    },
+    "visual_mobile": 6.5,
+    "technical": 8
+  },
+  "fix_queue_round": 1,
+  "rejected": [
+    "UX-006 repair H1 (client-specified copy; add sub-headline instead)",
+    "UX-008 reply-time number (operator decision)",
+    "VIS-009 sticky CTA (false positive: hidden in capture)"
+  ]
 }
