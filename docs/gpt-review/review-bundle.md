@@ -146,7 +146,7 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 ```json
 {
   "base": "http://localhost:4173/ehime-shuzen-desk/",
-  "date": "2026-10-05T23:44:23.180Z",
+  "date": "2026-10-06T03:51:31.558Z",
   "checks": [
     "/ @390: no horizontal overflow",
     "repair/ @390: no horizontal overflow",
@@ -209,18 +209,19 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
     "old URL kaitori/ -> repair/kaitori/",
     "old URL shop/ -> repair/shop/",
     "old URL contact/ -> repair/#form",
+    "old URL kanri/?utm_source=qa&offer=feasibility -> repair/kanri/?utm_source=qa&offer=feasibility",
     "old URL contact/?type=kanri -> repair/?seg=kanri#form",
     "old URL #form -> sale-support/#form",
     "hub page links to /repair/ and /sale-support/ (no form on the hub)",
     "repair: no banned / unsupported wording",
-    "repair: hero H1 and CTA \"修繕案件を相談する\"",
+    "repair: hero H1 and CTA \"今ある1件を見積相談\"",
     "repair: positioning copy present, other service's wording absent",
-    "repair: CTAs to the form: 5",
+    "repair: CTAs to the form: 6",
     "repair: no phone CTA while phone is not configured",
     "sale: no banned / unsupported wording",
-    "sale: hero H1 and CTA \"写真を送って案件相談\"",
+    "sale: hero H1 and CTA \"今ある1件を見積相談\"",
     "sale: positioning copy present, other service's wording absent",
-    "sale: CTAs to the form: 6",
+    "sale: CTAs to the form: 8",
     "sale: no phone CTA while phone is not configured",
     "hero CTA scrolls to the form",
     "sticky CTA hides while the form is on screen",
@@ -251,11 +252,12 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
     "contract: photos from both sites saved per case folder in Drive",
     "contract: notification mail subject names the service",
     "contract: case numbers issued by the shared backend are shown on each site",
+    "two-level CTA: quote_request_click / feasibility_check_click fire and set 相談の種類; ?offer= recorded as 入口コピー",
     "event fired with site_type=repair: hero_cta_click",
     "event fired with site_type=repair: form_start",
     "event fired with site_type=repair: photo_upload",
     "event fired with site_type=repair: form_submit",
-    "phone build: tel links shown (4) incl. sticky 電話で相談",
+    "phone build: tel links shown (5) incl. sticky 電話で相談",
     "event fired with site_type=sale_support: phone_click",
     "event fired with site_type=repair: phone_click",
     "partner form validation 7",
@@ -432,6 +434,12 @@ SITE_IMPLEMENTATION_70 = 上記合計 70 以上。
 | 「空室期間を延ばさないよう…」（/repair/kanri/） | 日数・削減率は掲載していない。表現として採用するか |
 | 「必須工事・推奨工事・見送り可能な工事に分けた見積」「設備・材料に代わりの選択肢がある場合はあわせて案内」（/repair/kaitori/） | 見積の様式として対応できるか |
 
+#### H. TARGET_80 監査で残った、運営者の決定が必要な事項（2026-10-06）
+
+- **受付連絡の目安**：案件を受け付けてから、何営業日以内に受付連絡をするか。受付時間・営業日。決まれば `operator.phoneHours` と、対応の流れの「案件受付」に追記できます。
+- **取引モデル**：契約・請求をデスクがまとめる（元請）か、施工パートナー・協力事業者と直接契約か。決まれば「取引の進め方」とFAQに1文で書けます（上のCの表と同じ）。
+- **費用の扱い**：相談・見積・現地調査のそれぞれが無料か、費用がかかる条件。愛媛修繕デスクと売却前おまかせデスクで表示をそろえます。
+
 
 ## ファイル：docs/known-limitations.md
 
@@ -557,6 +565,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   <div class="container hero__inner">
     <p class="hero__eyebrow">松山周辺の法人・事業者様向け<span class="br-pc">　</span><br class="br-sp">建物修繕の相談窓口</p>
     <h1 class="hero__title" id="hero-title">いつもの施工会社を<br>変える必要は<br class="br-sp">ありません。</h1>
+    <p class="hero__kicker">繁忙時・対応外工種・小修繕の「第二施工店」</p>
     <p class="hero__lead">手が回らない時、頼みたい工種の手配先がない時の「もう一つの相談先」として。写真と物件情報から建物修繕のご相談を受け付け、案件ごとに対応できる施工パートナーを手配します。</p>
     <div class="btn-row hero__actions">
       <a class="btn btn--primary" href="#form" data-track="hero_cta_click" data-intent="quote">今ある1件を見積相談</a>
@@ -808,7 +817,32 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   </div>
 </section>
 
-<section class="section section--paper" id="faq" aria-labelledby="faq-title">
+<section class="section section--paper" id="terms" aria-labelledby="terms-title">
+  <div class="container">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="eyebrow">TERMS</span>
+        <h2 class="sec-title" id="terms-title">取引の進め方</h2>
+      </div>
+      <p class="sec-lead">法人間のお取引として、着手前に条件を書面でご確認いただきます。</p>
+    </div>
+    <table class="terms-table">
+      <tbody>
+        <tr><th scope="row">ご相談・見積</th><td>1件からご相談いただけます。見積の内容をご確認いただき、ご承認後に手配します。</td></tr>
+        <tr><th scope="row">見積書に記載する事項</th><td>工事ごとの内訳、見積の発行者、契約先、請求先、施工の責任範囲、支払条件</td></tr>
+        <tr><th scope="row">施工の担当</th><td>案件ごとに、工種・地域・必要な許可や資格に合う施工パートナーが担当します。窓口・調整・完了確認は愛媛修繕デスクが担当します。</td></tr>
+        <tr><th scope="row">許可・資格の確認</th><td>電気工事・給水装置工事など許可・資格が必要な工事は、手配の前に、担当する施工パートナーが該当する許可・資格を持っていることを確認します。</td></tr>
+        <tr><th scope="row">手直し・不具合のご連絡</th><td>完了後に気になる箇所があれば、愛媛修繕デスクが窓口となり、施工パートナーとの対応を調整します。責任の所在と保険の範囲は、見積時に書面でお示しします。</td></tr>
+        <tr><th scope="row">写真・物件情報の共有範囲</th><td>案件の検討と施工に必要な範囲で、担当する施工パートナーとだけ共有します（<a href="{{base}}privacy/">個人情報の取扱い</a>）。</td></tr>
+        <tr><th scope="row">既存のお取引先</th><td>変更していただく必要はありません。お取引先への営業も行いません。</td></tr>
+        {{ops_rows}}
+      </tbody>
+    </table>
+    {{company_info}}
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
     <div>
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
@@ -835,6 +869,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <span class="eyebrow">REQUEST FORM</span>
       <h2 class="sec-title" id="form-title">修繕案件を<br>相談する</h2>
       <p class="form-lead">工事内容・物件の情報・写真をお送りください。内容を確認のうえ、対応できる施工パートナーの手配を調整し、担当者からご連絡します。</p>
+      <p class="form-note">分かる範囲で構いません。必須は、工事内容・物件エリア・会社名・ご担当者名・ご連絡先だけです。</p>
       <p class="form-note">法人・事業者様専用の窓口です。いつもの施工会社との併用を前提にしています。</p>
     </div>
     {{case_form}}
@@ -856,7 +891,8 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <h1 id="page-title">物件の商品化を、<br>止めない施工窓口。</h1>
       <p class="phero__lead">仕入れ後の現地調査、施工できるかどうかの判断、見積を出せる時期のご案内、販売開始日から逆算した工程まで。必須工事・推奨工事・見送り可能な工事に分けた内訳つきの見積で、手を入れる範囲をご判断いただけます。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{site}}?seg=kaitori#form">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=kaitori#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=kaitori#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#scope">工事範囲の決め方</a>
       </div>
     </div>
@@ -874,11 +910,11 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:fusuma|ふすま風の引戸がある、家具の置かれていない洋室|need__photo}}
+        {{photo:fusuma|ふすま風の引戸がある、家具の置かれていない洋室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">仕入れ後</span><h3>販売前に、内装を整えておきたい</h3><p>壁紙や床の汚れ・傷など、内覧の前に整えておきたい箇所。写真をお送りいただければ、箇所ごとに内容を確認してご案内します。</p></div>
       </article>
       <article class="need">
-        {{photo:kitaroom|無垢材の床と木の造作のある室内|need__photo}}
+        {{photo:kitaroom|無垢材の床と木の造作のある室内|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">範囲</span><h3>どこまで手を入れるか迷っている</h3><p>販売価格とのバランスを見ながら、工事範囲を段階的に検討したい。範囲ごとに分けた見積で、比べながらご判断いただけます。</p></div>
       </article>
     </div>
@@ -932,12 +968,22 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     </div>
     <div class="inline-cta">
       <p>仕入れ物件の手直しのご相談はこちら<small>工事範囲が決まっていない段階でもご相談いただけます。</small></p>
-      <a class="btn btn--primary" href="{{site}}?seg=kaitori#form">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=kaitori#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="kfaq-title">
+<section class="section" id="flow" aria-labelledby="kflow-title">
+  <div class="container flow-wrap">
+    <div class="flow-wrap__head">
+      <h2 class="sec-title" id="kflow-title">仕入れから販売開始までの流れ</h2>
+      <p class="sec-lead">販売開始・内覧開始の予定日をお知らせください。対応可否、現地調査の要否、見積を出せる時期を先にご案内し、可能な工程をご提案します。</p>
+    </div>
+    <div>{{flow}}</div>
+  </div>
+</section>
+
+<section class="section section--paper" aria-labelledby="kfaq-title">
   <div class="container faq-wrap">
     <div>
       <p class="faq-for">買取再販事業者様から</p>
@@ -946,7 +992,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     <div class="faq">
       <details><summary>仕入れ前の検討段階でも相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。写真や間取り図など、分かる範囲の情報をお送りください。現地を確認できない段階では、概算でのご案内になる場合があります。</p></div></details>
       <details><summary>販売開始日までに間に合わせてもらえますか？</summary><div class="faq__a"><p>工程は、工事内容と施工パートナーの状況によって異なります。ご希望の日程をお知らせいただければ、対応できるかどうかを確認してご回答します。日程をお約束できない場合は、その旨をお伝えします。</p></div></details>
-      <details><summary>空室で鍵を預ける形でも大丈夫ですか？</summary><div class="faq__a"><p>鍵の受け渡し方法や、作業中の管理方法は、案件ごとにご相談のうえ決めさせていただきます。</p></div></details>
+      <details><summary>空室で鍵を預ける形でも大丈夫ですか？</summary><div class="faq__a"><p>鍵の扱いや作業中の管理方法は、案件ごとに確認し、見積の前にお知らせします。</p></div></details>
     </div>
   </div>
 </section>
@@ -968,11 +1014,12 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <h1 id="page-title">退去が重なる時期の、<br>もう一つの修繕窓口に。</h1>
       <p class="phero__lead">原状回復や入居中の小修繕で、いつもの施工会社の手が回らない時に。物件の写真と情報をお送りいただければ、内容を確認のうえ、対応できる施工パートナーの手配を調整します。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{site}}?seg=kanri#form">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=kanri#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=kanri#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#prep">送っていただく情報</a>
       </div>
     </div>
-    {{photo:building|ベランダが並ぶ集合住宅の外観|phero__photo|写真はイメージです|eager}}
+    {{photo:washitsu2|障子と床の間のある、家具の置かれていない和室|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
@@ -986,15 +1033,15 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:washitsu2|障子と床の間のある、家具の置かれていない和室|need__photo}}
+        {{photo:building|ベランダが並ぶ集合住宅の外観|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">退去後</span><h3>原状回復の手配が重なった</h3><p>繁忙期に複数の退去が重なり、いつもの施工会社だけでは次の募集に間に合わない。クロスや床の張替え、ハウスクリーニングなど、原状回復の手配をご相談いただけます。</p></div>
       </article>
       <article class="need">
-        {{photo:tatami|家具や家電が置かれた、入居中の畳敷きの居室|need__photo}}
+        {{photo:tatami|家具や家電が置かれた、入居中の畳敷きの居室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">入居中</span><h3>入居者様からの不具合のご連絡</h3><p>建具の開閉や水まわりの部品など、入居中の小さな不具合。入居者様との日程調整の進め方も含めて、管理会社様のルールに合わせてご相談させてください。</p></div>
       </article>
       <article class="need">
-        {{photo:apartments|建ち並ぶ集合住宅|need__photo}}
+        {{photo:apartments|建ち並ぶ集合住宅|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">共用部</span><h3>共用部の傷みが気になる</h3><p>共用廊下や階段、外壁の小さなひびなど、部分的な補修の相談先として。写真で状況を共有していただき、現地確認が必要かどうかからご案内します。</p></div>
       </article>
     </div>
@@ -1013,7 +1060,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <p class="sec-lead">次の募集までの空室期間を延ばさないよう、対応できるかどうかと着工できる時期を先にお知らせし、段階ごとに予定をご案内します。</p>
     </div>
     <ol class="points">
-      <li><h3>写真から相談を始められます</h3><p>現地での立会いを前提とせず、写真と物件情報から相談を始められます。写真で判断できない場合に、現地確認の日程を調整します。</p></li>
+      <li><h3>写真から相談を始められます</h3><p>ご相談は、写真と物件情報から始められます。現地確認での立会いの要否や鍵の扱いは、案件ごとに確認し、見積の前にお知らせします。</p></li>
       <li><h3>見積は内訳の分かる形で</h3><p>工事内容と金額の内訳をご提示します。オーナー様へのご説明やご承認の取得にお使いください。</p></li>
       <li><h3>対応可否と着工時期を先に</h3><p>繁忙期でもご相談いただけます。対応できるかどうか、現地調査が必要か、着工できる時期を、見積の前にお知らせします。</p></li>
       <li><h3>手直しも同じ窓口へ</h3><p>完了後に気になる箇所があれば、愛媛修繕デスクへご連絡ください。施工パートナーとの調整は当デスクが行います。</p></li>
@@ -1059,7 +1106,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     </div>
     <div class="inline-cta">
       <p>退去・小修繕のご相談はこちら<small>写真がない場合も、内容をご記入のうえご相談いただけます。</small></p>
-      <a class="btn btn--primary" href="{{site}}?seg=kanri#form">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=kanri#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>
@@ -1073,7 +1120,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     <div class="faq">
       <details><summary>複数の物件をまとめて相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。物件ごとに所在地と修繕内容が分かるようにお送りください。施工パートナーの手配状況により、物件ごとに時期が異なる場合があります。</p></div></details>
       <details><summary>入居者様との日程調整はお願いできますか？</summary><div class="faq__a"><p>入居者様との連絡方法は、管理会社様のルールに合わせてご相談させてください。管理会社様を通じた調整を基本としています。</p></div></details>
-      <details><summary>鍵の受け渡しや立会いはどうなりますか？</summary><div class="faq__a"><p>鍵の受け渡し方法や立会いの要否は、物件と案件ごとにご相談のうえ決めさせていただきます。</p></div></details>
+      <details><summary>鍵の受け渡しや立会いはどうなりますか？</summary><div class="faq__a"><p>鍵の受け渡し方法や立会いの要否は、案件ごとに確認し、見積の前にお知らせします。</p></div></details>
       <details><summary>入居者様の負担区分の判断もしてもらえますか？</summary><div class="faq__a"><p>費用負担の区分は、管理会社様・オーナー様のご判断となります。判断の参考になるよう、施工前の写真と工事内容の内訳をお渡しします。</p></div></details>
     </div>
   </div>
@@ -1096,11 +1143,12 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <h1 id="page-title">営業を続けながらの<br>補修も、作業時間から<br>ご相談ください。</h1>
       <p class="phero__lead">店舗・事務所・施設の床や壁の傷み、建具の不具合、退店時の原状回復。営業への影響を確認しながら、作業できる日時を含めてご相談いただけます。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{site}}?seg=shop#form">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=shop#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=shop#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#conditions">お知らせいただきたい条件</a>
       </div>
     </div>
-    {{photo:shop|夜の商店街に建つ木造の店舗|phero__photo|写真はイメージです|eager}}
+    {{photo:shop2|テーブル席のある飲食店の店内|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
@@ -1114,11 +1162,11 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:shop2|テーブル席のある飲食店の店内|need__photo}}
+        {{photo:shop|夜の商店街に建つ木造の店舗|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">営業中</span><h3>床や壁の傷みが目立ってきた</h3><p>客席や通路の床、壁の汚れや傷など、営業を続けながら直したい箇所。開店前・閉店後・定休日など、作業できる時間帯をお知らせください。</p></div>
       </article>
       <article class="need">
-        {{photo:vacant|ガラス戸越しに見える、テナント退去後の空室|need__photo}}
+        {{photo:vacant|ガラス戸越しに見える、テナント退去後の空室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">退店・移転</span><h3>退店時の原状回復</h3><p>テナント契約の終了に合わせた原状回復。範囲は契約内容や貸主様の指定によって決まるため、契約書や指示書の内容をあわせてお知らせください。</p></div>
       </article>
     </div>
@@ -1138,6 +1186,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       </div>
       <p class="sec-lead">営業中の店舗や施設では、作業の条件が工程と施工パートナーの手配に大きく関わります。分かる範囲でお知らせください。</p>
     </div>
+    <p class="prep-note">分かる範囲で構いません。不明な点は、内容確認の際にこちらからお聞きします。</p>
     <div class="prep">
       <ul class="prep__list">
         <li><b>営業時間・定休日</b><span>作業できる曜日や時間帯（開店前・閉店後など）</span></li>
@@ -1174,7 +1223,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   <div class="container">
     <div class="inline-cta">
       <p>店舗・施設の修繕のご相談はこちら<small>作業日時の条件もあわせてお知らせください。</small></p>
-      <a class="btn btn--primary" href="{{site}}?seg=shop#form">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=shop#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>
@@ -1217,7 +1266,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
         <li>修繕内容とご希望の時期</li>
         <li>修繕箇所の写真（推奨）</li>
       </ol>
-      <a class="btn btn--primary btn--block" href="{{site}}#form" data-track="cta_click" data-track-pos="band">{{cta_label}}</a>
+      <a class="btn btn--primary btn--block" href="{{site}}#form" data-intent="quote" data-track="cta_click" data-track-pos="band">{{cta_label}}</a>
       <small>法人・事業者様専用の窓口です。</small>
     </div>
   </div>
@@ -1369,6 +1418,24 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   </div>
 </section>
 
+<section class="section section--paper" id="cases" aria-labelledby="cases-title">
+  <div class="container">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="eyebrow">FOR</span>
+        <h2 class="sec-title" id="cases-title">こんな不動産会社様に</h2>
+      </div>
+      <p class="sec-lead">売買仲介を中心に、相続物件や空き家を扱い、自社に現場の対応班を持たない不動産会社様を想定しています。</p>
+    </div>
+    <ol class="problems">
+      <li><span class="problems__no">01</span><div><h3>媒介中の相続物件、現地の段取りが進まない</h3><p>売主様が遠方で、片付けから清掃までの手配を組む人がいない。</p></div></li>
+      <li><span class="problems__no">02</span><div><h3>内覧・撮影の前に、室内と庭を整えたい</h3><p>清掃・草刈り・小修繕が重なり、業者ごとに連絡する時間がない。</p></div></li>
+      <li><span class="problems__no">03</span><div><h3>現地へ行く時間が取れない</h3><p>営業や契約業務が重なり、空室の確認や業者の立会いに出られない。</p></div></li>
+      <li><span class="problems__no">04</span><div><h3>小さな案件を頼める先がない</h3><p>建具1か所の調整など、リフォーム会社へ頼むほどではない作業がある。</p></div></li>
+    </ol>
+  </div>
+</section>
+
 <section class="section" id="services" aria-labelledby="svc-title">
   <div class="container">
     <div class="sec-head sec-head--split">
@@ -1424,7 +1491,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
         <span class="eyebrow">DELIVERABLES</span>
         <h2 class="sec-title" id="dl-title">ご依頼時に<br>お渡しする書類</h2>
       </div>
-      <p class="sec-lead">売主様・上司・オーナー様へのご説明にそのまま使える形でお渡しします。以下は書式のサンプルで、実際の案件ではありません。</p>
+      <p class="sec-lead">売主様・上司・オーナー様へのご説明にそのまま使える形で、メールなどご指定の方法でお送りします。以下は書式のサンプルで、実際の案件ではありません。</p>
     </div>
     <div class="docs">
       <figure class="doc-card">
@@ -1462,7 +1529,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
           <div class="doc-paper__ba"><span>作業前</span><span>作業後</span><span>作業前</span><span>作業後</span></div>
           <p class="doc-paper__foot">同じ位置・同じ向きで撮影した前後の写真を、箇所ごとに並べます</p>
         </div>
-        <figcaption><b>写真報告</b>現地に行かずに、仕上がりを確認できます。</figcaption>
+        <figcaption><b>写真報告</b>見積の項目ごとに写真番号をそろえ、現地に行かずに仕上がりを確認できます。</figcaption>
       </figure>
       <figure class="doc-card">
         <div class="doc-paper" aria-hidden="true">
@@ -1482,7 +1549,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   </div>
 </section>
 
-<section class="section" id="concept" aria-labelledby="concept-title">
+<section class="section section--paper" id="concept" aria-labelledby="concept-title">
   <div class="container">
     <div class="overlap">
       {{photo:fusuma|ふすまと無垢材の床の、片付いた明るい室内|overlap__photo}}
@@ -1525,24 +1592,6 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   </div>
 </section>
 
-<section class="section section--paper" id="cases" aria-labelledby="cases-title">
-  <div class="container">
-    <div class="sec-head sec-head--split">
-      <div>
-        <span class="eyebrow">FOR</span>
-        <h2 class="sec-title" id="cases-title">こんな不動産会社様に</h2>
-      </div>
-      <p class="sec-lead">売買仲介を中心に、相続物件や空き家を扱い、自社に現場の対応班を持たない不動産会社様を想定しています。</p>
-    </div>
-    <ol class="problems">
-      <li><span class="problems__no">01</span><div><h3>媒介中の相続物件、現地の段取りが進まない</h3><p>売主様が遠方で、片付けから清掃までの手配を組む人がいない。</p></div></li>
-      <li><span class="problems__no">02</span><div><h3>内覧・撮影の前に、室内と庭を整えたい</h3><p>清掃・草刈り・小修繕が重なり、業者ごとに連絡する時間がない。</p></div></li>
-      <li><span class="problems__no">03</span><div><h3>現地へ行く時間が取れない</h3><p>営業や契約業務が重なり、空室の確認や業者の立会いに出られない。</p></div></li>
-      <li><span class="problems__no">04</span><div><h3>小さな案件を頼める先がない</h3><p>建具1か所の調整など、リフォーム会社へ頼むほどではない作業がある。</p></div></li>
-    </ol>
-  </div>
-</section>
-
 <section class="section" id="examples" aria-labelledby="ex-title">
   <div class="container">
     <div class="sec-head sec-head--split">
@@ -1564,7 +1613,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
         </div>
       </article>
       <article class="example">
-        <figure class="example__photo photo">{{img:tatami|家具や生活用品が置かれたままの畳の部屋|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">写真はイメージです</figcaption></figure>
+        <figure class="example__photo photo">{{img:akiya_ext|瓦屋根の古い木造の戸建と、その前の駐車スペース|(max-width: 1023px) 100vw, 50vw}}<figcaption class="photo__cap">写真はイメージです</figcaption></figure>
         <div class="example__body">
           <p class="example__label">ご相談例 02</p>
           <h3 class="example__q">媒介中の相続戸建。内覧前に室内を整えたい</h3>
@@ -1591,7 +1640,10 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
         <tr><th scope="row">ご相談・見積</th><td>1案件からご相談いただけます。見積の内容をご確認いただき、ご承認後に手配します。</td></tr>
         <tr><th scope="row">見積書に記載する事項</th><td>作業ごとの内訳、見積の発行者、契約先、請求先、作業の責任範囲、支払条件</td></tr>
         <tr><th scope="row">作業の担当</th><td>案件ごとに、工種・地域・必要な許可や資格に合う協力事業者が担当します。窓口・調整・完了確認は当デスクが担当します。</td></tr>
-        <tr><th scope="row">空室の現地確認</th><td>鍵の受け渡し方法や入室のご承認方法は、物件ごとにご相談のうえ決めます。</td></tr>
+        <tr><th scope="row">許可・資格の確認</th><td>廃棄物の収集・運搬、電気工事、給水装置工事など許可・資格が必要な作業は、手配の前に、担当する事業者が該当する許可・資格を持っていることを確認します。</td></tr>
+        <tr><th scope="row">作業中の破損などのご連絡</th><td>当デスクが窓口となり、協力事業者との対応を調整します。責任の所在と保険の範囲は、見積時に書面でお示しします。</td></tr>
+        <tr><th scope="row">写真・物件情報の共有範囲</th><td>案件の検討と作業に必要な範囲で、担当する協力事業者とだけ共有します（<a href="{{base}}privacy/">個人情報の取扱い</a>）。</td></tr>
+        <tr><th scope="row">空室の現地確認</th><td>立会いの要否は物件ごとに確認し、見積の前にお知らせします。鍵の受け渡し方法や入室のご承認方法も、あわせてご相談のうえ決めます。</td></tr>
         <tr><th scope="row">既存のお取引先</th><td>変更していただく必要はありません。お取引先への営業も行いません。</td></tr>
         {{ops_rows}}
       </tbody>
@@ -1639,7 +1691,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
   </div>
 </section>
 
-<section class="section" id="faq" aria-labelledby="faq-title">
+<section class="section section--paper" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
     <div>
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
@@ -1650,8 +1702,10 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <details><summary>作業は誰が行いますか？</summary><div class="faq__a"><p>案件ごとに、工種・地域・必要な許可や資格に合う協力事業者が作業を行います。当デスクは自社で作業を行うのではなく、現地確認の調整、作業の整理、見積、手配、日程の調整、完了確認と写真報告の窓口を担当します。</p></div></details>
       <details><summary>見積はすぐに出ますか？</summary><div class="faq__a"><p>写真と内容を確認し、対応可否と見積までの進め方を先にご案内します。正式な見積は、必要な現地確認と協力事業者の判断を経てから提出します。見積までに時間が必要な案件は、先に提出予定をお知らせします。</p></div></details>
       <details><summary>依頼した後、進み具合はどう分かりますか？</summary><div class="faq__a"><p>受付から写真報告までの段階ごとに、次に何が起きるかと予定をお知らせします。予定の変更や確認が必要なことが起きた場合も、当デスクからご連絡します。</p></div></details>
+      <details><summary>見積を見てから、依頼しないこともできますか？</summary><div class="faq__a"><p>できます。見積の内容をご確認いただき、ご依頼しない場合はその旨をお知らせください。</p></div></details>
+      <details><summary>現地調査に費用はかかりますか？</summary><div class="faq__a"><p>ご相談は無料です。現地調査に費用がかかる場合は、調査の前に内容と金額をご説明し、ご了承をいただいてから伺います。</p></div></details>
       <details><summary>契約や請求の相手はどこになりますか？</summary><div class="faq__a"><p>見積をご案内する際に、見積の発行者・契約先・請求先と、作業の責任範囲を書面でお示しします。内容をご確認いただいたうえで、ご依頼をご判断ください。</p></div></details>
-      <details><summary>空室の現地確認で、立会いは必要ですか？</summary><div class="faq__a"><p>鍵の受け渡し方法や入室のご承認方法は、物件ごとにご相談のうえ決めます。ご希望の進め方をお知らせください。</p></div></details>
+      <details><summary>空室の現地確認で、立会いは必要ですか？</summary><div class="faq__a"><p>必要かどうかは物件ごとに確認し、見積の前にお知らせします。鍵の受け渡し方法や入室のご承認方法も、あわせてご相談のうえ決めます。</p></div></details>
       <details><summary>残置物の搬出・処分は、どの事業者が担当しますか？</summary><div class="faq__a"><p>収集・運搬・処分など法令上の許可が必要な業務は、必要な許可を有する事業者が担当します。当デスクは内容を確認し、その事業者への手配と日程の調整を行います。</p></div></details>
       <details><summary>電気・水まわりの作業も頼めますか？</summary><div class="faq__a"><p>電気工事・給水装置工事など許可・資格が必要な作業は、必要な許可・資格を有する事業者を手配できる場合に限り対応します。</p></div></details>
       <details><summary>費用はいつ分かりますか？</summary><div class="faq__a"><p>内容を確認したうえで、作業の前に見積をご案内します。見積の内容をご確認いただいてから手配します。</p></div></details>
@@ -1698,7 +1752,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
         <li>希望時期</li>
         <li>会社名・ご担当者名・ご連絡先</li>
       </ol>
-      <a class="btn btn--primary btn--block" href="{{site}}#form" data-track="cta_click" data-track-pos="band">{{cta_label}}</a>
+      <a class="btn btn--primary btn--block" href="{{site}}#form" data-intent="quote" data-track="cta_click" data-track-pos="band">{{cta_label}}</a>
       <small>{{cta_sub2}}</small>
     </div>
   </div>
@@ -2170,7 +2224,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
 <div class="ctaline">
       <p class="ctaline__text">{{ctaline_text}}</p>
       <div class="ctaline__act">
-        <a class="btn btn--primary" href="#form" data-track="cta_click" data-track-pos="{{pos}}">{{cta_label}}</a>
+        <a class="btn btn--primary" href="#form" data-intent="quote" data-track="cta_click" data-track-pos="{{pos}}">{{cta_label}}</a>
       </div>
     </div>
 
@@ -2185,7 +2239,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
     <li class="ladder__phase">
       <p class="ladder__phase-name"><span>PHASE 1</span>受付・確認</p>
       <ol class="ladder__steps" start="1">
-        <li><b>案件受付</b><span>受け付けたことをご連絡します。</span></li>
+        <li><b>案件受付</b><span>送信後の画面に受付番号を表示し、担当者から、ご指定の電話またはメールに受付のご連絡をします。</span></li>
         <li><b>内容確認</b><span>写真・所在地・ご希望の時期を確認します。</span></li>
         <li><b>対応可否の確認</b><span>対応できる{{p_partner}}を確認し、対応可否と次のステップをご案内します。</span></li>
         <li><b>必要情報の追加確認</b><span>判断に足りない情報があれば、お問い合わせします。</span></li>
@@ -2211,7 +2265,7 @@ https://luckys4900.github.io/ehime-shuzen-desk/repair/kanri/?utm_source=visit&ut
       <p class="ladder__phase-name"><span>PHASE 4</span>完了</p>
       <ol class="ladder__steps" start="11">
         <li><b>完了確認</b><span>見積の項目どおりに終わっているかを確認します。</span></li>
-        <li><b>写真報告</b><span>前後の写真と完了報告をお送りします。手直しのご連絡も当デスクが窓口です。</span></li>
+        <li><b>写真報告</b><span>前後の写真と完了報告を、メールなどご指定の方法でお送りします。手直しのご連絡も当デスクが窓口です。</span></li>
       </ol>
     </li>
   </ol>
@@ -2305,7 +2359,7 @@ const SITES = {
   repair: {
     dir: 'repair', slug: 'repair', name: '愛媛修繕デスク', sub: 'EHIME SHUZEN DESK', subJa: false,
     theme: 'theme-repair', siteType: 'repair', businessLine: 'repair_desk', themeColor: '#17283f', og: 'og-repair.png',
-    cta: '修繕案件を相談する', sticky: '修繕案件を相談する', stickyShort: '修繕案件を相談',
+    cta: '今ある1件を見積相談', sticky: '今ある1件を見積相談', stickyShort: '1件を見積相談',
     ctaSub: '法人・事業者様専用 ｜ いつもの施工会社との併用OK ｜ 松山市・近郊',
     ctaline: { concept: '普段の工事はそのままで。手が回らない案件だけ、ご相談ください。', services: '写真と物件情報から、対応できる施工パートナーを確認します。', flow: '写真と物件情報だけで、ご相談いただけます。' },
     nav: [{ href: 'kanri/', label: '管理会社様' }, { href: 'kaitori/', label: '買取再販事業者様' }, { href: 'shop/', label: '店舗・施設運営者様' }, { href: '#flow', label: 'ご相談の流れ' }],
@@ -2426,7 +2480,7 @@ const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}
 function header(site, root, siteBase) {
   const items = site.nav.map((n) => `<li><a href="${n.root ? root : siteBase}${n.href}">${n.label}</a></li>`).join('');
   const cta = site.cta ? `${phoneLink('gnav__tel', 'header')}
-      <a class="btn btn--primary gnav__cta" href="${siteBase}#form" data-track="cta_click" data-track-pos="header">${site.cta}</a>` : '';
+      <a class="btn btn--primary gnav__cta" href="${siteBase}#form" data-intent="quote" data-track="cta_click" data-track-pos="header">${site.cta}</a>` : '';
   return `<a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
   <div class="site-header__inner">
@@ -2460,14 +2514,14 @@ function footer(site, root, siteBase, page) {
     .map((n) => `<li><a href="${n.href || './'}">${n.label}</a></li>`).join('');
   let mobile = '';
   if (isPartner) mobile = `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`;
-  else if (site.cta) mobile = `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${siteBase}#form" data-track="sticky_cta_click">${PHONE ? site.stickyShort : site.sticky}</a>`;
+  else if (site.cta) mobile = `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${siteBase}#form" data-intent="quote" data-track="sticky_cta_click">${PHONE ? site.stickyShort : site.sticky}</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       ${logo(site, siteBase || './')}
       <p>${site.footerText}</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${site.cta && !isPartner ? `<div class="site-footer__cta"><a class="btn btn--primary" href="${siteBase}#form" data-track="cta_click" data-track-pos="footer">${site.cta}</a><p>${subHtml(site.ctaSub)}</p></div>` : ''}
+      ${site.cta && !isPartner ? `<div class="site-footer__cta"><a class="btn btn--primary" href="${siteBase}#form" data-intent="quote" data-track="cta_click" data-track-pos="footer">${site.cta}</a><p>${subHtml(site.ctaSub)}</p></div>` : ''}
       ${operatorHtml()}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
@@ -2505,7 +2559,8 @@ function companyInfo() {
     OP.invoiceNumber && ['適格請求書発行事業者', `登録番号 ${esc(OP.invoiceNumber)}`], OP.insurance && ['保険', esc(OP.insurance)],
     OP.licensePolicy && ['許可・資格の確認', esc(OP.licensePolicy)],
   ].filter(Boolean);
-  if (!rows.length) return '';
+  // 未設定の間も欄は表示し、何を正式公開時に掲載するかを明示する（ダミーの値は置かない）
+  if (!rows.length) return `<div class="company-info"><h3>会社・取引情報</h3><p class="company-info__pending">運営者名・所在地・電話番号・メールアドレス・受付時間・適格請求書発行事業者の登録番号・加入保険は、正式公開時にこの欄に掲載します。現在は営業提案用のデモサイトです。</p></div>`;
   return `<div class="company-info"><h3>会社・取引情報</h3><table class="terms-table"><tbody>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
@@ -2616,13 +2671,13 @@ for (const r of redirects) {
   const to = `../${r.to}`;
   // 旧問い合わせページの ?type=kanri 等は、愛媛修繕デスクのフォームの業種の初期選択（?seg=）に引き継ぐ
   const js = r.keepType
-    ? `var t=new URLSearchParams(location.search).get('type');location.replace(${JSON.stringify(to)}.replace('#form','')+(t?'?seg='+encodeURIComponent(t):'')+'#form');`
-    : `location.replace(${JSON.stringify(to)});`;
+    ? `var q=new URLSearchParams(location.search),t=q.get('type');q.delete('type');if(t)q.set('seg',t);var s=q.toString();location.replace(${JSON.stringify(to)}.replace('#form','')+(s?'?'+s:'')+(location.hash||'#form'));`
+    : `location.replace(${JSON.stringify(to)}+location.search+location.hash);`;
   writeFileSync(join(DIST, r.slug, 'index.html'), `<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
 <title>このページは移動しました</title><link rel="canonical" href="${SITE_URL}${r.to}">
-<meta http-equiv="refresh" content="0; url=${to}">
 <script>${js}</script>
+<noscript><meta http-equiv="refresh" content="0; url=${to}"></noscript>
 </head><body><p>このページは移動しました。<a href="${to}">移動先のページへ</a></p></body></html>
 `);
 }
@@ -2726,6 +2781,7 @@ console.log(`built ${pages.length} pages + ${redirects.length} redirects + 404 -
     var intent = a.getAttribute('data-intent');
     track(intent === 'feasibility' ? 'feasibility_check_click' : 'quote_request_click', { position: a.getAttribute('data-track-pos') || (a.closest('.hero') ? 'hero' : ''), offer: OFFER });
     var r = document.querySelector('#case-form input[name="intent"][data-intent="' + intent + '"]');
+    try { window.sessionStorage.setItem('osd-intent-v1', intent); } catch (err) { /* noop */ }
     if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
   });
 
@@ -2758,6 +2814,22 @@ console.log(`built ${pages.length} pages + ${redirects.length} redirects + 404 -
       var t = document.getElementById(location.hash.slice(1));
       if (t && !userMoved) t.scrollIntoView({ block: 'start' });
     });
+  }
+
+  /* ---------- 再読み込み：Webフォントの読み込みで文章の高さが変わっても、読んでいた位置に戻す ---------- */
+  var POS_KEY = 'osd-pos-v1';
+  window.addEventListener('pagehide', function () {
+    try { sessionStorage.setItem(POS_KEY, JSON.stringify({ p: location.pathname, y: window.scrollY })); } catch (e) { /* noop */ }
+  });
+  if (navEntry && navEntry.type === 'reload' && document.fonts && document.fonts.ready) {
+    var savedPos = null;
+    try { savedPos = JSON.parse(sessionStorage.getItem(POS_KEY) || 'null'); } catch (e) { savedPos = null; }
+    if (savedPos && savedPos.p === location.pathname) {
+      var moved = false;
+      var mark = function () { moved = true; };
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, mark, { once: true, passive: true }); });
+      document.fonts.ready.then(function () { if (!moved && Math.abs(window.scrollY - savedPos.y) > 4) window.scrollTo(0, savedPos.y); });
+    }
   }
 
   /* ---------- header over the home hero ---------- */
@@ -3209,6 +3281,14 @@ console.log(`built ${pages.length} pages + ${redirects.length} redirects + 404 -
     }
     function clearDraft() { var st = storage(); if (st) try { st.removeItem(DRAFT_KEY); } catch (e) { /* noop */ } }
     if (restoreDraft()) document.getElementById('draft-note').hidden = false;
+    // 別ページのCTAで選ばれた「ご相談の種類」を、未選択の場合に引き継ぐ
+    try {
+      var savedIntent = window.sessionStorage.getItem('osd-intent-v1');
+      if (savedIntent && !caseForm.querySelector('input[name="intent"]:checked')) {
+        var ir = caseForm.querySelector('input[name="intent"][data-intent="' + savedIntent + '"]');
+        if (ir) { ir.checked = true; ir.dispatchEvent(new Event('change', { bubbles: true })); }
+      }
+    } catch (err) { /* noop */ }
     // 業種別ページからの導線（?seg=kanri 等）は、業種の選択肢を初期選択にする（未選択のときだけ）
     var seg = new URLSearchParams(location.search).get('seg');
     var segInput = seg && form.querySelector('[data-seg="' + seg.replace(/[^a-z]/g, '') + '"]');
@@ -3564,7 +3644,7 @@ if (!navOk) fail('mobile nav anchor link'); else ok('mobile nav anchor jumps to 
 { const robots = await (await req.get(BASE + 'robots.txt')).text(); if (!/Disallow: \//.test(robots)) fail('demo robots.txt should disallow'); else ok('demo robots.txt disallows indexing'); }
 
 // ---- 旧URLは新しいページへ転送される（旧トップのページ内リンクは売却前おまかせデスクへ） ----
-for (const [from, to] of [['kanri/', 'repair/kanri/'], ['kaitori/', 'repair/kaitori/'], ['shop/', 'repair/shop/'], ['contact/', 'repair/#form'], ['contact/?type=kanri', 'repair/?seg=kanri#form'], ['#form', 'sale-support/#form']]) {
+for (const [from, to] of [['kanri/', 'repair/kanri/'], ['kaitori/', 'repair/kaitori/'], ['shop/', 'repair/shop/'], ['contact/', 'repair/#form'], ['kanri/?utm_source=qa&offer=feasibility', 'repair/kanri/?utm_source=qa&offer=feasibility'], ['contact/?type=kanri', 'repair/?seg=kanri#form'], ['#form', 'sale-support/#form']]) {
   const p2 = await ctx.newPage();
   await p2.goto(BASE + from, { waitUntil: 'networkidle' });
   const u = new URL(p2.url());
@@ -4193,7 +4273,7 @@ console.log(`backend tests passed: ${passed}`);
 :root {
   --ink: #23292a;
   --ink-2: #454f4d;
-  --muted: #6a7370;
+  --muted: #566260;
   --line: #d9d5cc;
   --line-2: #e9e6df;
   --paper: #f4f2ed;
@@ -4326,7 +4406,7 @@ ul, ol { margin: 0; padding: 0; }
 
 .photo { position: relative; overflow: hidden; background: var(--paper-2); margin: 0; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
-.photo__cap { position: absolute; z-index: 2; right: 12px; bottom: 12px; font-size: 11px; letter-spacing: .08em; background: rgba(255,255,255,.92); color: var(--ink-2); padding: 3px 10px; line-height: 1.6; }
+.photo__cap { position: absolute; z-index: 2; right: 12px; bottom: 12px; font-size: 12px; letter-spacing: .08em; background: rgba(255,255,255,.92); color: var(--ink-2); padding: 3px 10px; line-height: 1.6; }
 .photo__cap--dark { background: rgb(var(--shade) / .72); color: #fff; }
 
 /* ---------- home hero ---------- */
@@ -4447,7 +4527,7 @@ ul, ol { margin: 0; padding: 0; }
 .rel__partners span { border: 1px solid var(--line); background: var(--paper); font-size: 12.5px; padding: 8px 4px; line-height: 1.5; font-weight: 500; }
 .rel__usual-col { display: grid; align-content: start; }
 .rel__usual-note { font-size: 12px; font-weight: 500; color: var(--muted); padding-top: 14px; line-height: 1.6; }
-.rel-cap { font-size: 12.5px; color: var(--muted); margin-top: 14px; }
+.rel-cap { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
 /* ---------- services rows ---------- */
 .svc-rows { border-top: 1px solid var(--ink); }
@@ -4782,6 +4862,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 
 .hero__title { font-size: clamp(30px, 4.2vw, 60px); }
 .hero__lead { max-width: 38em; }
+@media (min-width: 768px) { .hero__lead { font-size: 16.5px; } }
 .hero__eyebrow { font-size: 15px; font-weight: 500; }
 @media (max-width: 767px) { .hero__eyebrow { font-size: 13.5px; } }
 @media (max-width: 767px) { .hero__title { font-size: clamp(28px, 8vw, 34px); letter-spacing: .04em; line-height: 1.55; } }
@@ -4919,7 +5000,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .theme-repair {
   --ink: #1d2633;
   --ink-2: #414d5c;
-  --muted: #677385;
+  --muted: #4f5b6b;
   --line: #d3d9e1;
   --line-2: #e6eaf0;
   --paper: #f1f4f8;
@@ -5003,7 +5084,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .steps7__no { font-family: var(--serif); font-size: 15px; color: var(--accent-dark); }
 .steps7 h3 { font-size: 17px; font-weight: 700; }
 .steps7 p { margin: 0 0 6px; font-size: 14.5px; color: var(--ink-2); flex: 1; }
-.who { align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .06em; padding: 2px 10px; }
+.who { align-self: flex-start; font-size: 13px; font-weight: 700; letter-spacing: .06em; padding: 2px 10px; }
 .who--desk { background: var(--green); color: #fff; }
 .who--you { border: 1px solid var(--accent); color: var(--accent-dark); }
 .who--partner { border: 1px solid var(--line-strong); color: var(--ink-2); }
@@ -5079,7 +5160,7 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .ladder__steps li { counter-increment: lstep; position: relative; padding-left: 34px; display: grid; gap: 2px; }
 .ladder__steps li::before { content: counter(lstep); position: absolute; left: 0; top: 1px; width: 24px; height: 24px; border-radius: 50%; background: var(--green); color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; }
 .ladder__steps b { font-size: 15px; }
-.ladder__steps span { font-size: 13.5px; color: var(--ink-2); line-height: 1.7; text-wrap: pretty; }
+.ladder__steps span { font-size: 14px; color: var(--ink-2); line-height: 1.7; text-wrap: pretty; }
 .ladder__steps .who { font-style: normal; margin-top: 4px; }
 .ladder__note { margin: 18px 0 0; font-size: 13px; color: var(--muted); }
 .section--paper .ladder__phase { box-shadow: none; }
@@ -5087,6 +5168,64 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .assure { list-style: none; display: grid; gap: 8px; margin: 24px 0 0; }
 .assure li { position: relative; padding-left: 26px; font-weight: 700; font-size: 15px; }
 .assure li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); }
+@media (max-width: 1023px) { .hero__flow3 span { white-space: nowrap; min-width: 5.6em; } }
+.company-info__pending { margin: 0; padding: 18px 20px; background: #fff; border: 1px dashed var(--line-strong); font-size: 14.5px; color: var(--ink-2); }
+
+/* ---------- 2段階CTA：副ボタン・サブ見出し・補足 ---------- */
+.btn--outline { background: transparent; color: var(--accent-dark); border: 1.5px solid var(--accent); }
+.btn--outline:hover { background: var(--accent-soft); color: var(--accent-dark); }
+.phero .btn-row { gap: 14px 20px; }
+.hero__kicker { margin: 10px 0 0; font-family: var(--serif); font-size: 18px; letter-spacing: .08em; color: #fff; text-shadow: 0 1px 12px rgba(0,0,0,.3); }
+@media (max-width: 767px) { .hero__kicker { font-size: 15px; } }
+.prep-note { margin: -24px 0 28px; font-size: 14.5px; color: var(--ink-2); }
+.form-section__head .form-note + .form-note { margin-top: 8px; }
+
+/* ---------- 売却前おまかせデスク トップ：明るい左右分割ヒーロー（修繕デスクのヒーローと差別化） ---------- */
+.theme-sale.page-home .site-header { position: sticky; }
+.theme-sale.page-home .site-header.is-over { background: #fff; border-bottom-color: var(--line-2); }
+.theme-sale.page-home .site-header.is-over .logo, .theme-sale.page-home .site-header.is-over .logo__name, .theme-sale.page-home .site-header.is-over .gnav__list a { color: var(--ink); }
+.theme-sale.page-home .site-header.is-over .logo__sub { color: var(--muted); }
+.theme-sale.page-home .site-header.is-over .menu-btn { color: var(--ink); border-color: var(--line); }
+.theme-sale.page-home .hero { display: grid; grid-template-columns: minmax(0, 55fr) minmax(0, 45fr); grid-template-rows: 1fr auto; min-height: 0; background: var(--paper); color: var(--ink); overflow: visible; }
+.theme-sale.page-home .hero__bg { position: relative; inset: auto; grid-column: 2; grid-row: 1 / span 2; min-height: 520px; }
+.theme-sale.page-home .hero__bg img { position: absolute; inset: 0; object-position: 50% 50%; filter: none; }
+.theme-sale.page-home .hero__bg::after { content: none; }
+.theme-sale.page-home .hero__inner { grid-column: 1; grid-row: 1; width: auto; max-width: none; margin: 0; padding: 48px 48px 24px max(var(--gutter), calc((100vw - var(--w)) / 2 + var(--gutter))); }
+.theme-sale.page-home .hero__eyebrow { color: var(--ink); border-bottom: 2px solid var(--accent); }
+.theme-sale.page-home .hero__title { color: var(--ink); text-shadow: none; font-size: clamp(30px, 3.4vw, 52px); }
+.theme-sale.page-home .hero__lead { color: var(--ink-2); }
+.theme-sale.page-home .hero__start { color: var(--ink-2); }
+.theme-sale.page-home .btn--line { color: var(--accent-dark); border: 1.5px solid var(--accent); background: transparent; }
+.theme-sale.page-home .btn--line:hover { background: var(--accent-soft); color: var(--accent-dark); }
+.theme-sale.page-home .policy-chips li { color: var(--ink); border-color: var(--accent); background: transparent; }
+.theme-sale.page-home .policy-chips li::before { color: var(--accent); }
+.theme-sale.page-home .hero__foot { grid-column: 1; grid-row: 2; margin: 0 48px 32px max(var(--gutter), calc((100vw - var(--w)) / 2 + var(--gutter))); background: var(--white); border: 1px solid var(--line); color: var(--ink); }
+.theme-sale.page-home .hero__foot-inner { max-width: none; margin: 0; padding: 14px 24px 16px; gap: 8px; min-height: 0; grid-template-columns: 1fr; }
+.theme-sale.page-home .hero__foot-label { color: var(--ink-2); border: 0; padding: 0; }
+@media (min-width: 1024px) {
+  .theme-sale.page-home .hero__flow3 { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr) minmax(0, .7fr); }
+  .theme-sale.page-home .hero__flow3 li { padding: 2px 20px; align-content: start; }
+  .theme-sale.page-home .hero__flow3 li:first-child { padding-left: 0; }
+}
+.theme-sale.page-home .hero__flow3 span { color: var(--accent-dark); }
+.theme-sale.page-home .hero__flow3 li { border-left-color: var(--line); }
+.theme-sale.page-home .hero__flow3 li + li::before { background: var(--white); color: var(--accent); }
+.theme-sale.page-home .hero__foot .photo__cap { display: none; }
+.theme-sale.page-home .hero__bg::before { content: "写真はイメージです"; position: absolute; z-index: 2; right: 12px; bottom: 12px; font-size: 12px; letter-spacing: .08em; background: rgba(255,255,255,.92); color: var(--ink-2); padding: 3px 10px; line-height: 1.6; }
+@media (max-width: 1023px) {
+  .theme-sale.page-home .hero { display: block; }
+  .theme-sale.page-home .hero__bg { aspect-ratio: 16 / 9; min-height: 0; }
+  .theme-sale.page-home .hero__inner { padding: 24px var(--gutter) 8px; margin: 0 auto; max-width: calc(var(--w) + var(--gutter) * 2); width: 100%; }
+  .theme-sale.page-home .hero__title { font-size: clamp(26px, 7.4vw, 30px); letter-spacing: .04em; }
+  .theme-sale.page-home .hero__eyebrow { margin-bottom: 14px; font-size: 13px; }
+  .theme-sale.page-home .hero__lead { margin-top: 14px; font-size: 14.5px; line-height: 1.9; }
+  .theme-sale.page-home .hero__actions { margin-top: 20px; }
+  .theme-sale.page-home .policy-chips { justify-content: center; margin-top: 16px; }
+  .theme-sale.page-home .hero__foot { margin: 16px var(--gutter) 28px; }
+  .theme-sale.page-home .hero__foot-inner { grid-template-columns: 1fr; gap: 8px; padding: 14px 16px; }
+  .theme-sale.page-home .hero__foot-label { border: 0; padding: 0; }
+}
+@media (min-width: 768px) and (max-width: 1023px) { .theme-sale.page-home .hero__title { font-size: clamp(30px, 4.4vw, 40px); } }
 
 ```
 

@@ -1,7 +1,7 @@
 {
-  "phase": "TARGET_80",
-  "score": null,
-  "audit_round": 0,
+  "phase": "TARGET_80_COMPLETE",
+  "score": 82,
+  "audit_round": 1,
   "rubric": "100: clarity15 / credibility20 / target15 / conversion15 / responsiveness15 / visual_mobile10 / technical10. Gates: total>=80, clarity>=11, credibility>=15, responsiveness>=11, visual>=8, technical>=8, HARD_FAIL=0, CRITICAL=0",
   "routes": [
     "/repair/",
@@ -13,28 +13,27 @@
   "hard_fail": [],
   "critical": [],
   "high": [
-    "UX-001 subpage 2-level CTA",
-    "UX-002 kaitori flow",
-    "UX-003 attendance/key wording",
-    "UX-004 相談無料 consistency",
-    "UX-005 repair terms/company block",
-    "VIS-001 empty image cards",
-    "VIS-002 sale vs repair template similarity",
-    "VIS-005 small low-contrast text"
+    "AUD-001 受付連絡の目安・受付時間（運営者の決定が必要）",
+    "AUD-002 契約・請求の相手（取引モデルの決定が必要）"
   ],
   "history": [
     {
       "note": "pre-harness audits (115-pt rubric, /sale-support/ only): r1 96/115, r2 97/115, HARD_FAIL 0"
+    },
+    {
+      "round": 1,
+      "score": 82,
+      "pass": true
     }
   ],
   "agent_runs": {
-    "opus_main": 2,
-    "opus_auditor": 0,
+    "opus_main": 3,
+    "opus_auditor": 1,
     "sonnet_research": 1,
     "sonnet_ux": 1,
     "sonnet_visual": 1,
     "sonnet_tech": 1,
-    "sonnet_implementer": 0
+    "sonnet_implementer": 1
   },
   "pre_audit_scores": {
     "ux_by_route": {
@@ -52,5 +51,33 @@
     "UX-006 repair H1 (client-specified copy; add sub-headline instead)",
     "UX-008 reply-time number (operator decision)",
     "VIS-009 sticky CTA (false positive: hidden in capture)"
-  ]
+  ],
+  "scores": {
+    "clarity": 13,
+    "credibility": 15,
+    "target": 13,
+    "conversion": 12,
+    "responsiveness": 12,
+    "visual_mobile": 8,
+    "technical": 9
+  },
+  "gates_passed": true,
+  "medium_remaining": [
+    "AUD-003 /repair/ と kanri に書式サンプルがない",
+    "AUD-004 費用の説明が2サイトで不統一（運営者の決定が必要）",
+    "AUD-005 kanri/shop の写真が場面に合わない",
+    "AUD-006 業種ページの12段階が同じ文面で長い"
+  ],
+  "low_remaining": [
+    "AUD-007 kaitori 見出しの「止めない」",
+    "AUD-008 相談方法の箱が1項目",
+    "AUD-009 業種ページ末尾CTAの seg",
+    "AUD-010 CONTACT の必要情報が業種共通",
+    "AUD-011 sale のヒーロー写真"
+  ],
+  "answers": {
+    "A_repair": "YES（費用と書式見本が弱い）",
+    "A_sale": "YES",
+    "B": "YES（条件付き：受付連絡の目安がない）"
+  }
 }
