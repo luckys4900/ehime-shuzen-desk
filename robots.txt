@@ -1,0 +1,3 @@
+# 営業提案用デモのため、検索エンジンへの掲載を拒否しています（本番は PRODUCTION=1 でビルド）
+User-agent: *
+Disallow: /
