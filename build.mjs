@@ -235,7 +235,8 @@ function companyInfo() {
     OP.invoiceNumber && ['適格請求書発行事業者', `登録番号 ${esc(OP.invoiceNumber)}`], OP.insurance && ['保険', esc(OP.insurance)],
     OP.licensePolicy && ['許可・資格の確認', esc(OP.licensePolicy)],
   ].filter(Boolean);
-  if (!rows.length) return '';
+  // 未設定の間も欄は表示し、何を正式公開時に掲載するかを明示する（ダミーの値は置かない）
+  if (!rows.length) return `<div class="company-info"><h3>会社・取引情報</h3><p class="company-info__pending">運営者名・所在地・電話番号・メールアドレス・受付時間・適格請求書発行事業者の登録番号・加入保険は、正式公開時にこの欄に掲載します。現在は営業提案用のデモサイトです。</p></div>`;
   return `<div class="company-info"><h3>会社・取引情報</h3><table class="terms-table"><tbody>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div>`;
 }
 

@@ -899,3 +899,5 @@ main li, main p, main dd, main span, main small, main td, .faq summary { word-br
 .assure { list-style: none; display: grid; gap: 8px; margin: 24px 0 0; }
 .assure li { position: relative; padding-left: 26px; font-weight: 700; font-size: 15px; }
 .assure li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); }
+@media (max-width: 1023px) { .hero__flow3 span { white-space: nowrap; min-width: 5.6em; } }
+.company-info__pending { margin: 0; padding: 18px 20px; background: #fff; border: 1px dashed var(--line-strong); font-size: 14.5px; color: var(--ink-2); }

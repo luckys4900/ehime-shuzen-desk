@@ -104,6 +104,22 @@
     });
   }
 
+  /* ---------- 再読み込み：Webフォントの読み込みで文章の高さが変わっても、読んでいた位置に戻す ---------- */
+  var POS_KEY = 'osd-pos-v1';
+  window.addEventListener('pagehide', function () {
+    try { sessionStorage.setItem(POS_KEY, JSON.stringify({ p: location.pathname, y: window.scrollY })); } catch (e) { /* noop */ }
+  });
+  if (navEntry && navEntry.type === 'reload' && document.fonts && document.fonts.ready) {
+    var savedPos = null;
+    try { savedPos = JSON.parse(sessionStorage.getItem(POS_KEY) || 'null'); } catch (e) { savedPos = null; }
+    if (savedPos && savedPos.p === location.pathname) {
+      var moved = false;
+      var mark = function () { moved = true; };
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, mark, { once: true, passive: true }); });
+      document.fonts.ready.then(function () { if (!moved && Math.abs(window.scrollY - savedPos.y) > 4) window.scrollTo(0, savedPos.y); });
+    }
+  }
+
   /* ---------- header over the home hero ---------- */
   var siteHeader = document.querySelector('.site-header');
   if (document.body.classList.contains('page-home') && siteHeader) {

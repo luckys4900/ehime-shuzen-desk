@@ -1,11 +1,22 @@
 {
-  "phase": "COMPLETE",
-  "implementation_percent": 100,
-  "implementation_breakdown": { "routes": 20, "components": 10, "content": 15, "responsive": 15, "nav_cta": 10, "contact": 10, "tech": 10, "deploy": 10 },
-  "required_routes": { "/": true, "/kanri": true, "/kaitori": true, "/shop": true, "/partner": true, "/contact": true },
-  "extra_routes": ["/privacy", "/credits", "404"],
-  "responsive": true,
-  "public_url": "https://luckys4900.github.io/ehime-shuzen-desk/",
-  "audit_score": 99,
-  "hard_fail": []
+  "phase": "TARGET_80",
+  "score": null,
+  "audit_round": 0,
+  "rubric": "100: clarity15 / credibility20 / target15 / conversion15 / responsiveness15 / visual_mobile10 / technical10. Gates: total>=80, clarity>=11, credibility>=15, responsiveness>=11, visual>=8, technical>=8, HARD_FAIL=0, CRITICAL=0",
+  "routes": ["/repair/", "/repair/kanri/", "/repair/kaitori/", "/repair/shop/", "/sale-support/"],
+  "hard_fail": [],
+  "critical": [],
+  "high": [],
+  "history": [
+    {"note": "pre-harness audits (115-pt rubric, /sale-support/ only): r1 96/115, r2 97/115, HARD_FAIL 0"}
+  ],
+  "agent_runs": {
+    "opus_main": 1,
+    "opus_auditor": 0,
+    "sonnet_research": 0,
+    "sonnet_ux": 0,
+    "sonnet_visual": 0,
+    "sonnet_tech": 0,
+    "sonnet_implementer": 0
+  }
 }
