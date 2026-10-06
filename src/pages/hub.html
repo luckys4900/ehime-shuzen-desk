@@ -1,0 +1,28 @@
+<section class="hub" aria-labelledby="hub-title">
+  <div class="container">
+    <p class="hub__eyebrow">愛媛の不動産・建物事業者向け</p>
+    <h1 class="hub__title" id="hub-title">2つの相談窓口</h1>
+    <p class="hub__lead">ご用件に合わせて、窓口をお選びください。どちらも、いつものお取引先を変えていただく必要はありません。</p>
+    <div class="hub__grid">
+      <a class="hub-card hub-card--repair" href="repair/" data-track="hub_select" data-track-pos="repair">
+        {{photo:hero|木の壁と無垢材の床の明るい室内|hub-card__photo|-}}
+        <span class="hub-card__for">建物修繕でお困りの法人・事業者様</span>
+        <h2 class="hub-card__name">愛媛修繕デスク</h2>
+        <p class="hub-card__text">いつもの施工会社が手いっぱいの時や、対応できる工種がない時の第二施工店。管理会社様・買取再販事業者様・店舗や施設の運営者様向けです。</p>
+        <span class="hub-card__go">愛媛修繕デスクを見る</span>
+      </a>
+      <a class="hub-card hub-card--sale" href="sale-support/" data-track="hub_select" data-track-pos="sale_support">
+        {{photo:kitaroom|家具がなく、無垢材の床が見える明るい室内|hub-card__photo|-}}
+        <span class="hub-card__for">売却前の手配でお困りの不動産会社様</span>
+        <h2 class="hub-card__name">売却前おまかせデスク</h2>
+        <p class="hub-card__text">残置物・清掃・草刈り・小修繕など、売却前の面倒な手配をまとめてご相談いただけます。</p>
+        <span class="hub-card__go">売却前おまかせデスクを見る</span>
+      </a>
+    </div>
+    <p class="hub__note">写真はイメージです。協力事業者の募集については<a href="partner/">こちら</a>をご覧ください。</p>
+  </div>
+</section>
+<script>
+  // 以前のトップページ（売却前おまかせデスク）のページ内リンク（#form など）で来た場合は、売却前おまかせデスクへ移動する
+  (function () { var h = location.hash; if (h && h.length > 1 && /^#[\w-]+$/.test(h) && h !== '#main') location.replace('sale-support/' + h); })();
+</script>

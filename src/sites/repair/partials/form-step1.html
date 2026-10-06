@@ -1,0 +1,45 @@
+          <div class="field field--stack" data-field="services">
+            <span class="field__label" id="services-label"><span class="req">必須</span>工事内容（複数選択できます）</span>
+            <div>
+              <div class="choices choices--grid" role="group" aria-labelledby="services-label" aria-describedby="services-err">
+                <label class="choice"><input type="checkbox" name="services" value="原状回復・内装"><span>原状回復・内装</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="建具・設備まわり"><span>建具・設備まわり</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="外回り・共用部"><span>外回り・共用部</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="店舗・事務所の修繕"><span>店舗・事務所の修繕</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="小規模な補修"><span>小規模な補修</span></label>
+                <label class="choice"><input type="checkbox" name="services" value="その他"><span>その他</span></label>
+              </div>
+              <p class="field__err" id="services-err" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="reason">
+            <span class="field__label" id="reason-label"><span class="opt">任意</span>普段の施工会社で対応できない理由</span>
+            <div class="choices" role="group" aria-labelledby="reason-label">
+              <label class="choice"><input type="checkbox" name="reason" value="繁忙で手が回らない"><span>繁忙で手が回らない</span></label>
+              <label class="choice"><input type="checkbox" name="reason" value="対応外の工種"><span>対応外の工種</span></label>
+              <label class="choice"><input type="checkbox" name="reason" value="小規模な案件"><span>小規模な案件</span></label>
+              <label class="choice"><input type="checkbox" name="reason" value="新しい相談先を探している"><span>新しい相談先を探している</span></label>
+              <label class="choice"><input type="checkbox" name="reason" value="その他"><span>その他</span></label>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="urgency">
+            <span class="field__label" id="urgency-label"><span class="opt">任意</span>緊急度</span>
+            <div class="choices" role="radiogroup" aria-labelledby="urgency-label">
+              <label class="choice"><input type="radio" name="urgency" value="使用・営業に支障がある"><span>使用・営業に支障がある</span></label>
+              <label class="choice"><input type="radio" name="urgency" value="早めに対応したい"><span>早めに対応したい</span></label>
+              <label class="choice"><input type="radio" name="urgency" value="急ぎではない"><span>急ぎではない</span></label>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="timing">
+            <span class="field__label" id="timing-label"><span class="opt">任意</span>希望時期</span>
+            <div class="choices" role="radiogroup" aria-labelledby="timing-label">
+              <label class="choice"><input type="radio" name="timing" value="1週間以内"><span>1週間以内</span></label>
+              <label class="choice"><input type="radio" name="timing" value="1か月以内"><span>1か月以内</span></label>
+              <label class="choice"><input type="radio" name="timing" value="2〜3か月以内"><span>2〜3か月以内</span></label>
+              <label class="choice"><input type="radio" name="timing" value="時期未定"><span>時期未定</span></label>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="note">
+            <label class="field__label" for="note"><span class="opt">任意</span>修繕内容の補足</label>
+            <div><textarea class="textarea" id="note" name="note" rows="4" placeholder="例）退去後の原状回復。6畳洋室のクロス張替えと、室内ドア1か所の開閉調整。いつもの施工会社は繁忙期で着工まで1か月かかると言われています。"></textarea></div>
+          </div>

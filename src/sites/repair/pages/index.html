@@ -3,19 +3,22 @@
   <div class="container hero__inner">
     <p class="hero__eyebrow">松山周辺の法人・事業者様向け<span class="br-pc">　</span><br class="br-sp">建物修繕の相談窓口</p>
     <h1 class="hero__title" id="hero-title">いつもの施工会社を<br>変える必要は<br class="br-sp">ありません。</h1>
-    <p class="hero__lead">手が回らない時、頼みたい工種の手配先がない時の「もう一つの相談先」として。愛媛修繕デスクは、写真と物件情報から建物修繕のご相談を受け付け、案件ごとに対応できる施工パートナーを手配します。</p>
+    <p class="hero__kicker">繁忙時・対応外工種・小修繕の「第二施工店」</p>
+    <p class="hero__lead">手が回らない時、頼みたい工種の手配先がない時の「もう一つの相談先」として。写真と物件情報から建物修繕のご相談を受け付け、案件ごとに対応できる施工パートナーを手配します。</p>
     <div class="btn-row hero__actions">
-      <a class="btn btn--primary" href="{{base}}contact/">{{cta_label}}</a>
-      <a class="more more--light" href="#flow">ご相談の流れ</a>
+      <a class="btn btn--primary" href="#form" data-track="hero_cta_click" data-intent="quote">今ある1件を見積相談</a>
+      <a class="btn btn--line" href="#form" data-intent="feasibility">{{cta2_label}}</a>
     </div>
+    <p class="hero__sub">{{cta_sub}}</p>
+    {{phone_cta}}
   </div>
   <div class="hero__foot">
     <div class="container hero__foot-inner">
       <span class="hero__foot-label">業種別のご案内</span>
       <ul class="hero__segs">
-        <li><a href="{{base}}kanri/">管理会社様</a></li>
-        <li><a href="{{base}}kaitori/">買取再販事業者様</a></li>
-        <li><a href="{{base}}shop/">店舗・施設運営者様</a></li>
+        <li><a href="{{site}}kanri/">管理会社様</a></li>
+        <li><a href="{{site}}kaitori/">買取再販事業者様</a></li>
+        <li><a href="{{site}}shop/">店舗・施設運営者様</a></li>
       </ul>
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
     </div>
@@ -67,29 +70,30 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="concept-title">
+<section class="section" id="concept" aria-labelledby="concept-title">
   <div class="container">
     <div class="overlap">
       {{photo:washitsu|障子窓のある、畳敷きの明るい和室|overlap__photo}}
       <div class="overlap__panel">
         <span class="eyebrow">CONCEPT</span>
         <h2 id="concept-title">「第二施工店」<br>という考え方。</h2>
-        <p>愛媛修繕デスクは、御社の取引先に置き換わるものではありません。普段の発注はこれまで通りに。手が回らない時期や、工種が合わない案件のときに使っていただく、もう一つの相談先です。</p>
-        <p>ご相談は愛媛修繕デスクが受け付け、施工パートナーの手配を調整します。</p>
+        <p class="overlap__msg">普段の工事は、いつもの施工会社へ。<br>手が回らない時だけ、愛媛修繕デスクへ。</p>
+        <p>愛媛修繕デスクは、御社の取引先に置き換わるものではありません。繁忙期や、工種が合わない案件、小さな修繕のときに使っていただく、もう一つの相談先です。</p>
+        <p>ご相談は愛媛修繕デスクが受け付け、施工パートナーの手配を調整します。愛媛修繕デスクが自社で施工する形ではありません。</p>
       </div>
     </div>
     <div class="concept-detail">
       <div>
         <h3>いつもの取引先との関係</h3>
-        <div class="rel" role="img" aria-label="関係図：御社は、これまで通りいつもの施工会社に発注し、手が回らない時に愛媛修繕デスクへ相談します。愛媛修繕デスクは案件ごとに施工パートナーを手配します。">
+        <div class="rel" role="img" aria-label="関係図：御社は、普段の工事をこれまで通りいつもの施工会社に依頼し、繁忙時・対応外の工種・小修繕だけを愛媛修繕デスクへ相談します。愛媛修繕デスクは案件ごとに対応できる施工パートナーを手配します。">
           <div class="rel__you">御社<small>管理会社・買取再販・店舗施設</small></div>
           <div class="rel__lines" aria-hidden="true"><span class="rel__solid"></span><span class="rel__dash"></span></div>
           <div class="rel__pair">
-            <div class="rel__usual-col"><div class="rel__box"><small>これまで通り</small>いつもの施工会社</div><p class="rel__usual-note">普段の修繕は、引き続き<br>いつもの施工会社へ</p></div>
+            <div class="rel__usual-col"><div class="rel__box"><small>普段の工事</small>いつもの施工会社</div><p class="rel__usual-note">普段の修繕は、引き続き<br>いつもの施工会社へ</p></div>
             <div class="rel__desk-col">
-              <div class="rel__box rel__box--desk"><small>手が回らない時に</small>愛媛修繕デスク</div>
+              <div class="rel__box rel__box--desk"><small>繁忙時・対応外工種・小修繕</small>愛媛修繕デスク</div>
               <span class="rel__drop" aria-hidden="true"></span>
-              <div class="rel__partners"><span>工種・地域に合う施工パートナーを案件ごとに手配</span></div>
+              <div class="rel__partners"><span>対応できる施工パートナーを<br>案件ごとに手配</span></div>
             </div>
           </div>
         </div>
@@ -98,14 +102,16 @@
       <div>
         <h3>お引き受けしていない内容</h3>
         <ul class="not-list">
+          <li>御社のお取引先への営業や、取引の切り替えのご提案</li>
           <li>個人のお客様からのご依頼</li>
           <li>新築工事、大規模な増改築</li>
           <li>夜間・休日の緊急駆け付け対応</li>
-          <li>資格・登録を持つ施工パートナーを手配できない工事</li>
+          <li>必要な許可・資格を有する施工パートナーを手配できない工事</li>
         </ul>
         <p class="not-note">上記以外でも、内容や時期によって施工パートナーを手配できない場合があります。その場合は、その旨をご連絡します。</p>
       </div>
     </div>
+    {{ctaline:concept}}
   </div>
 </section>
 
@@ -142,8 +148,9 @@
     </div>
     <div class="svc-note">
       <p>記載の工種は、ご相談いただける内容の例です。対応の可否は、案件内容を確認後、施工パートナーの手配状況によりご回答します。</p>
-      <p><span class="mark">※</span> 電気工事や給水装置工事など、資格や登録が必要な工事は、該当する資格・登録を持つ施工パートナーが担当できる場合に限り対応します。</p>
+      <p><span class="mark">※</span> 電気工事や給水装置工事など、許可・資格が必要な工事は、必要な許可・資格を有する施工パートナーを手配できる場合に限り対応します。</p>
     </div>
+    {{ctaline:services}}
   </div>
 </section>
 
@@ -158,7 +165,7 @@
     </div>
   </div>
   <div class="tiles">
-    <a class="tile" href="{{base}}kanri/">
+    <a class="tile" href="{{site}}kanri/">
       {{img:building||(max-width: 1023px) 100vw, 34vw}}
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
       <span class="tile__en">FOR PROPERTY MANAGEMENT</span>
@@ -166,7 +173,7 @@
       <p>退去後の原状回復や、入居中の小修繕。複数物件の修繕手配を、写真から相談できます。</p>
       <span class="more">詳しく見る</span>
     </a>
-    <a class="tile" href="{{base}}kaitori/">
+    <a class="tile" href="{{site}}kaitori/">
       {{img:kitchen||(max-width: 1023px) 100vw, 34vw}}
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
       <span class="tile__en">FOR RESALE</span>
@@ -174,7 +181,7 @@
       <p>仕入れ後の内装補修や、販売前の手直し。工事範囲ごとの見積で、手を入れる範囲を決められます。</p>
       <span class="more">詳しく見る</span>
     </a>
-    <a class="tile" href="{{base}}shop/">
+    <a class="tile" href="{{site}}shop/">
       {{img:shop||(max-width: 1023px) 100vw, 34vw}}
       <span class="photo__cap photo__cap--dark">写真はイメージです</span>
       <span class="tile__en">FOR SHOPS &amp; FACILITIES</span>
@@ -189,8 +196,15 @@
   <div class="container flow-wrap">
     <div class="flow-wrap__head">
       <span class="eyebrow">FLOW</span>
-      <h2 class="sec-title" id="flow-title">ご相談から<br>完了確認までの流れ</h2>
-      <p class="sec-lead">最初の一歩は、フォームから写真と物件情報をお送りいただくことです。現地確認は、写真で判断できない場合に日程を調整して行います。</p>
+      <h2 class="sec-title" id="flow-title">案件を送った後に、<br>起きること</h2>
+      <p class="sec-lead">繁忙期でもご相談いただけます。対応できるかどうか、現地調査が必要か、見積がいつ出るか、いつ着工できるかを、段階ごとに先にお知らせします。</p>
+      <ul class="assure">
+        <li>対応可否を先にご案内</li>
+        <li>内訳つきの見積</li>
+        <li>着工可能な時期のご案内</li>
+        <li>施工前後の写真と完了報告</li>
+        <li>手直しのご連絡も同じ窓口へ</li>
+      </ul>
     </div>
     <div>
       {{flow}}
@@ -198,7 +212,7 @@
   </div>
 </section>
 
-<section class="section" id="area" aria-labelledby="area-title">
+<section class="section" id="area-map" aria-labelledby="area-title">
   <div class="container">
     <div class="sec-head">
       <h2 class="sec-title" id="area-title">対応エリア</h2>
@@ -241,7 +255,32 @@
   </div>
 </section>
 
-<section class="section section--paper" id="faq" aria-labelledby="faq-title">
+<section class="section section--paper" id="terms" aria-labelledby="terms-title">
+  <div class="container">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="eyebrow">TERMS</span>
+        <h2 class="sec-title" id="terms-title">取引の進め方</h2>
+      </div>
+      <p class="sec-lead">法人間のお取引として、着手前に条件を書面でご確認いただきます。</p>
+    </div>
+    <table class="terms-table">
+      <tbody>
+        <tr><th scope="row">ご相談・見積</th><td>1件からご相談いただけます。見積の内容をご確認いただき、ご承認後に手配します。</td></tr>
+        <tr><th scope="row">見積書に記載する事項</th><td>工事ごとの内訳、見積の発行者、契約先、請求先、施工の責任範囲、支払条件</td></tr>
+        <tr><th scope="row">施工の担当</th><td>案件ごとに、工種・地域・必要な許可や資格に合う施工パートナーが担当します。窓口・調整・完了確認は愛媛修繕デスクが担当します。</td></tr>
+        <tr><th scope="row">許可・資格の確認</th><td>電気工事・給水装置工事など許可・資格が必要な工事は、手配の前に、担当する施工パートナーが該当する許可・資格を持っていることを確認します。</td></tr>
+        <tr><th scope="row">手直し・不具合のご連絡</th><td>完了後に気になる箇所があれば、愛媛修繕デスクが窓口となり、施工パートナーとの対応を調整します。責任の所在と保険の範囲は、見積時に書面でお示しします。</td></tr>
+        <tr><th scope="row">写真・物件情報の共有範囲</th><td>案件の検討と施工に必要な範囲で、担当する施工パートナーとだけ共有します（<a href="{{base}}privacy/">個人情報の取扱い</a>）。</td></tr>
+        <tr><th scope="row">既存のお取引先</th><td>変更していただく必要はありません。お取引先への営業も行いません。</td></tr>
+        {{ops_rows}}
+      </tbody>
+    </table>
+    {{company_info}}
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
     <div>
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
@@ -254,10 +293,23 @@
       <details><summary>契約や請求の相手はどこになりますか？</summary><div class="faq__a"><p>見積をご案内する際に、契約・請求の相手先と、施工の責任範囲を書面でお示しします。内容をご確認いただいたうえで、ご発注をご判断ください。</p></div></details>
       <details><summary>1か所だけの小さな修繕でも相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。内容によっては、近い時期の他の修繕とまとめて施工した方が効率的な場合もあるため、あわせてご提案することがあります。</p></div></details>
       <details><summary>入居中・営業中の物件でも相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。作業できる時間帯や、音・臭い・共用部の使用への配慮など、条件をお知らせください。条件に合う施工パートナーの手配を調整します。</p></div></details>
-      <details><summary>電気・水道まわりの工事も頼めますか？</summary><div class="faq__a"><p>電気工事や給水装置工事など、資格や登録が必要な工事は、該当する資格・登録を持つ施工パートナーが担当できる場合に限り対応します。対応できない場合は、その旨をお伝えします。</p></div></details>
+      <details><summary>電気・水道まわりの工事も頼めますか？</summary><div class="faq__a"><p>電気工事や給水装置工事など、許可・資格が必要な工事は、必要な許可・資格を有する施工パートナーを手配できる場合に限り対応します。対応できない場合は、その旨をお伝えします。</p></div></details>
       <details><summary>個人の住宅の修繕も相談できますか？</summary><div class="faq__a"><p>愛媛修繕デスクは、管理会社様・買取再販事業者様・店舗や施設を運営する事業者様など、法人・事業者様向けの窓口です。個人のお客様からのご依頼はお受けしていません。</p></div></details>
     </div>
   </div>
 </section>
 
 {{cta}}
+
+<section class="section form-section" id="form" aria-labelledby="form-title">
+  <div class="container form-section__inner">
+    <div class="form-section__head">
+      <span class="eyebrow">REQUEST FORM</span>
+      <h2 class="sec-title" id="form-title">修繕案件を<br>相談する</h2>
+      <p class="form-lead">工事内容・物件の情報・写真をお送りください。内容を確認のうえ、対応できる施工パートナーの手配を調整し、担当者からご連絡します。</p>
+      <p class="form-note">分かる範囲で構いません。必須は、工事内容・物件エリア・会社名・ご担当者名・ご連絡先だけです。</p>
+      <p class="form-note">法人・事業者様専用の窓口です。いつもの施工会社との併用を前提にしています。</p>
+    </div>
+    {{case_form}}
+  </div>
+</section>

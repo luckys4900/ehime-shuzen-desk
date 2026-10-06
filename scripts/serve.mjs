@@ -2,10 +2,10 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { join, extname } from 'node:path';
-const DIST = new URL('../dist/', import.meta.url).pathname;
+const DEFAULT_DIST = new URL('../dist/', import.meta.url).pathname;
 const BASE = '/ehime-shuzen-desk/';
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.xml': 'application/xml', '.txt': 'text/plain' };
-export function serve(port = 4173) {
+export function serve(port = 4173, DIST = DEFAULT_DIST) {
   return new Promise((resolve) => {
     const srv = createServer(async (req, res) => {
       const url = decodeURIComponent(new URL(req.url, 'http://x').pathname);

@@ -1,6 +1,6 @@
 <section class="phero" aria-labelledby="page-title">
   <div class="container">
-    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{base}}">トップ</a></li><li aria-current="page">店舗・施設運営者様へ</li></ol></nav>
+    <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{{site}}">愛媛修繕デスク</a></li><li aria-current="page">店舗・施設運営者様へ</li></ol></nav>
   </div>
   <div class="container phero__inner">
     <div>
@@ -8,11 +8,12 @@
       <h1 id="page-title">営業を続けながらの<br>補修も、作業時間から<br>ご相談ください。</h1>
       <p class="phero__lead">店舗・事務所・施設の床や壁の傷み、建具の不具合、退店時の原状回復。営業への影響を確認しながら、作業できる日時を含めてご相談いただけます。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{base}}contact/?type=shop">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=shop#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=shop#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#conditions">お知らせいただきたい条件</a>
       </div>
     </div>
-    {{photo:shop|夜の商店街に建つ木造の店舗|phero__photo|写真はイメージです|eager}}
+    {{photo:shop2|テーブル席のある飲食店の店内|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
@@ -26,11 +27,11 @@
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:shop2|テーブル席のある飲食店の店内|need__photo}}
+        {{photo:shop|夜の商店街に建つ木造の店舗|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">営業中</span><h3>床や壁の傷みが目立ってきた</h3><p>客席や通路の床、壁の汚れや傷など、営業を続けながら直したい箇所。開店前・閉店後・定休日など、作業できる時間帯をお知らせください。</p></div>
       </article>
       <article class="need">
-        {{photo:vacant|ガラス戸越しに見える、テナント退去後の空室|need__photo}}
+        {{photo:vacant|ガラス戸越しに見える、テナント退去後の空室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">退店・移転</span><h3>退店時の原状回復</h3><p>テナント契約の終了に合わせた原状回復。範囲は契約内容や貸主様の指定によって決まるため、契約書や指示書の内容をあわせてお知らせください。</p></div>
       </article>
     </div>
@@ -50,6 +51,7 @@
       </div>
       <p class="sec-lead">営業中の店舗や施設では、作業の条件が工程と施工パートナーの手配に大きく関わります。分かる範囲でお知らせください。</p>
     </div>
+    <p class="prep-note">分かる範囲で構いません。不明な点は、内容確認の際にこちらからお聞きします。</p>
     <div class="prep">
       <ul class="prep__list">
         <li><b>営業時間・定休日</b><span>作業できる曜日や時間帯（開店前・閉店後など）</span></li>
@@ -86,7 +88,7 @@
   <div class="container">
     <div class="inline-cta">
       <p>店舗・施設の修繕のご相談はこちら<small>作業日時の条件もあわせてお知らせください。</small></p>
-      <a class="btn btn--primary" href="{{base}}contact/?type=shop">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=shop#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>

@@ -1,0 +1,96 @@
+<!-- 案件相談フォーム（共通の枠）。サービスごとの質問は src/sites/<site>/partials/form-step1.html・form-step2.html（・form-step3.html）で差し込む -->
+<div class="case">
+      <ol class="stepper" aria-label="入力の進み具合">
+        <li class="stepper__item" data-step-ind="1" aria-current="step"><span class="stepper__no">1</span><span class="stepper__label">{{step1_label}}</span></li>
+        <li class="stepper__item" data-step-ind="2"><span class="stepper__no">2</span><span class="stepper__label">{{step2_label}}</span></li>
+        <li class="stepper__item" data-step-ind="3"><span class="stepper__no">3</span><span class="stepper__label">連絡先</span></li>
+      </ol>
+
+      <div class="form-status" data-status-for="case-form" role="alert" tabindex="-1" hidden></div>
+      <p class="draft-note" id="draft-note" hidden>前回の入力内容を復元しました。<button type="button" class="linklike" id="draft-clear">入力内容を消す</button></p>
+
+      <form class="case-form js-case-form" id="case-form" data-services-msg="{{services_msg}}" novalidate>
+        <fieldset class="cstep" data-step="1">
+          <legend class="cstep__legend">STEP 1　{{step1_label}}</legend>
+          <div class="field field--stack" data-field="intent">
+            <span class="field__label" id="intent-label"><span class="opt">任意</span>ご相談の種類</span>
+            <div class="choices" role="radiogroup" aria-labelledby="intent-label">
+              <label class="choice"><input type="radio" name="intent" value="見積の相談" data-intent="quote"><span>見積を相談したい</span></label>
+              <label class="choice"><input type="radio" name="intent" value="対応可否の確認" data-intent="feasibility"><span>まず対応できるか確認したい</span></label>
+            </div>
+          </div>
+{{form_step1}}          <div class="cstep__nav">
+            <button type="button" class="btn btn--primary btn--block" data-next="2">次へ（{{step2_label}}）</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="cstep" data-step="2" hidden>
+          <legend class="cstep__legend">STEP 2　{{step2_label}}</legend>
+          <div class="field field--stack" data-field="photos">
+            <span class="field__label" id="photos-label"><span class="opt">任意</span>写真（10枚まで）</span>
+            <div>
+              <div class="upload js-upload">
+                <input type="file" id="photos" name="photos" accept="image/*" multiple aria-labelledby="photos-label photos-btn" aria-describedby="photos-hint photos-err">
+                <label class="upload__btn" for="photos" id="photos-btn">写真を選ぶ・撮る</label>
+                <p class="upload__txt" id="photos-hint">スマートフォンのカメラ・アルバムから複数枚選べます。{{photo_hint}}</p>
+              </div>
+              <ul class="thumbs js-thumbs" aria-label="選択した写真"></ul>
+              <p class="field__err" id="photos-err" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="area">
+            <label class="field__label" for="area"><span class="req">必須</span>物件エリア</label>
+            <div>
+              <select class="select" id="area" name="area" required aria-describedby="area-err">
+                <option value="">選択してください</option>
+                <option>松山市</option><option>松前町</option><option>伊予市</option><option>東温市</option><option>砥部町</option><option>その他の近郊</option>
+              </select>
+              <p class="field__err" id="area-err" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field field--stack" data-field="address">
+            <label class="field__label" for="address"><span class="opt">任意</span>物件住所</label>
+            <div><input class="input" id="address" name="address" type="text" autocomplete="off" placeholder="町名まででも構いません"></div>
+          </div>
+{{form_step2}}          <div class="cstep__nav">
+            <button type="button" class="btn btn--back" data-prev="1">戻る</button>
+            <button type="button" class="btn btn--primary" data-next="3">次へ（連絡先）</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="cstep" data-step="3" hidden>
+          <legend class="cstep__legend">STEP 3　連絡先</legend>
+          <div class="field field--stack" data-field="company">
+            <label class="field__label" for="company"><span class="req">必須</span>会社名</label>
+            <div><input class="input" id="company" name="company" type="text" autocomplete="organization" required aria-describedby="company-err"><p class="field__err" id="company-err" aria-live="polite"></p></div>
+          </div>
+          <div class="field field--stack" data-field="name">
+            <label class="field__label" for="name"><span class="req">必須</span>ご担当者名</label>
+            <div><input class="input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err"><p class="field__err" id="name-err" aria-live="polite"></p></div>
+          </div>
+          <div class="field field--stack field--group" data-field="contact">
+            <span class="field__label" id="contact-label"><span class="req">必須</span>電話番号またはメールアドレス（どちらか一方）</span>
+            <div class="contact-pair" role="group" aria-labelledby="contact-label" aria-describedby="contact-err">
+              <label class="sublabel" for="tel">電話番号</label>
+              <input class="input" id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" data-type="tel" data-group="contact">
+              <label class="sublabel" for="email">メールアドレス</label>
+              <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" data-group="contact">
+              <p class="field__err" id="contact-err" aria-live="polite"></p>
+            </div>
+          </div>
+{{form_step3}}          <div class="hp" aria-hidden="true"><label for="website">ウェブサイト（入力しないでください）</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <p class="form-privacy">送信いただいた内容と写真は、ご相談への対応と、対応できる事業者への確認のために使用します。<a href="{{base}}privacy/" target="_blank" rel="noopener">個人情報の取扱い（別タブで開きます）</a></p>
+          <div class="cstep__nav">
+            <button type="button" class="btn btn--back" data-prev="2">戻る</button>
+            <button type="submit" class="btn btn--primary">この内容で相談を送る</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="case-done" id="case-done" tabindex="-1" hidden>
+        <p class="case-done__label">ご相談を受け付けました</p>
+        <p class="case-done__text" id="case-text">写真と内容を確認し、担当者から対応方法をご連絡します。</p>
+        <p class="case-done__ref"><span class="case-done__id-label">受付番号</span><span class="case-done__id" id="case-id"></span><button type="button" class="linklike" id="case-copy">コピー</button></p>
+        <button type="button" class="btn btn--back" id="case-again">続けて別の案件を相談する</button>
+      </div>
+    </div>
