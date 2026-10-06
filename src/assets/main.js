@@ -70,6 +70,7 @@
     var intent = a.getAttribute('data-intent');
     track(intent === 'feasibility' ? 'feasibility_check_click' : 'quote_request_click', { position: a.getAttribute('data-track-pos') || (a.closest('.hero') ? 'hero' : ''), offer: OFFER });
     var r = document.querySelector('#case-form input[name="intent"][data-intent="' + intent + '"]');
+    try { window.sessionStorage.setItem('osd-intent-v1', intent); } catch (err) { /* noop */ }
     if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
   });
 
@@ -569,6 +570,14 @@
     }
     function clearDraft() { var st = storage(); if (st) try { st.removeItem(DRAFT_KEY); } catch (e) { /* noop */ } }
     if (restoreDraft()) document.getElementById('draft-note').hidden = false;
+    // 別ページのCTAで選ばれた「ご相談の種類」を、未選択の場合に引き継ぐ
+    try {
+      var savedIntent = window.sessionStorage.getItem('osd-intent-v1');
+      if (savedIntent && !caseForm.querySelector('input[name="intent"]:checked')) {
+        var ir = caseForm.querySelector('input[name="intent"][data-intent="' + savedIntent + '"]');
+        if (ir) { ir.checked = true; ir.dispatchEvent(new Event('change', { bubbles: true })); }
+      }
+    } catch (err) { /* noop */ }
     // 業種別ページからの導線（?seg=kanri 等）は、業種の選択肢を初期選択にする（未選択のときだけ）
     var seg = new URLSearchParams(location.search).get('seg');
     var segInput = seg && form.querySelector('[data-seg="' + seg.replace(/[^a-z]/g, '') + '"]');

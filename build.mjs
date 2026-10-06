@@ -35,7 +35,7 @@ const SITES = {
   repair: {
     dir: 'repair', slug: 'repair', name: '愛媛修繕デスク', sub: 'EHIME SHUZEN DESK', subJa: false,
     theme: 'theme-repair', siteType: 'repair', businessLine: 'repair_desk', themeColor: '#17283f', og: 'og-repair.png',
-    cta: '修繕案件を相談する', sticky: '修繕案件を相談する', stickyShort: '修繕案件を相談',
+    cta: '今ある1件を見積相談', sticky: '今ある1件を見積相談', stickyShort: '1件を見積相談',
     ctaSub: '法人・事業者様専用 ｜ いつもの施工会社との併用OK ｜ 松山市・近郊',
     ctaline: { concept: '普段の工事はそのままで。手が回らない案件だけ、ご相談ください。', services: '写真と物件情報から、対応できる施工パートナーを確認します。', flow: '写真と物件情報だけで、ご相談いただけます。' },
     nav: [{ href: 'kanri/', label: '管理会社様' }, { href: 'kaitori/', label: '買取再販事業者様' }, { href: 'shop/', label: '店舗・施設運営者様' }, { href: '#flow', label: 'ご相談の流れ' }],
@@ -156,7 +156,7 @@ const phoneLink = (cls, track) => PHONE ? `<a class="${cls}" href="${PHONE_HREF}
 function header(site, root, siteBase) {
   const items = site.nav.map((n) => `<li><a href="${n.root ? root : siteBase}${n.href}">${n.label}</a></li>`).join('');
   const cta = site.cta ? `${phoneLink('gnav__tel', 'header')}
-      <a class="btn btn--primary gnav__cta" href="${siteBase}#form" data-track="cta_click" data-track-pos="header">${site.cta}</a>` : '';
+      <a class="btn btn--primary gnav__cta" href="${siteBase}#form" data-intent="quote" data-track="cta_click" data-track-pos="header">${site.cta}</a>` : '';
   return `<a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
   <div class="site-header__inner">
@@ -190,14 +190,14 @@ function footer(site, root, siteBase, page) {
     .map((n) => `<li><a href="${n.href || './'}">${n.label}</a></li>`).join('');
   let mobile = '';
   if (isPartner) mobile = `<a class="btn btn--primary" href="#entry">協力事業者として登録を相談する</a>`;
-  else if (site.cta) mobile = `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${siteBase}#form" data-track="sticky_cta_click">${PHONE ? site.stickyShort : site.sticky}</a>`;
+  else if (site.cta) mobile = `${PHONE ? `<a class="btn btn--tel" href="${PHONE_HREF}" data-track="phone_click" data-track-pos="sticky">電話で相談</a>` : ''}<a class="btn btn--primary" href="${siteBase}#form" data-intent="quote" data-track="sticky_cta_click">${PHONE ? site.stickyShort : site.sticky}</a>`;
   return `<footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       ${logo(site, siteBase || './')}
       <p>${site.footerText}</p>
       <p class="site-footer__area">対応エリア：<span class="nw">松山市</span>・<span class="nw">松前町</span>・<span class="nw">伊予市</span>・<span class="nw">東温市</span>・<span class="nw">砥部町</span>ほか近郊（案件によりご相談）</p>
-      ${site.cta && !isPartner ? `<div class="site-footer__cta"><a class="btn btn--primary" href="${siteBase}#form" data-track="cta_click" data-track-pos="footer">${site.cta}</a><p>${subHtml(site.ctaSub)}</p></div>` : ''}
+      ${site.cta && !isPartner ? `<div class="site-footer__cta"><a class="btn btn--primary" href="${siteBase}#form" data-intent="quote" data-track="cta_click" data-track-pos="footer">${site.cta}</a><p>${subHtml(site.ctaSub)}</p></div>` : ''}
       ${operatorHtml()}
     </div>
     <nav aria-label="フッターメニュー"><ul class="site-footer__nav">${items}</ul></nav>
@@ -347,13 +347,13 @@ for (const r of redirects) {
   const to = `../${r.to}`;
   // 旧問い合わせページの ?type=kanri 等は、愛媛修繕デスクのフォームの業種の初期選択（?seg=）に引き継ぐ
   const js = r.keepType
-    ? `var t=new URLSearchParams(location.search).get('type');location.replace(${JSON.stringify(to)}.replace('#form','')+(t?'?seg='+encodeURIComponent(t):'')+'#form');`
-    : `location.replace(${JSON.stringify(to)});`;
+    ? `var q=new URLSearchParams(location.search),t=q.get('type');q.delete('type');if(t)q.set('seg',t);var s=q.toString();location.replace(${JSON.stringify(to)}.replace('#form','')+(s?'?'+s:'')+(location.hash||'#form'));`
+    : `location.replace(${JSON.stringify(to)}+location.search+location.hash);`;
   writeFileSync(join(DIST, r.slug, 'index.html'), `<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
 <title>このページは移動しました</title><link rel="canonical" href="${SITE_URL}${r.to}">
-<meta http-equiv="refresh" content="0; url=${to}">
 <script>${js}</script>
+<noscript><meta http-equiv="refresh" content="0; url=${to}"></noscript>
 </head><body><p>このページは移動しました。<a href="${to}">移動先のページへ</a></p></body></html>
 `);
 }

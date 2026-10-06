@@ -8,11 +8,12 @@
       <h1 id="page-title">退去が重なる時期の、<br>もう一つの修繕窓口に。</h1>
       <p class="phero__lead">原状回復や入居中の小修繕で、いつもの施工会社の手が回らない時に。物件の写真と情報をお送りいただければ、内容を確認のうえ、対応できる施工パートナーの手配を調整します。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{site}}?seg=kanri#form">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=kanri#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=kanri#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#prep">送っていただく情報</a>
       </div>
     </div>
-    {{photo:building|ベランダが並ぶ集合住宅の外観|phero__photo|写真はイメージです|eager}}
+    {{photo:washitsu2|障子と床の間のある、家具の置かれていない和室|phero__photo|写真はイメージです|eager}}
   </div>
 </section>
 
@@ -26,15 +27,15 @@
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:washitsu2|障子と床の間のある、家具の置かれていない和室|need__photo}}
+        {{photo:building|ベランダが並ぶ集合住宅の外観|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">退去後</span><h3>原状回復の手配が重なった</h3><p>繁忙期に複数の退去が重なり、いつもの施工会社だけでは次の募集に間に合わない。クロスや床の張替え、ハウスクリーニングなど、原状回復の手配をご相談いただけます。</p></div>
       </article>
       <article class="need">
-        {{photo:tatami|家具や家電が置かれた、入居中の畳敷きの居室|need__photo}}
+        {{photo:tatami|家具や家電が置かれた、入居中の畳敷きの居室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">入居中</span><h3>入居者様からの不具合のご連絡</h3><p>建具の開閉や水まわりの部品など、入居中の小さな不具合。入居者様との日程調整の進め方も含めて、管理会社様のルールに合わせてご相談させてください。</p></div>
       </article>
       <article class="need">
-        {{photo:apartments|建ち並ぶ集合住宅|need__photo}}
+        {{photo:apartments|建ち並ぶ集合住宅|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">共用部</span><h3>共用部の傷みが気になる</h3><p>共用廊下や階段、外壁の小さなひびなど、部分的な補修の相談先として。写真で状況を共有していただき、現地確認が必要かどうかからご案内します。</p></div>
       </article>
     </div>
@@ -53,7 +54,7 @@
       <p class="sec-lead">次の募集までの空室期間を延ばさないよう、対応できるかどうかと着工できる時期を先にお知らせし、段階ごとに予定をご案内します。</p>
     </div>
     <ol class="points">
-      <li><h3>写真から相談を始められます</h3><p>現地での立会いを前提とせず、写真と物件情報から相談を始められます。写真で判断できない場合に、現地確認の日程を調整します。</p></li>
+      <li><h3>写真から相談を始められます</h3><p>ご相談は、写真と物件情報から始められます。現地確認での立会いの要否や鍵の扱いは、案件ごとに確認し、見積の前にお知らせします。</p></li>
       <li><h3>見積は内訳の分かる形で</h3><p>工事内容と金額の内訳をご提示します。オーナー様へのご説明やご承認の取得にお使いください。</p></li>
       <li><h3>対応可否と着工時期を先に</h3><p>繁忙期でもご相談いただけます。対応できるかどうか、現地調査が必要か、着工できる時期を、見積の前にお知らせします。</p></li>
       <li><h3>手直しも同じ窓口へ</h3><p>完了後に気になる箇所があれば、愛媛修繕デスクへご連絡ください。施工パートナーとの調整は当デスクが行います。</p></li>
@@ -99,7 +100,7 @@
     </div>
     <div class="inline-cta">
       <p>退去・小修繕のご相談はこちら<small>写真がない場合も、内容をご記入のうえご相談いただけます。</small></p>
-      <a class="btn btn--primary" href="{{site}}?seg=kanri#form">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=kanri#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>
@@ -113,7 +114,7 @@
     <div class="faq">
       <details><summary>複数の物件をまとめて相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。物件ごとに所在地と修繕内容が分かるようにお送りください。施工パートナーの手配状況により、物件ごとに時期が異なる場合があります。</p></div></details>
       <details><summary>入居者様との日程調整はお願いできますか？</summary><div class="faq__a"><p>入居者様との連絡方法は、管理会社様のルールに合わせてご相談させてください。管理会社様を通じた調整を基本としています。</p></div></details>
-      <details><summary>鍵の受け渡しや立会いはどうなりますか？</summary><div class="faq__a"><p>鍵の受け渡し方法や立会いの要否は、物件と案件ごとにご相談のうえ決めさせていただきます。</p></div></details>
+      <details><summary>鍵の受け渡しや立会いはどうなりますか？</summary><div class="faq__a"><p>鍵の受け渡し方法や立会いの要否は、案件ごとに確認し、見積の前にお知らせします。</p></div></details>
       <details><summary>入居者様の負担区分の判断もしてもらえますか？</summary><div class="faq__a"><p>費用負担の区分は、管理会社様・オーナー様のご判断となります。判断の参考になるよう、施工前の写真と工事内容の内訳をお渡しします。</p></div></details>
     </div>
   </div>

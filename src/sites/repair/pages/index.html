@@ -3,6 +3,7 @@
   <div class="container hero__inner">
     <p class="hero__eyebrow">松山周辺の法人・事業者様向け<span class="br-pc">　</span><br class="br-sp">建物修繕の相談窓口</p>
     <h1 class="hero__title" id="hero-title">いつもの施工会社を<br>変える必要は<br class="br-sp">ありません。</h1>
+    <p class="hero__kicker">繁忙時・対応外工種・小修繕の「第二施工店」</p>
     <p class="hero__lead">手が回らない時、頼みたい工種の手配先がない時の「もう一つの相談先」として。写真と物件情報から建物修繕のご相談を受け付け、案件ごとに対応できる施工パートナーを手配します。</p>
     <div class="btn-row hero__actions">
       <a class="btn btn--primary" href="#form" data-track="hero_cta_click" data-intent="quote">今ある1件を見積相談</a>
@@ -254,7 +255,32 @@
   </div>
 </section>
 
-<section class="section section--paper" id="faq" aria-labelledby="faq-title">
+<section class="section section--paper" id="terms" aria-labelledby="terms-title">
+  <div class="container">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="eyebrow">TERMS</span>
+        <h2 class="sec-title" id="terms-title">取引の進め方</h2>
+      </div>
+      <p class="sec-lead">法人間のお取引として、着手前に条件を書面でご確認いただきます。</p>
+    </div>
+    <table class="terms-table">
+      <tbody>
+        <tr><th scope="row">ご相談・見積</th><td>1件からご相談いただけます。見積の内容をご確認いただき、ご承認後に手配します。</td></tr>
+        <tr><th scope="row">見積書に記載する事項</th><td>工事ごとの内訳、見積の発行者、契約先、請求先、施工の責任範囲、支払条件</td></tr>
+        <tr><th scope="row">施工の担当</th><td>案件ごとに、工種・地域・必要な許可や資格に合う施工パートナーが担当します。窓口・調整・完了確認は愛媛修繕デスクが担当します。</td></tr>
+        <tr><th scope="row">許可・資格の確認</th><td>電気工事・給水装置工事など許可・資格が必要な工事は、手配の前に、担当する施工パートナーが該当する許可・資格を持っていることを確認します。</td></tr>
+        <tr><th scope="row">手直し・不具合のご連絡</th><td>完了後に気になる箇所があれば、愛媛修繕デスクが窓口となり、施工パートナーとの対応を調整します。責任の所在と保険の範囲は、見積時に書面でお示しします。</td></tr>
+        <tr><th scope="row">写真・物件情報の共有範囲</th><td>案件の検討と施工に必要な範囲で、担当する施工パートナーとだけ共有します（<a href="{{base}}privacy/">個人情報の取扱い</a>）。</td></tr>
+        <tr><th scope="row">既存のお取引先</th><td>変更していただく必要はありません。お取引先への営業も行いません。</td></tr>
+        {{ops_rows}}
+      </tbody>
+    </table>
+    {{company_info}}
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
     <div>
       <h2 class="sec-title" id="faq-title">よくあるご質問</h2>
@@ -281,6 +307,7 @@
       <span class="eyebrow">REQUEST FORM</span>
       <h2 class="sec-title" id="form-title">修繕案件を<br>相談する</h2>
       <p class="form-lead">工事内容・物件の情報・写真をお送りください。内容を確認のうえ、対応できる施工パートナーの手配を調整し、担当者からご連絡します。</p>
+      <p class="form-note">分かる範囲で構いません。必須は、工事内容・物件エリア・会社名・ご担当者名・ご連絡先だけです。</p>
       <p class="form-note">法人・事業者様専用の窓口です。いつもの施工会社との併用を前提にしています。</p>
     </div>
     {{case_form}}

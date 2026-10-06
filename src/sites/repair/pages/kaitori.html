@@ -8,7 +8,8 @@
       <h1 id="page-title">物件の商品化を、<br>止めない施工窓口。</h1>
       <p class="phero__lead">仕入れ後の現地調査、施工できるかどうかの判断、見積を出せる時期のご案内、販売開始日から逆算した工程まで。必須工事・推奨工事・見送り可能な工事に分けた内訳つきの見積で、手を入れる範囲をご判断いただけます。</p>
       <div class="btn-row">
-        <a class="btn btn--primary" href="{{site}}?seg=kaitori#form">{{cta_label}}</a>
+        <a class="btn btn--primary" href="{{site}}?seg=kaitori#form" data-intent="quote" data-track="cta_click" data-track-pos="subhero">今ある1件を見積相談</a>
+        <a class="btn btn--outline" href="{{site}}?seg=kaitori#form" data-intent="feasibility" data-track="cta_click" data-track-pos="subhero">写真で対応可否を確認</a>
         <a class="more" href="#scope">工事範囲の決め方</a>
       </div>
     </div>
@@ -26,11 +27,11 @@
     </div>
     <div class="needs">
       <article class="need">
-        {{photo:fusuma|ふすま風の引戸がある、家具の置かれていない洋室|need__photo}}
+        {{photo:fusuma|ふすま風の引戸がある、家具の置かれていない洋室|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">仕入れ後</span><h3>販売前に、内装を整えておきたい</h3><p>壁紙や床の汚れ・傷など、内覧の前に整えておきたい箇所。写真をお送りいただければ、箇所ごとに内容を確認してご案内します。</p></div>
       </article>
       <article class="need">
-        {{photo:kitaroom|無垢材の床と木の造作のある室内|need__photo}}
+        {{photo:kitaroom|無垢材の床と木の造作のある室内|need__photo|写真はイメージです|eager}}
         <div class="need__body"><span class="need__tag">範囲</span><h3>どこまで手を入れるか迷っている</h3><p>販売価格とのバランスを見ながら、工事範囲を段階的に検討したい。範囲ごとに分けた見積で、比べながらご判断いただけます。</p></div>
       </article>
     </div>
@@ -84,12 +85,22 @@
     </div>
     <div class="inline-cta">
       <p>仕入れ物件の手直しのご相談はこちら<small>工事範囲が決まっていない段階でもご相談いただけます。</small></p>
-      <a class="btn btn--primary" href="{{site}}?seg=kaitori#form">{{cta_label}}</a>
+      <a class="btn btn--primary" href="{{site}}?seg=kaitori#form" data-intent="quote" data-track="cta_click" data-track-pos="inline">今ある1件を見積相談</a>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="kfaq-title">
+<section class="section" id="flow" aria-labelledby="kflow-title">
+  <div class="container flow-wrap">
+    <div class="flow-wrap__head">
+      <h2 class="sec-title" id="kflow-title">仕入れから販売開始までの流れ</h2>
+      <p class="sec-lead">販売開始・内覧開始の予定日をお知らせください。対応可否、現地調査の要否、見積を出せる時期を先にご案内し、可能な工程をご提案します。</p>
+    </div>
+    <div>{{flow}}</div>
+  </div>
+</section>
+
+<section class="section section--paper" aria-labelledby="kfaq-title">
   <div class="container faq-wrap">
     <div>
       <p class="faq-for">買取再販事業者様から</p>
@@ -98,7 +109,7 @@
     <div class="faq">
       <details><summary>仕入れ前の検討段階でも相談できますか？</summary><div class="faq__a"><p>ご相談いただけます。写真や間取り図など、分かる範囲の情報をお送りください。現地を確認できない段階では、概算でのご案内になる場合があります。</p></div></details>
       <details><summary>販売開始日までに間に合わせてもらえますか？</summary><div class="faq__a"><p>工程は、工事内容と施工パートナーの状況によって異なります。ご希望の日程をお知らせいただければ、対応できるかどうかを確認してご回答します。日程をお約束できない場合は、その旨をお伝えします。</p></div></details>
-      <details><summary>空室で鍵を預ける形でも大丈夫ですか？</summary><div class="faq__a"><p>鍵の受け渡し方法や、作業中の管理方法は、案件ごとにご相談のうえ決めさせていただきます。</p></div></details>
+      <details><summary>空室で鍵を預ける形でも大丈夫ですか？</summary><div class="faq__a"><p>鍵の扱いや作業中の管理方法は、案件ごとに確認し、見積の前にお知らせします。</p></div></details>
     </div>
   </div>
 </section>

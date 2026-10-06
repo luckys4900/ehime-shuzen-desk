@@ -170,7 +170,7 @@ if (!navOk) fail('mobile nav anchor link'); else ok('mobile nav anchor jumps to 
 { const robots = await (await req.get(BASE + 'robots.txt')).text(); if (!/Disallow: \//.test(robots)) fail('demo robots.txt should disallow'); else ok('demo robots.txt disallows indexing'); }
 
 // ---- 旧URLは新しいページへ転送される（旧トップのページ内リンクは売却前おまかせデスクへ） ----
-for (const [from, to] of [['kanri/', 'repair/kanri/'], ['kaitori/', 'repair/kaitori/'], ['shop/', 'repair/shop/'], ['contact/', 'repair/#form'], ['contact/?type=kanri', 'repair/?seg=kanri#form'], ['#form', 'sale-support/#form']]) {
+for (const [from, to] of [['kanri/', 'repair/kanri/'], ['kaitori/', 'repair/kaitori/'], ['shop/', 'repair/shop/'], ['contact/', 'repair/#form'], ['kanri/?utm_source=qa&offer=feasibility', 'repair/kanri/?utm_source=qa&offer=feasibility'], ['contact/?type=kanri', 'repair/?seg=kanri#form'], ['#form', 'sale-support/#form']]) {
   const p2 = await ctx.newPage();
   await p2.goto(BASE + from, { waitUntil: 'networkidle' });
   const u = new URL(p2.url());
